@@ -1,0 +1,28 @@
+extends:
+  - "eslint:recommended"
+  - "airbnb-base"
+parser: "babel-eslint"
+env:
+  browser: true
+  node: true
+  jest: true
+rules:
+  no-underscore-dangle:
+    - "error"
+    - allow:
+      - "_id"
+  consistent-return: off
+  func-names: "off"
+  global-require: "off"
+  max-classes-per-file: "warn"
+  max-len:
+    - "error"
+    - code: 120
+  no-param-reassign: "off"
+  no-unused-vars: "off"
+  object-curly-newline:
+    - "error"
+    - consistent: true
+  guard-for-in: "off"
+  no-restricted-syntax: "off"
+  comma-dangle: "off"
