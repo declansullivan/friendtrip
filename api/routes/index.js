@@ -1,4 +1,5 @@
 var express = require('express');
+const { TravelerDB } = require('../db/models/traveler');
 var router = express.Router();
 
 /* GET home page. */
@@ -7,6 +8,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.put('/signup', function(req, res, next) {
+  // Example
+  // Create firebase user, then create Traveler object for that user
+  TravelerDB.addTraveler();
   res.send("Not Implemented!");
 });
 
