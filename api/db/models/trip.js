@@ -1,23 +1,30 @@
 import { tripRef } from "..";
 import { Accessor } from "./accessor";
 
-export class TripDB {
-    static getTrip(id) {
+export class Trip {
+    constructor(id) {
+        // call getTrip here, populate the following instance variables:
+        // id, travelerId, name, lastUpdate, travelerIds,
+        // destinationIds, itemIds, expenseIds, description,
+        // itinerary, tripLeaders
     }
 
-    static addTrip() {
+    getTrip() {
+    }
+
+    addTrip() {
 
     }
 
-    static deleteTrip() {
+    deleteTrip() {
 
     }
 
-    static updateTrip() {
+    updateTrip() {
 
     }
 
-    static generateTripJSON(id, travelerId, name, lastUpdate, travelerIds,
+    generateTripJSON(id, travelerId, name, lastUpdate, travelerIds,
                             destinationIds, itemIds, expenseIds, description,
                             itinerary, tripLeaders) {
 

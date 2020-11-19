@@ -1,24 +1,30 @@
 import { destinationRef } from "..";
 import { Accessor } from "./accessor";
 
-export class DestinationDB {
-    static getDestination(id) {
+export class Destination {
+    constructor(id) {
+        // call getDestination here, populate the following instance variables:
+        // id, tripId, travelerId, name, countryCode, 
+        // startDate, endDate, description, address
+    }
+
+    getDestination() {
         
     }
 
-    static addDestination() {
+    addDestination() {
 
     }
 
-    static deleteDestination() {
+    deleteDestination() {
 
     }
 
-    static updateDestination() {
+    updateDestination() {
 
     }
 
-    static generateDestinationJSON(id, tripId, travelerId, name, countryCode,
+    generateDestinationJSON(id, tripId, travelerId, name, countryCode,
                                    startDate, endDate, description, address) {
 
     }

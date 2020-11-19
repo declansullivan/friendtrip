@@ -1,5 +1,5 @@
 var express = require('express');
-const { ExpenseDB } = require('../db/models/expense');
+const { Expense } = require('../db/models/expense');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {

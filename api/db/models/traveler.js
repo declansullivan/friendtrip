@@ -1,24 +1,30 @@
 import { travelerRef } from "..";
 import { Accessor } from "./accessor";
 
-export class TravelerDB {
-    static getTraveler(id) {
-        
+export class Traveler {
+    constructor(id) {
+        // call getTraveler here, populate the following instance variables:
+        // email, firstName, lastName,
+        // createdOn, tripIds, friendIds, invitations
     }
 
-    static addTraveler() {
-
-    }
-
-    static deleteTraveler() {
-
-    }
-
-    static updateTraveler() {
+    getTraveler() {
 
     }
 
-    static generateTravelerJSON(email, firstName, lastName,
+    addTraveler() {
+
+    }
+
+    deleteTraveler() {
+
+    }
+
+    updateTraveler() {
+
+    }
+
+    generateTravelerJSON(email, firstName, lastName,
                          createdOn, tripIds, friendIds, invitations) {
 
     }

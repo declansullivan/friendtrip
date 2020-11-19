@@ -1,24 +1,30 @@
 import { itemRef } from "..";
 import { Accessor } from "./accessor";
 
-export class ItemDB {
-    static getItem(id) {
+export class Item {
+    constructor(id) {
+        // call getItem here, populate the following instance variables:
+        // id, tripId, travelerId, name, priority,
+        // assignee, description, isPublic
+    }
+
+    getItem() {
         
     }
 
-    static addItem() {
+    addItem() {
 
     }
 
-    static deleteItem() {
+    deleteItem() {
 
     }
 
-    static updateItem() {
+    updateItem() {
 
     }
 
-    static generateItemJSON(id, tripId, travelerId, name, priority,
+    generateItemJSON(id, tripId, travelerId, name, priority,
                             assignee, description, isPublic) {
 
     }
