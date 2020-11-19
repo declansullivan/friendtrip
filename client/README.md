@@ -2,9 +2,21 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## FriendTrip Specific Setup
+
+When first pulling the repo, run the following in the `api` and `console` directories:
+
+### `npm install`
+
+To run the web app, run the following in both the `api` and `console` directories:
+
+### `npm start`
+
+## Boiler Plate - Don't Follow Exactly, READ ABOVE
+
 ## Available Scripts
 
-In the project directory, you can run:
+In either the `api` or `console` directories, you can run:
 
 ### `npm start`
 
