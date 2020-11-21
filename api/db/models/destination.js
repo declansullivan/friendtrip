@@ -4,7 +4,7 @@ const { Accessor } = require('./accessor');
 module.exports = class Destination {
     static getDestination(id, callback) {
         Accessor.getObject(destinationRef, id, callback);
-    }npm st
+    }
 
     static getDestinationList(ids, callback) {
         Accessor.getObjectList(destinationRef, ids, callback);
