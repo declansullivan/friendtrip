@@ -1,30 +1,28 @@
-import { expenseRef } from "..";
-import { Accessor } from "./accessor";
+const { expenseRef } = require('../index');
+const { Accessor } = require('./accessor');
 
-export class Expense {
-    constructor(id) {
-        // call getExpense here, populate the following instance variables:
-        // id, tripId, travelerId, name, 
-        // description, cost, travelerIds
-    }
-
-    getExpense() {
+module.exports = class Expense {
+    static getExpense() {
         
     }
 
-    addExpense() {
+    static getExpenseList() {
+        
+    }
+
+    static addExpense() {
 
     }
 
-    deleteExpense() {
+    static deleteExpense() {
 
     }
 
-    updateExpense() {
+    static updateExpense() {
 
     }
 
-    generateExpenseJSON(id, tripId, travelerId, name, 
+    static generateExpenseJSON(id, tripId, travelerId, name, 
                                description, cost, travelerIds) {
 
     }

@@ -1,31 +1,29 @@
-import { travelerRef } from "..";
-import { Accessor } from "./accessor";
+const { travelerRef } = require('../index');
+const { Accessor } = require('./accessor');
 
-export class Traveler {
-    constructor(id) {
-        // call getTraveler here, populate the following instance variables:
-        // email, firstName, lastName,
-        // createdOn, tripIds, friendIds, invitations
-    }
-
-    getTraveler() {
+module.exports = class Traveler {
+    static getTraveler() {
 
     }
 
-    addTraveler() {
+    static getTravelerList() {
 
     }
 
-    deleteTraveler() {
+    static addTraveler() {
 
     }
 
-    updateTraveler() {
+    static deleteTraveler() {
 
     }
 
-    generateTravelerJSON(email, firstName, lastName,
-                         createdOn, tripIds, friendIds, invitations) {
+    static updateTraveler() {
+
+    }
+
+    static generateTravelerJSON(email, firstName, lastName,
+                                createdOn, tripIds, friendIds, invitations) {
 
     }
 }

@@ -1,11 +1,11 @@
-import firebase from 'firebase';
+var firebase = require('firebase');
 
+const db = firebase.default.initializeApp(firebaseConfig);
 
+const travelerRef = db.database().ref("traveler");
+const tripRef = db.database().ref("trip");
+const destinationRef = db.database().ref("destination");
+const itemRef = db.database().ref("item");
+const expenseRef = db.database().ref("expense");
 
-const db = firebase.initializeApp(firebaseConfig);
-
-export const travelerRef = db.database().ref("traveler");
-export const tripRef = db.database().ref("trip");
-export const destinationRef = db.database().ref("destination");
-export const itemRef = db.database().ref("item");
-export const expenseRef = db.database().ref("expense");
+module.exports = {travelerRef, tripRef, destinationRef, itemRef, expenseRef};

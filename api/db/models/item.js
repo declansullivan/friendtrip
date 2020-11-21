@@ -1,30 +1,28 @@
-import { itemRef } from "..";
-import { Accessor } from "./accessor";
+const { itemRef } = require('../index');
+const { Accessor } = require('./accessor');
 
-export class Item {
-    constructor(id) {
-        // call getItem here, populate the following instance variables:
-        // id, tripId, travelerId, name, priority,
-        // assignee, description, isPublic
-    }
-
-    getItem() {
+module.exports = class Item {
+    static getItem() {
         
     }
 
-    addItem() {
+    static getItemList() {
 
     }
 
-    deleteItem() {
+    static addItem() {
 
     }
 
-    updateItem() {
+    static deleteItem() {
 
     }
 
-    generateItemJSON(id, tripId, travelerId, name, priority,
+    static updateItem() {
+
+    }
+
+    static generateItemJSON(id, tripId, travelerId, name, priority,
                             assignee, description, isPublic) {
 
     }

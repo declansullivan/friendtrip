@@ -1,5 +1,5 @@
 var express = require('express');
-const { Destination } = require('../db/models/destination');
+var Destination = require('../db/models/destination');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
