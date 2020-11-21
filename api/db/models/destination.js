@@ -1,31 +1,30 @@
-import { destinationRef } from "..";
-import { Accessor } from "./accessor";
+const { destinationRef } = require('../index');
+const { Accessor } = require('./accessor');
 
-export class Destination {
-    constructor(id) {
-        // call getDestination here, populate the following instance variables:
-        // id, tripId, travelerId, name, countryCode, 
-        // startDate, endDate, description, address
+module.exports = class Destination {
+    static getDestination(id, callback) {
+        Accessor.getObject(destinationRef, id, callback);
     }
 
-    getDestination() {
-        
+    static getDestinationList(ids, callback) {
+        Accessor.getObjectList(destinationRef, ids, callback);
     }
 
-    addDestination() {
-
+    static addDestination(json, callback) {
+        Accessor.addObject(destinationRef, json, callback);
     }
 
-    deleteDestination() {
-
+    static deleteDestination(id, callback) {
+        Accessor.deleteObject(destinationRef, id, callback);
     }
 
-    updateDestination() {
-
+    static updateDestination(json, callback) {
+        Accessor.updateObject(destinationRef, json, callback);
     }
 
-    generateDestinationJSON(id, tripId, travelerId, name, countryCode,
+    static generateDestinationJSON(id, tripId, travelerId, name, countryCode,
                                    startDate, endDate, description, address) {
-
+        return { id, tripId, travelerId, name, countryCode, 
+                 startDate, endDate, description, address };
     }
 }
