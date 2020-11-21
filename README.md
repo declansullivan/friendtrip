@@ -4,11 +4,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## FriendTrip Specific Setup
 
-When first pulling the repo, run the following in the `api` and `console` directories:
+When first pulling the repo, run the following in the `api` and `client` directories:
 
 ### `npm install`
 
-To run the web app, run the following in both the `api` and `console` directories:
+To run the web app, run the following in both the `api` and `client` directories:
 
 ### `npm start`
 
@@ -16,7 +16,7 @@ To run the web app, run the following in both the `api` and `console` directorie
 
 ## Available Scripts
 
-In either the `api` or `console` directories, you can run:
+In either the `api` or `client` directories, you can run:
 
 ### `npm start`
 
