@@ -38,7 +38,7 @@ class SignIn extends Component {
                             </Form.Row>
 
                             <div class="centerbuttons">
-                                <Button variant="primary" type="submit">Sign In</Button>{' '}
+                                <Button variant="primary" type="submit">Login</Button>{' '}
                                 <Link to="/signup">
                                     <Button variant="primary" onClick>
                                         Register

@@ -89,7 +89,7 @@ class CreateAccount extends Component {
                             <div style={{ "text-align": "right" }}>
                                 <Link to="/">
                                     <Button variant="primary" type="submit">
-                                        Sign In
+                                        Login
                                     </Button>{' '}
                                 </Link>
                                 <Button variant="primary" type="submit">Register</Button>
