@@ -1,3 +1,5 @@
+const db = require("..");
+
 class Accessor {
     static getObject(ref, id, callback) {
         ref.child(id).once('value', snapshot => {
@@ -28,6 +30,17 @@ class Accessor {
 
     static updateObject(ref, json, callback) {
         ref.child(json.id).update(json).then(callback);
+    }
+
+    static createAccount(email, password, callback) {
+        db.db.auth().createUserWithEmailAndPassword(email, password)
+        .then((user) => {
+            // Signed in
+            callback(200, null);
+        }).catch((error) => {
+            // Error
+            callback(401, error.code);
+        });
     }
 }
 

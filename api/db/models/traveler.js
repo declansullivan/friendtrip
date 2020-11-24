@@ -22,10 +22,10 @@ module.exports = class Traveler {
         Accessor.updateObject(travelerRef, json, callback);
     }
 
-    static generateTravelerJSON(email, firstName, lastName,
-        createdOn, tripIds, friendIds, invitations) {
+    static generateTravelerJSON(id, email, username, firstName, lastName,
+                                createdOn, tripIds, friendIds, invitations) {
         return {
-            email, firstName, lastName,
+            id, email, username, firstName, lastName,
             createdOn, tripIds, friendIds, invitations
         };
     }
