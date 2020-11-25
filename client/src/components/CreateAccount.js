@@ -5,14 +5,6 @@ import { Link } from 'react-router-dom';
 class CreateAccount extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            username: '',
-            email: '',
-            first: '',
-            last: '',
-            password: '',
-        };
     }
 
     createAccount = event => {
@@ -26,8 +18,6 @@ class CreateAccount extends Component {
             last: last.value,
             password: password.value
         }
-
-        console.log(data);
 
         fetch('http://localhost:9000/signup', {
             method: 'PUT',
@@ -48,10 +38,10 @@ class CreateAccount extends Component {
 
     render() {
         return (
-            <div class="centerdiv">
-                <Card border="secondary" style={{ "width": "48rem", "margin-left": "auto", "margin-right": "auto" }}>
+            <div className="centerdiv">
+                <Card border="secondary" style={{ "width": "48rem", "marginLeft": "auto", "marginRight": "auto" }}>
                     <Card.Header>
-                        <Card.Title style={{ "text-align": "center" }}>Create an Account</Card.Title>
+                        <Card.Title style={{ "textAlign": "center" }}>Create an Account</Card.Title>
                     </Card.Header>
                     <Card.Body>
                         <Form onSubmit={this.createAccount}>
@@ -86,7 +76,7 @@ class CreateAccount extends Component {
                                 </Form.Group>
                             </Form.Row>
 
-                            <div style={{ "text-align": "right" }}>
+                            <div style={{ "textAlign": "right" }}>
                                 <Link to="/">
                                     <Button variant="primary" type="submit">
                                         Login

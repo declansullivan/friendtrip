@@ -49,7 +49,7 @@ router.post('/login', function (req, res, next) {
   }
   // getTraveler callback function
   handleGetTraveler = (snapshotValue) => {
-    res.json({ status: 200, code: "Success" });
+    res.json({ status: 200, code: "Success", id: snapshotValue.id });
   }
   Accessor.loginAccount(req.body.email, req.body.password, handleLoginAccount);
 });
