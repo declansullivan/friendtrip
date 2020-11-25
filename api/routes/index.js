@@ -1,5 +1,6 @@
 var express = require('express');
-const { Traveler } = require('../db/models/traveler');
+const { Accessor } = require('../db/models/accessor');
+const { generateTravelerJSON, addTraveler } = require('../db/models/traveler');
 var router = express.Router();
 
 /* GET home page. */
@@ -8,10 +9,30 @@ router.get('/', function(req, res, next) {
 });
 
 router.put('/signup', function(req, res, next) {
-  // Example
-  // Create firebase user, then create Traveler object for that user
-  TravelerDB.addTraveler();
-  res.send("Not Implemented!");
+  
+  // Callback for Firebase auth.
+  handleCreateAccount = (status, code) => {
+    const id = req.body.email.replace('.', '');
+
+    if (status === 200) {
+      const data = generateTravelerJSON(id, req.body.email, req.body.username, req.body.first, 
+                                        req.body.last, Date.now(), [], [], []);
+      addTraveler(data, handleCreateTraveler);
+    }
+    else {
+      res.json({ status: 401, code });
+    }
+  }
+
+  // Callback for Firebase addObject (Traveler).
+  handleCreateTraveler = (error) => {
+    var status;
+    if (error) status = 401;
+    else status = 200;
+    res.json({ status, code: "none" });
+  }
+
+  Accessor.createAccount(req.body.email, req.body.password, handleCreateAccount);
 });
 
 router.post('/login', function(req, res, next) {

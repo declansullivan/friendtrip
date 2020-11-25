@@ -19,4 +19,4 @@ const destinationRef = db.database().ref("destination");
 const itemRef = db.database().ref("item");
 const expenseRef = db.database().ref("expense");
 
-module.exports = {travelerRef, tripRef, destinationRef, itemRef, expenseRef};
+module.exports = {db, travelerRef, tripRef, destinationRef, itemRef, expenseRef};
