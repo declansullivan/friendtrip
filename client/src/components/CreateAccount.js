@@ -19,12 +19,12 @@ class CreateAccount extends Component {
         event.preventDefault();
 
         const { username, email, first, last, password } = event.target.elements;
-        const data = { 
-            username: username.value, 
-            email: email.value, 
-            first: first.value, 
-            last: last.value, 
-            password: password.value 
+        const data = {
+            username: username.value,
+            email: email.value,
+            first: first.value,
+            last: last.value,
+            password: password.value
         }
 
         console.log(data);
@@ -36,14 +36,14 @@ class CreateAccount extends Component {
             },
             body: JSON.stringify(data)
         }).then(res => res.json())
-          .then(res => {
-              if (res.code === "auth/email-already-in-use") {
-                  alert("This email is already in use.");
-              }
-              if (res.code === "auth/weak-password") {
-                  alert("Your password is too weak.");
-              }
-        });
+            .then(res => {
+                if (res.code === "auth/email-already-in-use") {
+                    alert("This email is already in use.");
+                }
+                if (res.code === "auth/weak-password") {
+                    alert("Your password is too weak.");
+                }
+            });
     }
 
     render() {
@@ -57,32 +57,32 @@ class CreateAccount extends Component {
                         <Form onSubmit={this.createAccount}>
                             <Form.Row>
                                 <Form.Group as={Col} controlId="formGridUsername">
-                                <Form.Label>Username</Form.Label>
-                                <Form.Control name="username" type="username" placeholder="Username" />
+                                    <Form.Label>Username</Form.Label>
+                                    <Form.Control name="username" type="username" placeholder="Username" />
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridEmail">
-                                <Form.Label>Email</Form.Label>
-                                <Form.Control name="email" type="email" placeholder="Email" />
+                                    <Form.Label>Email</Form.Label>
+                                    <Form.Control name="email" type="email" placeholder="Email" />
                                 </Form.Group>
                             </Form.Row>
 
                             <Form.Row>
                                 <Form.Group as={Col} controlId="formGridFirst">
-                                <Form.Label>First Name</Form.Label>
-                                <Form.Control name="first" type="first" placeholder="First name" />
+                                    <Form.Label>First Name</Form.Label>
+                                    <Form.Control name="first" type="first" placeholder="First name" />
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridLast">
-                                <Form.Label>Last Name</Form.Label>
-                                <Form.Control name="last" type="last" placeholder="Last name" />
+                                    <Form.Label>Last Name</Form.Label>
+                                    <Form.Control name="last" type="last" placeholder="Last name" />
                                 </Form.Group>
                             </Form.Row>
 
                             <Form.Row>
                                 <Form.Group as={Col} controlId="formGridPassword">
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control name="password" type="password" placeholder="Password" />
+                                    <Form.Label>Password</Form.Label>
+                                    <Form.Control name="password" type="password" placeholder="Password" />
                                 </Form.Group>
                             </Form.Row>
 
