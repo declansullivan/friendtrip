@@ -90,7 +90,7 @@ class CreateAccount extends Component {
                                 <Link to="/">
                                     <Button variant="primary" type="submit">
                                         Login
-                                    </Button>
+                                    </Button>{' '}
                                 </Link>
                                 <Button variant="primary" type="submit">Register</Button>
                             </div>
