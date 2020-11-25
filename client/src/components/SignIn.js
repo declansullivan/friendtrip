@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { Form, Button, Col, Card } from "react-bootstrap";
 import { Link } from 'react-router-dom';
+import {
+    BrowserRouter as Router, Route,
+    Redirect, Switch
+} from 'react-router-dom';
 
 class SignIn extends Component {
     constructor(props) {
@@ -26,6 +30,7 @@ class SignIn extends Component {
                 console.log(res);
                 if (res.code === "Success") {
                     alert("Success!");
+                    this.props.history.push('/home');
                 }
                 else {
                     alert("Incorrect email or password.");

@@ -6,6 +6,7 @@ import './App.css'
 
 import CreateAccount from "./components/CreateAccount";
 import SignIn from "./components/SignIn";
+import Home from "./routes/Home.js"
 
 class App extends Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class App extends Component {
         <Router>
           <Route exact path='/' component={SignIn} />
           <Route exact path='/signup' component={CreateAccount} />
+          <Route exact path='/home' component={Home} />
         </Router>
       </div>
     );
