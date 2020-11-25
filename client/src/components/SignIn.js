@@ -8,10 +8,29 @@ class SignIn extends Component {
     }
 
     signIn = event => {
+        event.preventDefault();
+        const { email, password } = event.target.elements;
+        const data = {
+            email: email.value,
+            password: password.value
+        }
 
-    }
-
-    signUp = event => {
+        fetch('http://localhost:9000/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        }).then(res => res.json())
+            .then(res => {
+                console.log(res);
+                if (res.code === "Success") {
+                    alert("Success!");
+                }
+                else {
+                    alert("Incorrect email or password.");
+                }
+            });
     }
 
     render() {
@@ -25,15 +44,15 @@ class SignIn extends Component {
                         <Form onSubmit={this.signIn}>
                             <Form.Row>
                                 <Form.Group as={Col} controlId="formGridUsername">
-                                <Form.Label>Email</Form.Label>
-                                <Form.Control name="email" type="email" placeholder="Email" />
+                                    <Form.Label>Email</Form.Label>
+                                    <Form.Control name="email" type="email" placeholder="Email" />
                                 </Form.Group>
                             </Form.Row>
 
                             <Form.Row>
                                 <Form.Group as={Col} controlId="formGridPassword">
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control name="password" type="password" placeholder="Password" />
+                                    <Form.Label>Password</Form.Label>
+                                    <Form.Control name="password" type="password" placeholder="Password" />
                                 </Form.Group>
                             </Form.Row>
 

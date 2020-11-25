@@ -15,7 +15,7 @@ class Accessor {
             for (const id of ids) {
                 objects.push(snapshot[id]);
             }
-            
+
             callback(objects)
         });
     }
@@ -34,13 +34,23 @@ class Accessor {
 
     static createAccount(email, password, callback) {
         db.db.auth().createUserWithEmailAndPassword(email, password)
-        .then((user) => {
-            // Signed in
-            callback(200, null);
-        }).catch((error) => {
-            // Error
-            callback(401, error.code);
-        });
+            .then((user) => {
+                // Signed in
+                callback(200, null);
+            }).catch((error) => {
+                // Error
+                callback(401, error.code);
+            });
+    }
+    static loginAccount(email, password, callback) {
+        db.db.auth().signInWithEmailAndPassword(email, password)
+            .then((user) => {
+                //Signed in
+                callback(200, null);
+            }).catch((error) => {
+                //Error
+                callback(401, error.code);
+            });
     }
 }
 

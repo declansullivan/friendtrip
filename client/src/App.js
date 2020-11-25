@@ -14,16 +14,15 @@ class App extends Component {
   }
 
   componentDidMount() {
-    
+
   }
 
   render() {
     return (
       <div>
         <Router>
-          <Route exact path='/' component={SignIn}/>
-          <Route exact path='/signup' component={CreateAccount}/>
-        
+          <Route exact path='/' component={SignIn} />
+          <Route exact path='/signup' component={CreateAccount} />
         </Router>
       </div>
     );
