@@ -54,8 +54,19 @@ router.post('/login', function (req, res, next) {
   Accessor.loginAccount(req.body.email, req.body.password, handleLoginAccount);
 });
 
-router.post('/logout', function (req, res, next) {
-  res.send("Not Implemented!");
+router.post('/logout', function (req, res) {
+  // Accessor's logout callback function
+  handleLogout = (status, code) => {
+    if (status === 200) {
+      // sign out successful
+      res.json({ status: 200});
+    }
+    else {
+      // Return error message
+      res.json({ status: 401, code });
+    }
+  }
+  Accessor.logout(handleLogout);
 });
 
 router.put('/createTrip', function (req, res, next) {

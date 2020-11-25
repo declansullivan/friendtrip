@@ -52,6 +52,14 @@ class Accessor {
                 callback(401, error.code);
             });
     }
+    static logout(callback){
+        db.db.auth().signOut()
+            .then(() => {
+                callback(200, null);
+            }).catch((error) => {
+                callback(401, error.code);
+            });
+    }
 }
 
 module.exports = { Accessor };

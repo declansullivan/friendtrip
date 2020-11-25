@@ -8,8 +8,17 @@ class Home extends Component {
 
 
     logOut = () => {
-        this.props.history.push('/');
         localStorage.clear();
+        fetch('http://localhost:9000/logout', {
+            method: 'GET'
+        }).then(res => res.json())
+            .then(res => {
+                if (res.status === 200){
+                    this.props.history.push('/');
+                }else{
+                    alert("Logout failed.")
+                }
+            });
     }
     
     getUserId = () => {
