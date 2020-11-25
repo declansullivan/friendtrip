@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import { Form, Button, Col, Card } from "react-bootstrap";
 import { Link } from 'react-router-dom';
-import {
-    BrowserRouter as Router, Route,
-    Redirect, Switch
-} from 'react-router-dom';
 
 class SignIn extends Component {
     constructor(props) {
@@ -27,9 +23,8 @@ class SignIn extends Component {
             body: JSON.stringify(data)
         }).then(res => res.json())
             .then(res => {
-                console.log(res);
                 if (res.code === "Success") {
-                    alert("Success!");
+                    localStorage.setItem("id", res.id);
                     this.props.history.push('/home');
                 }
                 else {
@@ -40,10 +35,10 @@ class SignIn extends Component {
 
     render() {
         return (
-            <div class="centerdiv">
-                <Card border="secondary" style={{ "width": "24rem", "margin-left": "auto", "margin-right": "auto" }}>
+            <div className="centerdiv">
+                <Card border="secondary" style={{ "width": "24rem", "marginLeft": "auto", "marginRight": "auto" }}>
                     <Card.Header>
-                        <Card.Title style={{ "text-align": "center" }}>Welcome to FriendTrip!</Card.Title>
+                        <Card.Title style={{ "textAlign": "center" }}>Welcome to FriendTrip!</Card.Title>
                     </Card.Header>
                     <Card.Body>
                         <Form onSubmit={this.signIn}>
@@ -61,10 +56,10 @@ class SignIn extends Component {
                                 </Form.Group>
                             </Form.Row>
 
-                            <div class="centerbuttons">
+                            <div className="centerbuttons">
                                 <Button variant="primary" type="submit">Login</Button>{' '}
                                 <Link to="/signup">
-                                    <Button variant="primary" onClick>
+                                    <Button variant="primary">
                                         Register
                                     </Button>
                                 </Link>

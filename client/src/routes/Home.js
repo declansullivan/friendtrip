@@ -5,14 +5,15 @@ class Home extends Component {
         super(props);
     }
 
-    signIn = event => {
-
+    getUserId = () => {
+        return localStorage.getItem("id");
     }
 
     render() {
         return (
-            <div class="centerdiv">
+            <div className="centerdiv">
                 <h1> HOME PAGE </h1>
+                <h2> Signed in as - {this.getUserId()}</h2>
             </div>
         )
     }
