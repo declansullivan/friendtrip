@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 
-import { Form, Button, Col, Card } from "react-bootstrap";
+import { Image, Container, Row, Button, Col } from "react-bootstrap";
 import { Link } from 'react-router-dom';
-import { Image, Container, Row, Col, Button} from "react-bootstrap";
-import {Navbar as ReactNavbar} from "react-bootstrap";
-import {Nav as ReactNav} from "react-bootstrap";
+import { Navbar as ReactNavbar } from "react-bootstrap";
+import { Nav as ReactNav } from "react-bootstrap";
 import Navbar from '../components/Navbar.js';
 import Account from "../components/account/Account";
 import Friends from "../components/Friends";
@@ -33,10 +32,10 @@ class Home extends Component {
             method: 'POST'
         }).then(res => res.json())
             .then(res => {
-                if (res.status === 200){
+                if (res.status === 200) {
                     this.props.history.push('/');
                     localStorage.clear();
-                }else{
+                } else {
                     alert("Logout failed.")
                 }
             });
@@ -47,7 +46,7 @@ class Home extends Component {
     }
 
     renderContent() {
-        switch(this.state.render) {
+        switch (this.state.render) {
             case 'account':
                 return (
                     <Account user={this.getUserId()}> </Account>
@@ -58,53 +57,55 @@ class Home extends Component {
                         <Trips></Trips>
                         <Trip></Trip>
                     </div>
-                    
+
                 )
             case 'friends':
                 return (
-                    <Friends></Friends> 
+                    <Friends></Friends>
                 )
         }
     }
 
     render() {
-        return (       
-                <Link to="/createTrip">
-                    <Button variant="primary" type="submit">
-                        Create Trip
-                    </Button>{' '}
-                </Link>
+        return (
+
+
             <div>
                 <Container fluid className="homeContainer">
-                    <Row> 
-                        <Col xs={12} className="align-items-center"> 
-                        <ReactNavbar bg="white">
-                            <ReactNavbar.Brand >
-                            <img
-                            src={friendtripLogo}
-                            width="50"
-                            height="50"
-                            className="d-inline-block align-center mr-2"
-                            alt="FriendTrip logo"
-                            id="friendtripLogo"
-                            />{' '}
+                    <Row>
+                        <Col xs={12} className="align-items-center">
+                            <ReactNavbar bg="white">
+                                <ReactNavbar.Brand >
+                                    <img
+                                        src={friendtripLogo}
+                                        width="50"
+                                        height="50"
+                                        className="d-inline-block align-center mr-2"
+                                        alt="FriendTrip logo"
+                                        id="friendtripLogo"
+                                    />{' '}
                             FriendTrip
                             </ReactNavbar.Brand>
-                            <ReactNav className="ml-auto font-weight-bold"> 
-                                {this.getUserId()}
-                            </ReactNav>
-                        </ReactNavbar>
+                                <Link to="/createTrip">
+                                    <Button variant="primary" type="submit">
+                                        Create Trip
+                    </Button>{' '}
+                                </Link>
+                                <ReactNav className="ml-auto font-weight-bold">
+                                    {this.getUserId()}
+                                </ReactNav>
+                            </ReactNavbar>
                         </Col>
                     </Row>
-                    <Row> 
+                    <Row>
                         <Col xs={2}>
-                        <Navbar className="NavBar" page={this.switchPage} out={this.logoutFunc}></Navbar>
+                            <Navbar className="NavBar" page={this.switchPage} out={this.logoutFunc}></Navbar>
                         </Col>
                         <Col xs={10} className="mt-3">
-                           {this.renderContent()}
+                            {this.renderContent()}
                         </Col>
                     </Row>
-                    </Container>
+                </Container>
             </div>
         )
     }

@@ -10,7 +10,7 @@ class CreateTrip extends Component {
     createTrip = event => {
         event.preventDefault();
 
-        const { name, description} = event.target.elements;
+        const { name, description } = event.target.elements;
         const data = {
             travelerId: this.getUserId(),
             name: name.value,
@@ -25,9 +25,9 @@ class CreateTrip extends Component {
             body: JSON.stringify(data)
         }).then(res => res.json())
             .then(res => {
-                if (res.status === 200){
-                    this.props.history.push('/createTrip');
-                }else{
+                if (res.status === 200) {
+                    this.props.history.push('/home');
+                } else {
                     alert("Create Trip failed.")
                 }
             });
