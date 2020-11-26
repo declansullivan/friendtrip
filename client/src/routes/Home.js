@@ -10,7 +10,7 @@ class Home extends Component {
     logOut = () => {
         localStorage.clear();
         fetch('http://localhost:9000/logout', {
-            method: 'GET'
+            method: 'POST'
         }).then(res => res.json())
             .then(res => {
                 if (res.status === 200){
