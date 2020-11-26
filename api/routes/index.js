@@ -1,5 +1,6 @@
 var express = require('express');
 const { Accessor } = require('../db/models/accessor');
+const { addTrip, generateTripJSON } = require('../db/models/trip');
 const { generateTravelerJSON, addTraveler, getTraveler } = require('../db/models/traveler');
 var router = express.Router();
 
@@ -71,29 +72,24 @@ router.post('/logout', function (req, res) {
 
 router.put('/createTrip', function (req, res, next) {
 
-  function randomString(length, chars) {
+  function generateId(length, chars) {
       var result = '';
       for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
       return result;
   }
 
-  const id = randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
-  
+  const id = ("trip_").concat(generateId(16, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'));
   const data = generateTripJSON(id, req.body.travelerId, req.body.name, Date.now(),
-  [], [], [], req.body.description, "", []);
+  [], [], [], [], req.body.description, "", []);
 
-  handleAddTrip = (status, code) => {
-    if (status === 200) {
-      // create trip successful
-      res.json({ status: 200});
-    }
-    else {
-      // Return error message
-      res.json({ status: 401, code });
-    }
+  handleAddTrip = (error) => {
+    var status;
+    if (error) status = 401;
+    else status = 200;
+    res.json({ status, code: "none" });
   }
 
-  Trip.addTrip(data, handleAddTrip);
+  addTrip(data, handleAddTrip);
 });
 
 /*

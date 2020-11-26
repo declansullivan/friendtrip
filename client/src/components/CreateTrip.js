@@ -12,6 +12,7 @@ class CreateTrip extends Component {
 
         const { name, description} = event.target.elements;
         const data = {
+            travelerId: this.getUserId(),
             name: name.value,
             description: description.value,
         }
@@ -24,13 +25,16 @@ class CreateTrip extends Component {
             body: JSON.stringify(data)
         }).then(res => res.json())
             .then(res => {
-                if (res.code === "auth/email-already-in-use") {
-                    alert("This email is already in use.");
-                }
-                if (res.code === "auth/weak-password") {
-                    alert("Your password is too weak.");
+                if (res.status === 200){
+                    this.props.history.push('/createTrip');
+                }else{
+                    alert("Create Trip failed.")
                 }
             });
+    }
+
+    getUserId = () => {
+        return localStorage.getItem("id");
     }
 
     render() {
