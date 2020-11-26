@@ -63,6 +63,13 @@ class Home extends Component {
                 return (
                     <Friends></Friends>
                 )
+            default:
+            return (
+                <div>
+                    <Trips></Trips>
+                    <Trip></Trip>
+                </div>
+            )
         }
     }
 
