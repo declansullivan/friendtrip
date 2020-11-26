@@ -38,7 +38,6 @@ class SignIn extends Component {
 
   render() {
     return (
-      <div className="centerdiv">
         <Container fluid className="vh-100">
           <Row className="h-100">
             <Col xs={4} className="p-0">
@@ -86,7 +85,7 @@ class SignIn extends Component {
                   <Card.Body className="landing-login-body">
                     <Form onSubmit={this.signIn}>
                       <Form.Row>
-                        <Form.Group as={Col} controlId="formGridUsername">
+                        <Form.Group as={Col} className="p-0 m-1" controlId="formGridUsername">
                           <Form.Control
                             name="email"
                             type="email"
@@ -97,7 +96,7 @@ class SignIn extends Component {
                         </Form.Group>
                       </Form.Row>
                       <Form.Row>
-                        <Form.Group as={Col} controlId="formGridPassword">
+                        <Form.Group as={Col} className="p-0 m-1" controlId="formGridPassword">
                           <Form.Control
                             name="password"
                             type="password"
@@ -112,7 +111,7 @@ class SignIn extends Component {
                           Login
                         </Button>{" "}
                         <Link to="/signup">
-                          <Button variant="primary">Register</Button>
+                          <Button className="ml-1" variant="primary">Register</Button>
                         </Link>
                       </div>
                     </Form>
@@ -122,7 +121,6 @@ class SignIn extends Component {
             </Col>
           </Row>
         </Container>
-      </div>
     );
   }
 }

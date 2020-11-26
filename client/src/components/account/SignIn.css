@@ -20,7 +20,6 @@
   background-image: url("../../Media//loginImage.svg");
   background-repeat: no-repeat;
   background-size: cover;
-  
 }
 .landingLogo {
   position: absolute;
@@ -40,7 +39,7 @@
 }
 .landing-email-input {
   border: none;
-  border-bottom: 1px solid #ffffff;
+  border-bottom: 3px solid #ffffff;
   background-color: #ebeaf7;
 }
 .landing-email-input ~ .border {
@@ -51,12 +50,12 @@
   height: 3px;
 }
 .landing-email-input:focus ~ .border {
-  width: 96.8%;
+  width: 100%;
   transition: 0.5s;
   background-color: #ebeaf7;
 }
 .landing-email-input:focus {
-  background-color: #ebeaf7;
+  background-color: #ceddfa;
   box-shadow: inset 0 -1px 0 #ddd;
 }
 .border {
