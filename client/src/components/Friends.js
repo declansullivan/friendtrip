@@ -14,7 +14,7 @@ class Friends extends Component {
                     <Form.Row>
                         <Col xs={5}>
                             <Form.Group controlId="formBasicEmail">
-                                <Form.Control name="username" type="username" placeholder="Enter username" />
+                                <Form.Control name="email" type="email" placeholder="Enter friend's email" />
                             </Form.Group>
                         </Col>
                         <Col xs={2}>
