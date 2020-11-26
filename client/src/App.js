@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 
-import CreateAccount from "./components/CreateAccount";
-import SignIn from "./components/SignIn";
+import CreateAccount from "./components/account/CreateAccount";
+import SignIn from "./components/account/SignIn";
 import Home from "./routes/Home.js"
 import CreateTrip from "./components/CreateTrip.js"
 
