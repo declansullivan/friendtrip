@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+
+import { Form, Button, Col, Card } from "react-bootstrap";
+import { Link } from 'react-router-dom';
 import { Image, Container, Row, Col, Button} from "react-bootstrap";
 import {Navbar as ReactNavbar} from "react-bootstrap";
 import {Nav as ReactNav} from "react-bootstrap";
@@ -7,8 +10,8 @@ import Account from "../components/account/Account";
 import Friends from "../components/Friends";
 import Trips from "../components/trip/Trips";
 import Trip from "../components/trip/Trip";
-
 import friendtripLogo from "../Media/friendtripLogo.svg";
+
 
 class Home extends Component {
     constructor(props) {
@@ -65,7 +68,12 @@ class Home extends Component {
     }
 
     render() {
-        return (
+        return (       
+                <Link to="/createTrip">
+                    <Button variant="primary" type="submit">
+                        Create Trip
+                    </Button>{' '}
+                </Link>
             <div>
                 <Container fluid className="homeContainer">
                     <Row> 

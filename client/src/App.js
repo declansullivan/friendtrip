@@ -4,9 +4,10 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 
-import CreateAccount from "./components/account/CreateAccount";
-import SignIn from "./components/account/SignIn";
-import Home from "./routes/Home";
+import CreateAccount from "./components/CreateAccount";
+import SignIn from "./components/SignIn";
+import Home from "./routes/Home.js"
+import CreateTrip from "./components/CreateTrip.js"
 
 class App extends Component {
   constructor(props) {
@@ -25,6 +26,7 @@ class App extends Component {
           <Route exact path='/' component={SignIn} />
           <Route exact path='/signup' component={CreateAccount} />
           <Route exact path='/home' component={Home} />
+          <Route exact path='/createTrip' component={CreateTrip} />
         </Router>
       </div>
     );

@@ -1,5 +1,6 @@
 var express = require('express');
 const { Accessor } = require('../db/models/accessor');
+const { addTrip, generateTripJSON } = require('../db/models/trip');
 const { generateTravelerJSON, addTraveler, getTraveler } = require('../db/models/traveler');
 var router = express.Router();
 
@@ -70,8 +71,29 @@ router.post('/logout', function (req, res) {
 });
 
 router.put('/createTrip', function (req, res, next) {
-  res.send("Not Implemented!");
+
+  function generateId(length, chars) {
+      var result = '';
+      for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+      return result;
+  }
+
+  const id = ("trip_").concat(generateId(16, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'));
+  const data = generateTripJSON(id, req.body.travelerId, req.body.name, Date.now(),
+  [], [], [], [], req.body.description, "", []);
+
+  handleAddTrip = (error) => {
+    var status;
+    if (error) status = 401;
+    else status = 200;
+    res.json({ status, code: "none" });
+  }
+
+  addTrip(data, handleAddTrip);
 });
 
-
+/*
+        return  { id, travelerId, name, lastUpdate, travelerIds, destinationIds,
+                  itemIds, expenseIds, description, itinerary, tripLeaders };
+*/
 module.exports = router;
