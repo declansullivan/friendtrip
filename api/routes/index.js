@@ -59,8 +59,44 @@ router.post('/logout', function (req, res, next) {
 });
 
 router.put('/createTrip', function (req, res, next) {
-  res.send("Not Implemented!");
+
+  function randomString(length, chars) {
+      var result = '';
+      for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+      return result;
+  }
+
+  const id = randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+  const data = generateTripJSON(id, req.body.travelerId, req.body.name, Date.now(),
+  [], [], [], req.body.description, [], []);
+
+  // // Callback for Firebase auth.
+  // handleCreateTrip = (status, code) => {
+  //   const id = randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+  //   if (status === 200) {
+  //     const data = generateTripJSON(id, req.body.travelerId, req.body.name, Date.now(),
+  //                                     [], [], [], req.body.description, [], []);
+  //     // addTrip(data, handleAddTrip);
+  //   }
+  //   else {
+  //     res.json({ status: 401, code });
+  //   }
+  // }
+
+  // Callback for Firebase addObject (Traveler).
+  handleAddTrip = (error) => {
+    var status;
+    if (error) status = 401;
+    else status = 200;
+    res.json({ status, code: "none" });
+  }
+
+  Trip.addTrip(data, handleAddTrip);
 });
 
-
+/*
+        return  { id, travelerId, name, lastUpdate, travelerIds, destinationIds,
+                  itemIds, expenseIds, description, itinerary, tripLeaders };
+*/
 module.exports = router;
