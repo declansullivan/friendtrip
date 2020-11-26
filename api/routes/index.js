@@ -78,29 +78,19 @@ router.put('/createTrip', function (req, res, next) {
   }
 
   const id = randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+  
   const data = generateTripJSON(id, req.body.travelerId, req.body.name, Date.now(),
-  [], [], [], req.body.description, [], []);
+  [], [], [], req.body.description, "", []);
 
-  // // Callback for Firebase auth.
-  // handleCreateTrip = (status, code) => {
-  //   const id = randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
-
-  //   if (status === 200) {
-  //     const data = generateTripJSON(id, req.body.travelerId, req.body.name, Date.now(),
-  //                                     [], [], [], req.body.description, [], []);
-  //     // addTrip(data, handleAddTrip);
-  //   }
-  //   else {
-  //     res.json({ status: 401, code });
-  //   }
-  // }
-
-  // Callback for Firebase addObject (Traveler).
-  handleAddTrip = (error) => {
-    var status;
-    if (error) status = 401;
-    else status = 200;
-    res.json({ status, code: "none" });
+  handleAddTrip = (status, code) => {
+    if (status === 200) {
+      // create trip successful
+      res.json({ status: 200});
+    }
+    else {
+      // Return error message
+      res.json({ status: 401, code });
+    }
   }
 
   Trip.addTrip(data, handleAddTrip);

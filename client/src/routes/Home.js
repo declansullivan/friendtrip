@@ -1,11 +1,6 @@
 import React, { Component } from "react";
-<<<<<<< HEAD
 import { Form, Button, Col, Card } from "react-bootstrap";
 import { Link } from 'react-router-dom';
-=======
-import { Button } from "react-bootstrap";
-
->>>>>>> 8b31b12d9eec781b663c419f2f54ff0fd2ecd61c
 class Home extends Component {
     constructor(props) {
         super(props);
@@ -34,14 +29,14 @@ class Home extends Component {
         return (
             
             <div className="centerdiv">
+                <h1> HOME PAGE </h1>
+                <Button variant="primary" onClick={this.logOut}>Logout</Button>
+                <h2> Signed in as - {this.getUserId()}</h2>
                 <Link to="/createTrip">
                     <Button variant="primary" type="submit">
                         Create Trip
                     </Button>{' '}
                 </Link>
-                <h1> HOME PAGE </h1>
-                <Button variant="primary" onClick={this.logOut}>Logout</Button>
-                <h2> Signed in as - {this.getUserId()}</h2>
             </div>
         )
     }
