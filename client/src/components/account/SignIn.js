@@ -1,75 +1,129 @@
 import React, { Component } from "react";
-import { Form, Button, Col, Card } from "react-bootstrap";
-import { Link } from 'react-router-dom';
-
+import { Form, Button, Card, Container, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import friendtripLogo from "../../Media/friendtripLogo.svg";
+import Fade from "react-reveal/Fade";
+import "./SignIn.css";
 class SignIn extends Component {
-    constructor(props) {
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    signIn = event => {
-        event.preventDefault();
-        const { email, password } = event.target.elements;
-        const data = {
-            email: email.value,
-            password: password.value
+  signIn = (event) => {
+    event.preventDefault();
+    const { email, password } = event.target.elements;
+    const data = {
+      email: email.value,
+      password: password.value,
+    };
+
+    fetch("http://localhost:9000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.code === "Success") {
+          localStorage.setItem("id", res.id);
+          this.props.history.push("/home");
+        } else {
+          alert("Incorrect email or password.");
         }
+      });
+  };
 
-        fetch('http://localhost:9000/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        }).then(res => res.json())
-            .then(res => {
-                if (res.code === "Success") {
-                    localStorage.setItem("id", res.id);
-                    this.props.history.push('/home');
-                }
-                else {
-                    alert("Incorrect email or password.");
-                }
-            });
-    }
-
-    render() {
-        return (
-            <div className="centerdiv">
-                <Card border="secondary" style={{ "width": "24rem", "marginLeft": "auto", "marginRight": "auto" }}>
-                    <Card.Header>
-                        <Card.Title style={{ "textAlign": "center" }}>Welcome to FriendTrip!</Card.Title>
-                    </Card.Header>
-                    <Card.Body>
-                        <Form onSubmit={this.signIn}>
-                            <Form.Row>
-                                <Form.Group as={Col} controlId="formGridUsername">
-                                    <Form.Label>Email</Form.Label>
-                                    <Form.Control name="email" type="email" placeholder="Email" />
-                                </Form.Group>
-                            </Form.Row>
-
-                            <Form.Row>
-                                <Form.Group as={Col} controlId="formGridPassword">
-                                    <Form.Label>Password</Form.Label>
-                                    <Form.Control name="password" type="password" placeholder="Password" />
-                                </Form.Group>
-                            </Form.Row>
-
-                            <div className="centerbuttons">
-                                <Button variant="primary" type="submit">Login</Button>{' '}
-                                <Link to="/signup">
-                                    <Button variant="primary">
-                                        Register
-                                    </Button>
-                                </Link>
-                            </div>
-                        </Form>
-                    </Card.Body>
+  render() {
+    return (
+      <div className="centerdiv">
+        <Container fluid className="vh-100">
+          <Row className="h-100">
+            <Col xs={4} className="p-0">
+              <Fade left>
+                <div className="landing-left">
+                  <img
+                    src={friendtripLogo}
+                    width="100"
+                    height="100"
+                    className="d-inline-block align-top mr-2 rounded-circle landingLogo"
+                    alt="accountIcon logo"
+                    id="accountIcon"
+                  />
+                  <div className="landing-content">
+                    <h1> FriendTrip.</h1>
+                    <h4 className="mt-3">
+                      {" "}
+                      A platform designed to making planning and going on trips
+                      with your friends effortless through collaborative task
+                      management, real-time trip notifications, and
+                      user-friendly expense allocation.
+                    </h4>
+                  </div>
+                </div>
+              </Fade>
+            </Col>
+            <Col xs={8} className="p-0 landing-login">
+              <Fade right>
+                <Card
+                  border="none"
+                  style={{
+                    width: "24rem",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                  }}
+                  className="border-0"
+                >
+                  <Card.Header className="border-0 landing-login-header">
+                    <Card.Title
+                      style={{ textAlign: "center", verticalAlign: "center" }}
+                    >
+                      Sign In
+                    </Card.Title>
+                  </Card.Header>
+                  <Card.Body className="landing-login-body">
+                    <Form onSubmit={this.signIn}>
+                      <Form.Row>
+                        <Form.Group as={Col} controlId="formGridUsername">
+                          <Form.Control
+                            name="email"
+                            type="email"
+                            placeholder="Email"
+                            className="landing-email-input"
+                          />
+                          <span class="border"></span>
+                        </Form.Group>
+                      </Form.Row>
+                      <Form.Row>
+                        <Form.Group as={Col} controlId="formGridPassword">
+                          <Form.Control
+                            name="password"
+                            type="password"
+                            placeholder="Password"
+                            className="landing-email-input"
+                          />
+                          <span class="border"></span>
+                        </Form.Group>
+                      </Form.Row>
+                      <div className="centerbuttons">
+                        <Button variant="primary" type="submit">
+                          Login
+                        </Button>{" "}
+                        <Link to="/signup">
+                          <Button variant="primary">Register</Button>
+                        </Link>
+                      </div>
+                    </Form>
+                  </Card.Body>
                 </Card>
-            </div>
-        )
-    }
+              </Fade>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    );
+  }
 }
 
 export default SignIn;

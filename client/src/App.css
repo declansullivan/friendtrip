@@ -15,18 +15,6 @@ html {
     background-color: #FFFFFF;
     text-align: right;
 }
-.centerdiv {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-
-.centerbuttons {
-    text-align: center;
-}
-
 /* NAV BAR  */
 .navbar {
     background-color: #FFFFFF;
