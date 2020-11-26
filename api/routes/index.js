@@ -59,7 +59,7 @@ router.post('/logout', function (req, res) {
   handleLogout = (status, code) => {
     if (status === 200) {
       // sign out successful
-      res.json({ status: 200});
+      res.json({ status: 200 });
     }
     else {
       // Return error message
