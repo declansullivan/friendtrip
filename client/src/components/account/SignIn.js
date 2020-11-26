@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Form, Button, Card, Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import friendtripLogo from "../../Media/friendtripLogo.svg";
+import loginImage from "../../Media/loginImage.svg";
 import Fade from "react-reveal/Fade";
 import "./SignIn.css";
 class SignIn extends Component {
@@ -65,7 +66,7 @@ class SignIn extends Component {
               </Fade>
             </Col>
             <Col xs={8} className="p-0 landing-login">
-              <Fade right>
+              <Fade right >
                 <Card
                   border="none"
                   style={{
@@ -77,7 +78,7 @@ class SignIn extends Component {
                 >
                   <Card.Header className="border-0 landing-login-header">
                     <Card.Title
-                      style={{ textAlign: "center", verticalAlign: "center" }}
+                      style={{ textAlign: "center", verticalAlign: "center", margin:"0px"}}
                     >
                       Sign In
                     </Card.Title>
