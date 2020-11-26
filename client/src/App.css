@@ -1,3 +1,20 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+html {
+    background-color: #F0F2F5;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background-color: #FFFFFF;
+    text-align: right;
+}
 .centerdiv {
     display: flex;
     flex-direction: column;
@@ -9,3 +26,47 @@
 .centerbuttons {
     text-align: center;
 }
+
+/* NAV BAR  */
+.navbar {
+    background-color: #FFFFFF;
+    border-radius: 10%;
+}
+.navbar > Button {
+    background-color: #FFFFFF;
+    color: black;
+    border: none;
+}
+.navbar > Button:hover {
+    background-color: #bbc0c9;
+    outline-color: #bbc0c9;
+    color: black;
+}
+.navbar > Button:active {
+    background-color: #bcceeb;
+    outline-color: #bcceeb;
+    color: black;
+}
+
+.tripThumbnail:hover {
+    cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+#friendtripLogo {
+    border-radius: "100%";
+    display: inline-block;
+}
+
+.close {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: 0%;
+    padding: 12px 16px;
+    transform: translate(0%, -50%);
+}
+.homeContainer {
+    background-color: #F0F2F5;
+}
+  
+.close:hover {background: #bbb;}
