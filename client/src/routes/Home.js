@@ -27,15 +27,14 @@ class Home extends Component {
     logoutFunc = () => {
         fetch('http://localhost:9000/logout', {
             method: 'POST'
-        }).then(res => res.json())
-            .then(res => {
-                if (res.status === 200) {
-                    this.props.history.push('/');
-                    localStorage.clear();
-                } else {
-                    alert("Logout failed.")
-                }
-            });
+        }).then(res => res.json()).then(res => {
+            if (res.status === 200) {
+                this.props.history.push('/');
+                localStorage.clear();
+            } else {
+                alert("Logout failed.")
+            }
+        });
     }
 
     getTravelerJSON = () => {
@@ -45,14 +44,12 @@ class Home extends Component {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ id: this.getUserId() }),
-        }).then((res) => res.json())
-            .then((res) => {
-                this.setState({ traveler: res });
-            });
+        }).then((res) => res.json()).then((res) => {
+            this.setState({ traveler: res });
+        });
     }
 
     switchPage = event => {
-        this.getTravelerJSON();
         this.setState({ render: event });
     }
 
@@ -77,7 +74,7 @@ class Home extends Component {
                 )
             case 'trip':
                 return (
-                    <Trip id={this.state.tripId} key={this.state.tripId}></Trip>
+                    <Trip tripId={this.state.tripId} traveler={this.state.traveler} ></Trip>
                 )
             case 'friends':
                 return (
@@ -85,7 +82,7 @@ class Home extends Component {
                 )
             case 'createTrip':
                 return (
-                    <CreateTrip></CreateTrip>
+                    <CreateTrip refreshTraveler={this.refreshTravelerJSON}></CreateTrip>
                 )
             default:
             return (
@@ -94,6 +91,10 @@ class Home extends Component {
         }
     }
 
+    refreshTravelerJSON = () => {
+        this.getTravelerJSON();
+    }
+    
     componentDidMount() {
         this.getTravelerJSON();
     }

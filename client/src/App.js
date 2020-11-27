@@ -7,7 +7,6 @@ import './App.css'
 import CreateAccount from "./components/account/CreateAccount";
 import SignIn from "./components/account/SignIn";
 import Home from "./routes/Home.js"
-import CreateTrip from "./components/CreateTrip.js"
 
 class App extends Component {
   constructor(props) {
