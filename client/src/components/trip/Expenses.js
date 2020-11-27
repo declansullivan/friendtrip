@@ -28,9 +28,8 @@ class Expenses extends Component {
             <AddExpense kind="Edit" show={this.state.showAddExpense} handleClose={this.closeAddExpenseModal}></AddExpense>
 
             <Card>
+            <Card.Header> <h5> Expenses </h5> </Card.Header>
                 <Card.Body>
-                    <h5>Expenses</h5>
-                    <hr></hr>
                     <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
                         <Row>
                             <Col sm={5}>

@@ -10,7 +10,7 @@ class Friends extends Component {
         return (
             <div>
                 <Form className="align-items-center" style={{ width: '48rem' }}>
-                    <h4>Add Friend</h4>
+                    <h2>Add Friend</h2>
                     <Form.Row>
                         <Col xs={5}>
                             <Form.Group controlId="formBasicEmail">

@@ -13,6 +13,7 @@ class Trips extends Component {
         return (
             <div>
                 <Card style={{ width: '64rem' }}>
+                    <Card.Header> <h2> My Trips </h2> </Card.Header>
                     <Card.Body>
                         <Container fluid>
                             <Row>

@@ -70,19 +70,17 @@ class Trip extends Component {
 
     render() {
         return (
-            <div>
+            <div className="mt-3">
                 <ConfirmDelete show={this.state.showDeleteTrip} handleClose={this.closeDeleteTripModal}></ConfirmDelete>
                 <EditTrip show={this.state.showEditTrip} handleClose={this.closeEditTripModal}></EditTrip>
                 <AddItem kind="Add" show={this.state.showAddItem} handleClose={this.closeAddItemModal}></AddItem>
                 <AddExpense kind="Add" show={this.state.showAddExpense} handleClose={this.closeAddExpenseModal}></AddExpense>
 
-                <Card bg="dark" style={{ width: '64rem' }}>
+                <Card bg="white" style={{ width: '64rem' }}>
+                    <Card.Header> <h2> Trip Name </h2> </Card.Header>
                     <Card.Body>
-                        <h2 style={{color: "white"}}>Trip Name</h2>
+                        <p style={{color: "black"}}>Trip Description</p>
                         <hr></hr>
-                        <p style={{color: "white"}}>Trip Description</p>
-                        <hr></hr>
-
                         <Container fluid>
                             <Row>
                                 <Col>
