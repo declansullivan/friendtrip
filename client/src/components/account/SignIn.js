@@ -86,30 +86,32 @@ class SignIn extends Component {
                     <Form onSubmit={this.signIn}>
                       <Form.Row>
                         <Form.Group as={Col} className="p-0 m-1" controlId="formGridUsername">
+                          <Form.Label className="pl-1 m-0"><strong>Email address</strong></Form.Label>
                           <Form.Control
                             name="email"
                             type="email"
-                            placeholder="Email"
-                            className="landing-email-input"
+                            placeholder="Enter Email"
+                            className="landing-email-input pl-1"
                           />
-                          <span class="border"></span>
+                          <span class="landing-input-border"></span>
                         </Form.Group>
                       </Form.Row>
                       <Form.Row>
                         <Form.Group as={Col} className="p-0 m-1" controlId="formGridPassword">
+                        <Form.Label className="pl-1 m-0"><strong>Password</strong></Form.Label>
                           <Form.Control
                             name="password"
                             type="password"
-                            placeholder="Password"
-                            className="landing-email-input"
+                            placeholder="Enter Password"
+                            className="landing-email-input pl-1"
                           />
-                          <span class="border"></span>
+                          <span class="landing-input-border"></span>
                         </Form.Group>
                       </Form.Row>
                       <div className="centerbuttons">
                         <Button variant="primary" type="submit">
                           Login
-                        </Button>{" "}
+                        </Button>
                         <Link to="/signup">
                           <Button className="ml-1" variant="primary">Register</Button>
                         </Link>

@@ -4,6 +4,7 @@ import accountIcon from "../Media/accountIcon.svg"
 import tripIcon from "../Media/tripIcon.svg";
 import friendsIcon from "../Media/friendsIcon.svg";
 import logoutLogo from "../Media/logoutLogo.svg";
+
 class Navbar extends Component {
     constructor(props) {
         super(props);
@@ -12,7 +13,7 @@ class Navbar extends Component {
     render() {
         return (
             <div className="navbar mt-3">
-                <Button className="align-items-left" block onClick={(e) => this.props.page('account')}>
+                <Button className="navbar-btn shadow-none" block onClick={(e) => this.props.page('account')}>
                     <img
                         src={accountIcon}
                         width="25"
@@ -23,7 +24,7 @@ class Navbar extends Component {
                         />
                     Account
                     </Button>
-                <Button block onClick={(e) => this.props.page('trips')}>
+                <Button className="navbar-btn shadow-none" block onClick={(e) => this.props.page('trips')}>
                     <img
                         src={tripIcon}
                         width="25"
@@ -34,7 +35,7 @@ class Navbar extends Component {
                         />
                     Trips
                     </Button>
-                <Button block onClick={(e) => this.props.page('friends')}>
+                <Button className="navbar-btn shadow-none" block onClick={(e) => this.props.page('friends')}>
                 <img
                         src={friendsIcon}
                         width="25"
@@ -45,7 +46,7 @@ class Navbar extends Component {
                         />
                     Friends
                     </Button>
-                <Button block onClick={(e) => this.props.out()}>
+                <Button className="navbar-btn shadow-none" block onClick={(e) => this.props.out()}>
                     <img
                         src={logoutLogo}
                         width="25"
@@ -55,7 +56,7 @@ class Navbar extends Component {
                         id="logoutLogo"
                         />
                     Logout
-                    </Button>
+                </Button>
             </div>
         )
     }

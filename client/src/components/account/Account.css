@@ -1,0 +1,33 @@
+.settingsList {
+    list-style: none;
+    background-color: #FFFFFF;
+}
+.settingsList > .settingsListItem {
+    border-bottom: 1px solid rgb(231, 231, 231);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+.settingsList > .settingsListItem:hover {
+    background-color: rgb(212, 212, 212);
+    border-radius: 15px;
+}
+.settingsList > .settingsListItem > * {
+    flex: 1 1 0px;
+}
+.settingsList > .settingsListItem>*:first-child {
+    text-align: left;
+}
+.settingsList > .settingsListItem>*:nth-child(3) {
+    text-align: right;
+}
+.settingsList > .settingsListItem:hover .editIcon {
+    display: inline-block;
+}
+.settingsList > .settingsListItem .editIcon {
+    display: none;
+}
+.editBtn {
+    height: 24px;
+}

@@ -29,9 +29,8 @@ class Items extends Component {
             <AddItem kind="Edit" show={this.state.showAddItem} handleClose={this.closeAddItemModal}></AddItem>
 
             <Card>
+                <Card.Header> <h5>{this.props.category} List</h5> </Card.Header>
                 <Card.Body>
-                    <h5>{this.props.category} List</h5>
-                    <hr></hr>
                     <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1" transition={false}>
                         <Row>
                             <Col sm={5}>

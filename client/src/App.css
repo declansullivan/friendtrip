@@ -17,11 +17,11 @@ html {
 }
 /* NAV BAR  */
 .navbar {
-    background-color: #FFFFFF;
+    background-color: #F0F2F5;
     border-radius: 10%;
 }
 .navbar > Button {
-    background-color: #FFFFFF;
+    background-color: #F0F2F5;
     color: black;
     border: none;
 }
@@ -32,7 +32,10 @@ html {
 }
 .navbar > Button:active {
     background-color: #bcceeb;
-    outline-color: #bcceeb;
+    color: black;
+}
+.navbar > Button:focus {
+    background-color: #bcceeb;
     color: black;
 }
 
@@ -58,3 +61,22 @@ html {
 }
   
 .close:hover {background: #bbb;}
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #6caef5;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #007BFF;
+  }
