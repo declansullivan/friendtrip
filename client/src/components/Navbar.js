@@ -13,7 +13,7 @@ class Navbar extends Component {
     render() {
         return (
             <div className="navbar mt-3">
-                <Button className="align-items-left" block onClick={(e) => this.props.page('account')}>
+                <Button className="navbar-btn shadow-none" block onClick={(e) => this.props.page('account')}>
                     <img
                         src={accountIcon}
                         width="25"
@@ -21,10 +21,10 @@ class Navbar extends Component {
                         className="d-inline-block align-top mr-2"
                         alt="accountIcon logo"
                         id="accountIcon"
-                        />
+                    />
                     Account
                     </Button>
-                <Button block onClick={(e) => this.props.page('trips')}>
+                <Button className="navbar-btn shadow-none" block onClick={(e) => this.props.page('trips')}>
                     <img
                         src={tripIcon}
                         width="25"
@@ -32,21 +32,21 @@ class Navbar extends Component {
                         className="d-inline-block align-top mr-2"
                         alt="tripIcon logo"
                         id="tripIcon"
-                        />
+                    />
                     Trips
                     </Button>
-                <Button block onClick={(e) => this.props.page('friends')}>
-                <img
+                <Button className="navbar-btn shadow-none" block onClick={(e) => this.props.page('friends')}>
+                    <img
                         src={friendsIcon}
                         width="25"
                         height="25"
                         className="d-inline-block align-top mr-2"
                         alt="friendIcon logo"
                         id="friendIcon"
-                        />
+                    />
                     Friends
                     </Button>
-                <Button block onClick={(e) => this.props.page('createTrip')}>
+                <Button className="navbar-btn shadow-none" block onClick={(e) => this.props.page('createTrip')}>
                     <img
                         src={logoutLogo}
                         width="25"
@@ -54,10 +54,10 @@ class Navbar extends Component {
                         className="d-inline-block align-top mr-2"
                         alt="createTrip logo"
                         id="createTrip"
-                        />
+                    />
                     Create Trip
                     </Button>
-                <Button block onClick={(e) => this.props.out()}>
+                <Button className="navbar-btn shadow-none" block onClick={(e) => this.props.out()}>
                     <img
                         src={logoutLogo}
                         width="25"
@@ -65,9 +65,9 @@ class Navbar extends Component {
                         className="d-inline-block align-top mr-2"
                         alt="logoutLogo logo"
                         id="logoutLogo"
-                        />
+                    />
                     Logout
-                    </Button>
+                </Button>
             </div>
         )
     }

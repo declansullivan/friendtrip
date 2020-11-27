@@ -3,7 +3,8 @@ import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Navbar as ReactNavbar } from "react-bootstrap";
 import { Nav as ReactNav } from "react-bootstrap";
-import Navbar from '../components/Navbar.js';
+import ScrollToTop from "../components/ScrollToTop";
+import Navbar from "../components/Navbar.js";
 import Account from "../components/account/Account";
 import Friends from "../components/Friends";
 import Trips from "../components/trip/Trips";
@@ -100,36 +101,41 @@ class Home extends Component {
     render() {
         return (
             <div>
-                <Container fluid className="homeContainer">
-                    <Row>
-                        <Col xs={12} className="align-items-center">
-                            <ReactNavbar bg="white">
-                                <ReactNavbar.Brand >
-                                    <img
-                                        src={friendtripLogo}
-                                        width="50"
-                                        height="50"
-                                        className="d-inline-block align-center mr-2"
-                                        alt="FriendTrip logo"
-                                        id="friendtripLogo"
-                                    />{' '}
+                <Container fluid className="homeContainer p-0 m-0">
+                <Row className="m-0 p-0">
+                    <Col xs={12} className="align-items-center p-0">
+                        <ReactNavbar bg="white">
+                            <ReactNavbar.Brand className="p-0">
+                            <img
+                                src={friendtripLogo}
+                                width="50"
+                                height="50"
+                                className="d-inline-block align-center mr-2 p-0"
+                                alt="FriendTrip logo"
+                                id="friendtripLogo"
+                            />{" "}
                             FriendTrip
                             </ReactNavbar.Brand>
-                                <ReactNav className="ml-auto font-weight-bold">
-                                    {this.getUserId()}
-                                </ReactNav>
-                            </ReactNavbar>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xs={2}>
-                            <Navbar className="NavBar" page={this.switchPage} out={this.logoutFunc}></Navbar>
-                        </Col>
-                        <Col xs={10} className="mt-3">
-                            {this.renderContent()}
-                        </Col>
-                    </Row>
+                            <ReactNav className="ml-auto font-weight-bold">
+                                {this.getUserId()}
+                            </ReactNav>
+                        </ReactNavbar>
+                    </Col>
+                </Row>
+                <Row className="m-0 p-0">
+                    <Col xs={2}>
+                        <Navbar
+                            className="NavBar"
+                            page={this.switchPage}
+                            out={this.logoutFunc}
+                        ></Navbar>
+                    </Col>
+                    <Col xs={10} className="mt-3">
+                        {this.renderContent()}
+                    </Col>
+                </Row>
                 </Container>
+                <ScrollToTop></ScrollToTop>
             </div>
         )
     }

@@ -13,7 +13,7 @@
     background-size: contain;
     background-position: right top;
   }
-  .border {
+  .signup-input-border {
     border: 1px solid #4385f4 !important;
     background-color: #4385f4 !important;
   }
@@ -22,7 +22,7 @@
     border-bottom: 3px solid #FFFFFF;
     background-color:#ebeaf7;
   }
-  .signup-input ~ .border {
+  .signup-input ~ .signup-input-border {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -30,7 +30,7 @@
     height: 3px;
     
   }
-  .signup-input:focus ~ .border {
+  .signup-input:focus ~ .signup-input-border {
     width: 100%;
     transition: 0.5s;
     background-color: #ebeaf7;
@@ -48,4 +48,14 @@
   }
   .centerbuttons {
     text-align: center;
+  }
+  .signup-left {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: #1569e0;
+    text-align: center;
+    color: white;
+    justify-content: center;
   }
