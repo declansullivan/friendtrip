@@ -16,12 +16,10 @@ class Account extends Component {
                 <h2>Account Information</h2>
                 <Card style={{ width: '48rem' }}>
                         <Card.Body>
-                        <Card.Text>
                             <h3>Full Name - </h3>
                             <h5>Username - </h5>
                             <h5>Email - </h5>
                             You created your account on TIME.
-                        </Card.Text>
                         </Card.Body>
                     </Card>
                 </div>
