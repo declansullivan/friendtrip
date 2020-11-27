@@ -1,14 +1,42 @@
 var express = require('express');
-const { Trip } = require('../db/models/trip');
+const { getTraveler, updateTraveler } = require('../db/models/traveler');
+const { getTripList } = require('../db/models/trip');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
     res.send("Trip page.");
-//   res.render('trip', { title: 'Express' });
+});
+
+router.post('/getTrip', function(req, res, next) {
+
+});
+
+router.post('/getTrips', function(req, res, next) {
+    handleGetTrips = (trips) => {
+        res.json({ trips });
+    }
+
+    getTripList(req.body.tripIds, handleGetTrips);
 });
 
 router.put('/addTraveler', function(req, res, next) {
-    res.send("Not Implemented!");
+    handleGetTraveler = (traveler) => {
+        var trips;
+        if (!traveler.tripIds) trips = [];
+        else trips = traveler.tripIds;
+
+        trips.push(req.body.tripId);
+        traveler.tripIds = trips;
+
+        updateTraveler(traveler, handleUpdateTraveler);
+    }
+
+    handleUpdateTraveler = (error) => {
+        if (error) res.sendStatus(401);
+        else res.sendStatus(200);
+    }
+
+    getTraveler(req.body.travelerId, handleGetTraveler);
 });
 
 router.put('/addTripLeader', function(req, res, next) {

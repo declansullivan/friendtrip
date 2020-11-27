@@ -1,12 +1,52 @@
 import React, { Component } from "react";
-import { Alert, Container, Row, Col, Button, Card} from "react-bootstrap";
+import { Alert, Container, Row, Col, Card} from "react-bootstrap";
 
 class Trips extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // user = {} // Get user JSON
+            trips: []
         }
+    }
+
+    getTripsJSON = () => {
+        fetch("http://localhost:9000/trip/getTrips", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ tripIds: this.props.tripIds }),
+        }).then((res) => res.json())
+            .then((res) => {
+                this.setState({ trips: res.trips });
+            });
+    }
+
+    createTrip(trip) {
+        return (
+            <Alert onClick={() => this.props.callback(trip.id)} key={trip.id} className="tripThumbnail" variant="secondary">
+                <Row style={{color:"black"}} className="align-items-center">
+                    <Col xs={2}>{trip.name}</Col>
+                    <Col xs={2}>Owner name</Col>
+                    <Col xs={2}>{Object.keys(trip.travelerIds).length}</Col>
+                    <Col>{trip.description}</Col>
+                </Row>
+            </Alert>
+        )
+    }
+
+    renderTrips() {
+        if (!this.state.trips) return;
+
+        var tripsJSX = [];
+        for (const trip of this.state.trips) {
+            tripsJSX.push(this.createTrip(trip));
+        }
+        return tripsJSX;
+    }
+
+    componentDidMount() {
+        this.getTripsJSON();
     }
 
     render() {
@@ -22,15 +62,7 @@ class Trips extends Component {
                                 <Col><h5>Description</h5></Col>
                             </Row>
 
-                            {/* Need to programmatically create rows. */}
-                            <Alert className="tripThumbnail" variant="secondary">
-                                <Row style={{color:"black"}} className="align-items-center">
-                                    <Col xs={2}>Trip Name</Col>
-                                    <Col xs={2}>Owner name</Col>
-                                    <Col xs={2}>10</Col>
-                                    <Col>Trip description</Col>
-                                </Row>
-                            </Alert>
+                            {this.renderTrips()}
                                 
                         </Container>
                     </Card.Body>

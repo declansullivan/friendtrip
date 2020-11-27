@@ -4,6 +4,7 @@ import accountIcon from "../Media/accountIcon.svg"
 import tripIcon from "../Media/tripIcon.svg";
 import friendsIcon from "../Media/friendsIcon.svg";
 import logoutLogo from "../Media/logoutLogo.svg";
+
 class Navbar extends Component {
     constructor(props) {
         super(props);
@@ -44,6 +45,17 @@ class Navbar extends Component {
                         id="friendIcon"
                         />
                     Friends
+                    </Button>
+                <Button block onClick={(e) => this.props.page('createTrip')}>
+                    <img
+                        src={logoutLogo}
+                        width="25"
+                        height="25"
+                        className="d-inline-block align-top mr-2"
+                        alt="createTrip logo"
+                        id="createTrip"
+                        />
+                    Create Trip
                     </Button>
                 <Button block onClick={(e) => this.props.out()}>
                     <img

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
-import { Image, Container, Row, Button, Col } from "react-bootstrap";
-import { Link } from 'react-router-dom';
+import { Container, Row, Col } from "react-bootstrap";
 import { Navbar as ReactNavbar } from "react-bootstrap";
 import { Nav as ReactNav } from "react-bootstrap";
 import Navbar from '../components/Navbar.js';
@@ -9,22 +8,19 @@ import Account from "../components/account/Account";
 import Friends from "../components/Friends";
 import Trips from "../components/trip/Trips";
 import Trip from "../components/trip/Trip";
+import CreateTrip from "../components/CreateTrip";
 import friendtripLogo from "../Media/friendtripLogo.svg";
-
 
 class Home extends Component {
     constructor(props) {
         super(props);
-
         this.page = this.switchPage.bind(this);
         this.logout = this.logoutFunc.bind(this);
         this.state = {
-            render: "trips",
+            render: "",
+            tripId: "",
+            traveler: {}
         };
-    }
-
-    switchPage = event => {
-        this.setState({ render: event });
     }
 
     logoutFunc = () => {
@@ -41,6 +37,29 @@ class Home extends Component {
             });
     }
 
+    getTravelerJSON = () => {
+        fetch("http://localhost:9000/account/getAccount", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id: this.getUserId() }),
+        }).then((res) => res.json())
+            .then((res) => {
+                this.setState({ traveler: res });
+            });
+    }
+
+    switchPage = event => {
+        this.getTravelerJSON();
+        this.setState({ render: event });
+    }
+
+    selectTrip = tripId => {
+        this.setState({ tripId });
+        this.setState({ render: 'trip' });
+    }
+
     getUserId = () => {
         return localStorage.getItem("id");
     }
@@ -49,34 +68,37 @@ class Home extends Component {
         switch (this.state.render) {
             case 'account':
                 return (
-                    <Account user={this.getUserId()}> </Account>
+                    <Account user={this.getUserId()}></Account>
                 )
             case 'trips':
                 return (
-                    <div>
-                        <Trips></Trips>
-                        <Trip></Trip>
-                    </div>
-
+                    <Trips tripIds={this.state.traveler.tripIds} callback={this.selectTrip}></Trips>
+                )
+            case 'trip':
+                return (
+                    <Trip id={this.state.tripId} key={this.state.tripId}></Trip>
                 )
             case 'friends':
                 return (
                     <Friends></Friends>
                 )
+            case 'createTrip':
+                return (
+                    <CreateTrip></CreateTrip>
+                )
             default:
             return (
-                <div>
-                    <Trips></Trips>
-                    <Trip></Trip>
-                </div>
+                <h1>Home</h1>
             )
         }
     }
 
+    componentDidMount() {
+        this.getTravelerJSON();
+    }
+
     render() {
         return (
-
-
             <div>
                 <Container fluid className="homeContainer">
                     <Row>
@@ -93,11 +115,6 @@ class Home extends Component {
                                     />{' '}
                             FriendTrip
                             </ReactNavbar.Brand>
-                                <Link to="/createTrip">
-                                    <Button variant="primary" type="submit">
-                                        Create Trip
-                    </Button>{' '}
-                                </Link>
                                 <ReactNav className="ml-auto font-weight-bold">
                                     {this.getUserId()}
                                 </ReactNav>

@@ -12,6 +12,11 @@ class Accessor {
             snapshot = snapshot.toJSON();
             var objects = []
 
+            if (!ids) {
+                callback(objects);
+                return;
+            }
+
             for (const id of ids) {
                 objects.push(snapshot[id]);
             }
