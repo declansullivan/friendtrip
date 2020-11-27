@@ -80,20 +80,17 @@ router.put('/createTrip', function (req, res, next) {
 
   const id = ("trip_").concat(generateId(16, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'));
   const data = generateTripJSON(id, req.body.travelerId, req.body.name, Date.now(),
-  [], [], [], [], req.body.description, "", []);
+                                req.body.travelerIds, [], [], [], req.body.description, 
+                                "", req.body.tripLeaders);
 
   handleAddTrip = (error) => {
     var status;
     if (error) status = 401;
     else status = 200;
-    res.json({ status, code: "none" });
+    res.json({ status, tripId: id });
   }
 
   addTrip(data, handleAddTrip);
 });
 
-/*
-        return  { id, travelerId, name, lastUpdate, travelerIds, destinationIds,
-                  itemIds, expenseIds, description, itinerary, tripLeaders };
-*/
 module.exports = router;

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Alert, Container, Row, ListGroup, Col, Button, Card} from "react-bootstrap";
+import { Container, Row, Col, Button, Card} from "react-bootstrap";
 
 import Travelers from "./Travelers";
 import Notes from "./Notes";
@@ -19,7 +19,8 @@ class Trip extends Component {
             showDeleteTrip: false,
             showEditTrip: false,
             showAddItem: false,
-            showAddExpense: false
+            showAddExpense: false,
+            tripData: {}
             // user = {} // Get user JSON
         }
 

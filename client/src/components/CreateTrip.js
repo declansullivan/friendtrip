@@ -11,8 +11,11 @@ class CreateTrip extends Component {
         event.preventDefault();
 
         const { name, description } = event.target.elements;
+        const travelerId = this.getUserId();
         const data = {
-            travelerId: this.getUserId(),
+            travelerId: travelerId,
+            travelerIds: [travelerId],
+            tripLeaders: [travelerId],
             name: name.value,
             description: description.value,
         }
@@ -26,11 +29,23 @@ class CreateTrip extends Component {
         }).then(res => res.json())
             .then(res => {
                 if (res.status === 200) {
-                    this.props.history.push('/home');
+                    this.addTravelerToTrip(travelerId, res.tripId);
+                    alert("Created Trip");
                 } else {
                     alert("Create Trip failed.")
                 }
             });
+    }
+
+    addTravelerToTrip = (travelerId, tripId) => {
+        const data = { travelerId, tripId };
+        fetch('http://localhost:9000/trip/addTraveler', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
     }
 
     getUserId = () => {

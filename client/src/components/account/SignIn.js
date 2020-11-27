@@ -93,7 +93,7 @@ class SignIn extends Component {
                             placeholder="Enter Email"
                             className="landing-email-input pl-1"
                           />
-                          <span class="landing-input-border"></span>
+                          <span className="landing-input-border"></span>
                         </Form.Group>
                       </Form.Row>
                       <Form.Row>
@@ -105,7 +105,7 @@ class SignIn extends Component {
                             placeholder="Enter Password"
                             className="landing-email-input pl-1"
                           />
-                          <span class="landing-input-border"></span>
+                          <span className="landing-input-border"></span>
                         </Form.Group>
                       </Form.Row>
                       <div className="centerbuttons">

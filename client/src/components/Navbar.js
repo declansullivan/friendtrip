@@ -21,7 +21,7 @@ class Navbar extends Component {
                         className="d-inline-block align-top mr-2"
                         alt="accountIcon logo"
                         id="accountIcon"
-                        />
+                    />
                     Account
                     </Button>
                 <Button className="navbar-btn shadow-none" block onClick={(e) => this.props.page('trips')}>
@@ -32,19 +32,30 @@ class Navbar extends Component {
                         className="d-inline-block align-top mr-2"
                         alt="tripIcon logo"
                         id="tripIcon"
-                        />
+                    />
                     Trips
                     </Button>
                 <Button className="navbar-btn shadow-none" block onClick={(e) => this.props.page('friends')}>
-                <img
+                    <img
                         src={friendsIcon}
                         width="25"
                         height="25"
                         className="d-inline-block align-top mr-2"
                         alt="friendIcon logo"
                         id="friendIcon"
-                        />
+                    />
                     Friends
+                    </Button>
+                <Button className="navbar-btn shadow-none" block onClick={(e) => this.props.page('createTrip')}>
+                    <img
+                        src={logoutLogo}
+                        width="25"
+                        height="25"
+                        className="d-inline-block align-top mr-2"
+                        alt="createTrip logo"
+                        id="createTrip"
+                    />
+                    Create Trip
                     </Button>
                 <Button className="navbar-btn shadow-none" block onClick={(e) => this.props.out()}>
                     <img
@@ -54,7 +65,7 @@ class Navbar extends Component {
                         className="d-inline-block align-top mr-2"
                         alt="logoutLogo logo"
                         id="logoutLogo"
-                        />
+                    />
                     Logout
                 </Button>
             </div>
