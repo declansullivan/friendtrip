@@ -1,0 +1,39 @@
+/* NAV BAR  */
+.navbar {
+    background-color: #166AE0;
+    border-radius: 10%;
+}
+.navbar > Button {
+    background-color: #166AE0;
+    border: 1px solid white;
+    color: white;
+}
+.navbar > Button:hover {
+    background-color: black;
+    border: 1px solid black;
+    color: white;
+}
+.navbar > Button:hover > Img {
+    filter: grayscale(100%) invert(1);
+}
+
+.navbar > Button > Img {
+    filter: drop-shadow(1px 1px 2px #FFFFFF) grayscale(100%) invert(1);
+}
+
+.navbar > Button:active {
+    background-color: black;
+}
+.navbar > Button:focus {
+    background-color: black;
+}
+.navbar-retract {
+    display: flex;
+    align-self: flex-end;
+}
+.navbar-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}

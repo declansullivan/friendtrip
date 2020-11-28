@@ -1,0 +1,63 @@
+.homepage-wrapper {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(255, 202, 202);
+}
+.homepage-left {
+  width: 20%;
+  background-color: #166ae0;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+}
+.homepage-right {
+  display: flex;
+  justify-content: center;
+  width: 80%;
+  background-color: #f0f2f5;
+}
+/* Wrapper for sticky profile and dropdown-menu */
+.homepage-account {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: fixed;
+  top: 1rem;
+  right: 2rem;
+}
+/* Sticky profile (Top-right) */
+.homepage-profile {
+  display: inline-block;
+  border-radius: 15px;
+  color: white;
+  background-color: #166ae0;
+}
+.homepage-profile > img {
+  filter: invert(1);
+}
+/* Sticky dropdown menu (Top-right) */
+.profile-dropdown {
+  background-color: #166ae0;
+}
+.profile-dropdown:hover,
+.profile-dropdown:focus,
+.profile-dropdown:active {
+  background-color: black;
+}
+.profile-dropdown-menu {
+  background-color: #166ae0;
+}
+.profile-dropdown-menu-item {
+  color: white;
+}
+.profile-dropdown-menu-item > img {
+  filter: invert(1);
+}
+.profile-dropdown-menu-item:hover {
+  background-color: black;
+  color: white;
+}
+.dropdownIcon {
+  border-radius: 25%;
+  filter: invert(1);
+}
