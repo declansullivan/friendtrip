@@ -35,8 +35,8 @@ class Home extends Component {
       .then((res) => res.json())
       .then((res) => {
         if (res.status === 200) {
-          this.props.history.push("/");
           localStorage.clear();
+          this.props.history.push("/");
         } else {
           alert("Logout failed.");
         }
@@ -107,9 +107,14 @@ class Home extends Component {
     this.getTravelerJSON();
   }
 
+  redirectOnLoggedOut = () => {
+    if (!localStorage.getItem("id")) this.props.history.push("/");
+  }
+
   render() {
     return (
       <div className="homepage-wrapper">
+        {this.redirectOnLoggedOut()}
         <Fade left>
           <div className="homepage-left">
             <Navbar

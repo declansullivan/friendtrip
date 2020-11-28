@@ -22,7 +22,7 @@ class Trip extends Component {
             showAddExpense: false,
             tripData: {},
         }
-
+        
         // Handle modal visibility
 
         this.openDeleteTripModal = this.openDeleteTripModal.bind(this);
@@ -114,7 +114,8 @@ class Trip extends Component {
                         <hr></hr>
                         <Container fluid>
                             <Row><Col>
-                                <Notes 
+                                <Notes
+                                    id={this.state.tripData.id}
                                     notes={this.state.tripData.itinerary} 
                                     refreshTrip={this.refreshTripJSON}/>
                             </Col></Row>

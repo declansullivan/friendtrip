@@ -20,7 +20,7 @@ class Accessor {
             for (const id of ids) {
                 objects.push(snapshot[id]);
             }
-
+            
             callback(objects)
         });
     }

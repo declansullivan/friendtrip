@@ -3,13 +3,16 @@ import { Container, Row, Col, Card, ListGroup, Button } from "react-bootstrap";
 import tripPageImage from "../../Media/tripPageImage.svg";
 import tripIcon from "../../Media/tripIcon.svg";
 import "./Trips.css";
+
 class Trips extends Component {
   constructor(props) {
     super(props);
     this.state = {
       trips: [],
+      owners: {}
     };
   }
+
   getTripsJSON = () => {
     fetch("http://localhost:9000/trip/getTrips", {
       method: "POST",
@@ -21,9 +24,38 @@ class Trips extends Component {
       .then((res) => res.json())
       .then((res) => {
         this.setState({ trips: res.trips });
+        this.getOwnerNames();
       });
   };
+
+  getOwnerIds = () => {
+    var owners = [];
+    for (const trip of this.state.trips) {
+      owners.push(trip.travelerId);
+    }
+    return owners;
+  }
+
+  getOwnerNames = () => {
+    fetch("http://localhost:9000/trip/getTravelers", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ travelerIds: this.getOwnerIds() }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        const owners = {}
+        for (const traveler of res.travelers) {
+          owners[traveler.id] = traveler.firstName + " " + traveler.lastName
+        }
+        this.setState({ owners });
+      });
+  }
+
   createTrip(trip) {
+    const ownerName = this.state.owners[trip.travelerId]
     return (
       <ListGroup.Item
         key={trip.id}
@@ -35,13 +67,14 @@ class Trips extends Component {
           className="align-items-center text-center"
         >
           <Col xs={2}>{trip.name}</Col>
-          <Col xs={2}>Owner name</Col>
+          <Col xs={2}>{ownerName}</Col>
           <Col xs={2}>{Object.keys(trip.travelerIds).length}</Col>
           <Col>{trip.description}</Col>
         </Row>
       </ListGroup.Item>
     );
   }
+
   renderTrips() {
     if (!this.state.trips) return;
 
@@ -51,9 +84,11 @@ class Trips extends Component {
     }
     return tripsJSX;
   }
+
   componentDidMount() {
     this.getTripsJSON();
   }
+
   render() {
     return (
       <div className="w-100 h-100">
