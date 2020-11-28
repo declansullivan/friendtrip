@@ -31,7 +31,7 @@ class Notes extends Component {
                     <Card.Body>
                         <h5>Notes</h5>
                         <hr></hr>
-                        This is where (editable) notes about the trip can go.
+                        {this.props.itinerary}
                         <br></br><br></br>
                         <Button onClick={this.openEditNotesModal}>Edit</Button>
                     </Card.Body>

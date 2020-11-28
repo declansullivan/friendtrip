@@ -29,38 +29,33 @@ class Home extends Component {
   }
 
   logoutFunc = () => {
-    fetch("http://localhost:9000/logout", {
-      method: "POST",
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.status === 200) {
-          this.props.history.push("/");
-          localStorage.clear();
-        } else {
-          alert("Logout failed.");
-        }
+      fetch('http://localhost:9000/logout', {
+          method: 'POST'
+      }).then(res => res.json()).then(res => {
+          if (res.status === 200) {
+              this.props.history.push('/');
+              localStorage.clear();
+          } else {
+              alert("Logout failed.")
+          }
       });
-  };
+  }
 
   getTravelerJSON = () => {
-    fetch("http://localhost:9000/account/getAccount", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id: this.getUserId() }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        this.setState({ traveler: res });
+      fetch("http://localhost:9000/account/getAccount", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: this.getUserId() }),
+      }).then((res) => res.json()).then((res) => {
+          this.setState({ traveler: res });
       });
-  };
+  }
 
-  switchPage = (event) => {
-    this.getTravelerJSON();
-    this.setState({ render: event });
-  };
+  switchPage = event => {
+      this.setState({ render: event });
+  }
 
   selectTrip = (tripId) => {
     this.setState({ tripId });
@@ -72,29 +67,40 @@ class Home extends Component {
   };
 
   renderContent() {
-    switch (this.state.render) {
-      case "account":
-        return <Account user={this.getUserId()}></Account>;
-      case "trips":
-        return (
-          <Trips
-            tripIds={this.state.traveler.tripIds}
-            callback={this.selectTrip}
-          ></Trips>
-        );
-      case "trip":
-        return <Trip id={this.state.tripId} key={this.state.tripId}></Trip>;
-      case "friends":
-        return <Friends></Friends>;
-      case "createTrip":
-        return <CreateTrip></CreateTrip>;
-      default:
-        return <h1>Home</h1>;
-    }
+      switch (this.state.render) {
+          case 'account':
+              return (
+                  <Account user={this.getUserId()}></Account>
+              )
+          case 'trips':
+              return (
+                  <Trips tripIds={this.state.traveler.tripIds} callback={this.selectTrip}></Trips>
+              )
+          case 'trip':
+              return (
+                  <Trip tripId={this.state.tripId} traveler={this.state.traveler} ></Trip>
+              )
+          case 'friends':
+              return (
+                  <Friends></Friends>
+              )
+          case 'createTrip':
+              return (
+                  <CreateTrip refreshTraveler={this.refreshTravelerJSON}></CreateTrip>
+              )
+          default:
+              return (
+                  <h1>Home</h1>
+              )
+        }
   }
 
+  refreshTravelerJSON = () => {
+      this.getTravelerJSON();
+  }
+  
   componentDidMount() {
-    this.getTravelerJSON();
+      this.getTravelerJSON();
   }
 
   render() {

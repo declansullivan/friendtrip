@@ -1,16 +1,22 @@
 import React, { Component } from "react";
-import { Form, Button, Col, Card } from "react-bootstrap";
+import { Form, Button, Col, Card, Alert } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 
 class CreateTrip extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            visible: false,
+            message: "",
+            status: "",
+        }
     }
 
     createTrip = event => {
         event.preventDefault();
 
         const { name, description } = event.target.elements;
+
         const travelerId = this.getUserId();
         const data = {
             travelerId: travelerId,
@@ -20,21 +26,23 @@ class CreateTrip extends Component {
             description: description.value,
         }
 
+        event.target.elements.name.value = "";
+        event.target.elements.description.value = "";
+
         fetch('http://localhost:9000/createTrip', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data)
-        }).then(res => res.json())
-            .then(res => {
-                if (res.status === 200) {
-                    this.addTravelerToTrip(travelerId, res.tripId);
-                    alert("Created Trip");
-                } else {
-                    alert("Create Trip failed.")
-                }
-            });
+        }).then(res => res.json()).then(res => {
+            if (res.status === 200) {
+                this.addTravelerToTrip(travelerId, res.tripId);
+                this.showAlert("Successfully created Trip!", "success");
+            } else {
+                this.showAlert("Failed to create Trip.", "danger")
+            }
+        });
     }
 
     addTravelerToTrip = (travelerId, tripId) => {
@@ -45,6 +53,8 @@ class CreateTrip extends Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data)
+        }).then(res => {
+            this.props.refreshTraveler();
         });
     }
 
@@ -52,6 +62,16 @@ class CreateTrip extends Component {
         return localStorage.getItem("id");
     }
 
+    showAlert = (message, status) => {
+        this.setState({ message });
+        this.setState({ status });
+        this.setState({ visible: true }, () => {
+            window.setTimeout(() => {
+                this.setState({ visible: false });
+            }, 2000);
+        });
+    }
+    
     render() {
         return (
             <div className="centerdiv">
@@ -84,6 +104,10 @@ class CreateTrip extends Component {
                             </div>
                         </Form>
                     </Card.Body>
+
+                    <Alert variant={this.state.status} show={this.state.visible} style={{textAlign: "center"}}>
+                        {this.state.message}
+                    </Alert>
                 </Card>
             </div>
         );

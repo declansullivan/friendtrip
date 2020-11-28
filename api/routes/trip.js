@@ -1,6 +1,6 @@
 var express = require('express');
 const { getTraveler, updateTraveler } = require('../db/models/traveler');
-const { getTripList } = require('../db/models/trip');
+const { getTripList, getTrip } = require('../db/models/trip');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
@@ -8,7 +8,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/getTrip', function(req, res, next) {
+    handleGetTrip = (trip) => {
+        res.json({ trip });
+    }
 
+    getTrip(req.body.tripId, handleGetTrip);
 });
 
 router.post('/getTrips', function(req, res, next) {

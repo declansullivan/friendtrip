@@ -20,9 +20,10 @@ class Trip extends Component {
             showEditTrip: false,
             showAddItem: false,
             showAddExpense: false,
-            tripData: {}
-            // user = {} // Get user JSON
+            tripData: {},
         }
+
+        // Handle modal visibility
 
         this.openDeleteTripModal = this.openDeleteTripModal.bind(this);
         this.closeDeleteTripModal = this.closeDeleteTripModal.bind(this);
@@ -36,6 +37,8 @@ class Trip extends Component {
         this.openAddExpenseModal = this.openAddExpenseModal.bind(this);
         this.closeAddExpenseModal = this.closeAddExpenseModal.bind(this);
     }
+
+    // Handle modal visibility
 
     closeDeleteTripModal = () => {
         this.setState({showDeleteTrip: false});
@@ -69,6 +72,29 @@ class Trip extends Component {
         this.setState({showAddExpense: true});
     }
 
+    // Retrieve all releveant data
+
+    getTripJSON = () => {
+        fetch("http://localhost:9000/trip/getTrip", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ tripId: this.props.tripId }),
+        }).then((res) => res.json())
+            .then((res) => {
+                this.setState({ tripData: res.trip });
+            });
+    }
+
+    refreshTripJSON = () => {
+        this.getTripJSON();
+    }
+
+    componentDidMount() {
+        this.getTripJSON();
+    }
+
     render() {
         return (
             <div className="mt-3">
@@ -78,50 +104,61 @@ class Trip extends Component {
                 <AddExpense kind="Add" show={this.state.showAddExpense} handleClose={this.closeAddExpenseModal}></AddExpense>
 
                 <Card bg="white" style={{ width: '64rem' }}>
-                    <Card.Header> <h2> Trip Name </h2> </Card.Header>
+                    <Card.Header>
+                        <h2>{this.state.tripData.name}</h2>
+                    </Card.Header>
                     <Card.Body>
-                        <p style={{color: "black"}}>Trip Description</p>
+                        <p style={{color: "black"}}>
+                            {this.state.tripData.description}
+                        </p>
                         <hr></hr>
                         <Container fluid>
-                            <Row>
-                                <Col>
-                                    <Notes></Notes>
-                                </Col>
-                            </Row>
+                            <Row><Col>
+                                <Notes 
+                                    notes={this.state.tripData.itinerary} 
+                                    refreshTrip={this.refreshTripJSON}/>
+                            </Col></Row>
                             <br></br>
 
-                            <Row>
-                                <Col>
-                                    <Destinations></Destinations>
-                                </Col>
-                            </Row>
+                            <Row><Col>
+                                <Destinations 
+                                    destinationIds={this.state.tripData.destinationIds} 
+                                    refreshTrip={this.refreshTripJSON}/>
+                            </Col></Row>
                             <br></br>
 
-                            <Row>
-                                <Col xs={8}>
-                                    <Items category="Group"></Items>
+                            <Row><Col xs={8}>
+                                    <Items 
+                                        itemIds={this.state.tripData.itemIds} 
+                                        category="Group" 
+                                        refreshTrip={this.refreshTripJSON}/>
                                     <br></br>
-                                    <Items category="Personal"></Items>
+                                    <Items 
+                                        itemIds={this.state.tripData.itemIds} 
+                                        category="Personal" 
+                                        refreshTrip={this.refreshTripJSON}/>
                                     <br></br>
-                                    <Expenses></Expenses>
-
+                                    <Expenses 
+                                        expenseIds={this.state.tripData.expenseIds} 
+                                        refreshTrip={this.refreshTripJSON}/>
                                 </Col>
                                 <Col>
-                                    <Travelers></Travelers>
-                                </Col>
-                            </Row>
+                                    <Travelers
+                                        travelerIds={this.state.tripData.travelerIds}
+                                        friendIds={this.props.traveler.friendIds}
+                                        refreshTrip={this.refreshTripJSON}/>
+                            </Col></Row>
                             <br></br>
 
-                            <Row>
-                                <Col>
-                                    <Button onClick={this.openAddItemModal}>Add Item</Button>{' '}
-                                    <Button onClick={this.openAddExpenseModal}>Add Expense</Button>{' '}
-                                    <Button onClick={this.openEditTripModal}>Edit Trip</Button>
-                                    <Button variant="danger" style={{float:"right"}} onClick={this.openDeleteTripModal}>Delete Trip</Button>
-                                </Col>
-                            </Row>
+                            <Row><Col>
+                                <Button onClick={this.openAddItemModal}>Add Item</Button>{' '}
+                                <Button onClick={this.openAddExpenseModal}>Add Expense</Button>{' '}
+                                <Button onClick={this.openEditTripModal}>Edit Trip</Button>
+                                <Button variant="danger" 
+                                        style={{float:"right"}} 
+                                        onClick={this.openDeleteTripModal}>Delete Trip</Button>
+                            </Col></Row>
                         </Container>
-
                     </Card.Body>
                 </Card>
             </div>
