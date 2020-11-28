@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Card, ListGroup } from "react-bootstrap";
+import { Container, Row, Col, Card, ListGroup, Button } from "react-bootstrap";
 import tripPageImage from "../../Media/tripPageImage.svg";
 import tripIcon from "../../Media/tripIcon.svg";
 import "./Trips.css";
@@ -70,8 +70,60 @@ class Trips extends Component {
             <strong> Trips</strong>
           </h1>
         </div>
+
         <hr></hr>
+
+        {/* TRIP INVITATIONS */}
         <Card className="trip-list" style={{ width: "100%" }}>
+          <Card.Header className="trip-list-header">
+            <h2> Trip Invitations </h2>
+          </Card.Header>
+          <Card.Body>
+            <Container fluid>
+              <Row className="m-0 text-center">
+                <Col xs={2}>
+                  <h5>Inviter</h5>
+                </Col>
+                <Col xs={2}>
+                  <h5>Trip Name</h5>
+                </Col>
+                <Col xs={5}>
+                  <h5>Description</h5>
+                </Col>
+                <Col></Col>
+              </Row>
+
+              {/* Need to programmatically create rows. */}
+              <Row className="trip-invite m-0 text-center p-1">
+                <Col xs={2}>Username</Col>
+                <Col xs={2}>Trip Name</Col>
+                <Col xs={5}>Trip Description</Col>
+                <Col>
+                  <Button variant="success">Accept</Button>{" "}
+                  <Button className="ml-3" variant="danger">
+                    Decline
+                  </Button>
+                </Col>
+              </Row>
+
+              {/* Need to programmatically create rows. */}
+              <Row className="trip-invite m-0 text-center p-1">
+                <Col xs={2}>Username</Col>
+                <Col xs={2}>Trip Name</Col>
+                <Col xs={5}>Trip Description</Col>
+                <Col>
+                  <Button variant="success">Accept</Button>{" "}
+                  <Button className="ml-3" variant="danger">
+                    Decline
+                  </Button>
+                </Col>
+              </Row>
+            </Container>
+          </Card.Body>
+        </Card>
+
+        {/* VIEW MY TRIPS */}
+        <Card className="trip-list mt-3" style={{ width: "100%" }}>
           <Card.Header className="trip-list-header">
             <h2> My Trips </h2>
           </Card.Header>

@@ -16,7 +16,6 @@ class Account extends Component {
       <div>
         <div className="accountInfo">
           <h2> General Account Settings</h2>
-
           <Card style={{ width: "48rem" }}>
             <Card.Body>
               <ListGroup variant="flush" className="settingsList">
@@ -97,42 +96,6 @@ class Account extends Component {
                   </div>
                 </ListGroup.Item>
               </ListGroup>
-            </Card.Body>
-          </Card>
-        </div>
-
-        <hr></hr>
-
-        <h2>Trip Invitations</h2>
-
-        <div className="tripInvitations">
-          <Card style={{ width: "64rem" }}>
-            <Card.Body>
-              <Container fluid>
-                <Row>
-                  <Col xs={2}>
-                    <h5>Inviter</h5>
-                  </Col>
-                  <Col xs={2}>
-                    <h5>Trip Name</h5>
-                  </Col>
-                  <Col xs={5}>
-                    <h5>Description</h5>
-                  </Col>
-                  <Col></Col>
-                </Row>
-
-                {/* Need to programmatically create rows. */}
-                <Row className="align-items-center">
-                  <Col xs={2}>Username</Col>
-                  <Col xs={2}>Trip Name</Col>
-                  <Col xs={5}>Trip Description</Col>
-                  <Col>
-                    <Button variant="success">Accept</Button>{" "}
-                    <Button className="ml-3" variant="danger">Decline</Button>
-                  </Col>
-                </Row>
-              </Container>
             </Card.Body>
           </Card>
         </div>
