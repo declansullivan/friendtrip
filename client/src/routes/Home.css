@@ -1,11 +1,16 @@
 .homepage-wrapper {
   display: flex;
   justify-content: space-between;
-  background-color: rgb(255, 202, 202);
+  background-color: #a7ccff;
+}
+.homepage-left-image {
+  opacity: 0.5;
+  position: absolute;
+  bottom: 0px;
 }
 .homepage-left {
   width: 20%;
-  background-color: #166ae0;
+  background-color: #166AE0;
   height: 100vh;
   position: sticky;
   top: 0;
@@ -60,4 +65,11 @@
 .dropdownIcon {
   border-radius: 25%;
   filter: invert(1);
+}
+.page-background-image {
+  opacity: 0.1;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
 }

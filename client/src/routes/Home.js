@@ -1,21 +1,21 @@
 import React, { Component } from "react";
-
-import { Container, Row, Col, Dropdown, DropdownButton } from "react-bootstrap";
-import { Navbar as ReactNavbar } from "react-bootstrap";
-import { Nav as ReactNav } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 import ScrollToTop from "../components/ScrollToTop";
 import Navbar from "../components/Navbar.js";
 import Account from "../components/account/Account";
 import Friends from "../components/Friends";
 import Trips from "../components/trip/Trips";
 import Trip from "../components/trip/Trip";
+import HomePage from "../components/HomePage";
 import CreateTrip from "../components/CreateTrip";
 import dropdownIcon from "../Media/dropdownIcon.svg";
 import accountIcon from "../Media/accountIcon.svg";
 import logoutLogo from "../Media/logoutLogo.svg";
 import profileLogo from "../Media/profileIcon.svg";
+import navBarImage from "../Media/loginImage.svg";
 import Fade from "react-reveal/Fade";
 import "./Home.css";
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -29,33 +29,37 @@ class Home extends Component {
   }
 
   logoutFunc = () => {
-      fetch('http://localhost:9000/logout', {
-          method: 'POST'
-      }).then(res => res.json()).then(res => {
-          if (res.status === 200) {
-              this.props.history.push('/');
-              localStorage.clear();
-          } else {
-              alert("Logout failed.")
-          }
+    fetch("http://localhost:9000/logout", {
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 200) {
+          this.props.history.push("/");
+          localStorage.clear();
+        } else {
+          alert("Logout failed.");
+        }
       });
-  }
+  };
 
   getTravelerJSON = () => {
-      fetch("http://localhost:9000/account/getAccount", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ id: this.getUserId() }),
-      }).then((res) => res.json()).then((res) => {
-          this.setState({ traveler: res });
+    fetch("http://localhost:9000/account/getAccount", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: this.getUserId() }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        this.setState({ traveler: res });
       });
-  }
+  };
 
-  switchPage = event => {
-      this.setState({ render: event });
-  }
+  switchPage = (event) => {
+    this.setState({ render: event });
+  };
 
   selectTrip = (tripId) => {
     this.setState({ tripId });
@@ -67,40 +71,40 @@ class Home extends Component {
   };
 
   renderContent() {
-      switch (this.state.render) {
-          case 'account':
-              return (
-                  <Account user={this.getUserId()}></Account>
-              )
-          case 'trips':
-              return (
-                  <Trips tripIds={this.state.traveler.tripIds} callback={this.selectTrip}></Trips>
-              )
-          case 'trip':
-              return (
-                  <Trip tripId={this.state.tripId} traveler={this.state.traveler} ></Trip>
-              )
-          case 'friends':
-              return (
-                  <Friends></Friends>
-              )
-          case 'createTrip':
-              return (
-                  <CreateTrip refreshTraveler={this.refreshTravelerJSON}></CreateTrip>
-              )
-          default:
-              return (
-                  <h1>Home</h1>
-              )
-        }
+    switch (this.state.render) {
+      case "account":
+        return <Account user={this.getUserId()}></Account>;
+      case "trips":
+        return (
+          <Trips
+            tripIds={this.state.traveler.tripIds}
+            callback={this.selectTrip}
+          ></Trips>
+        );
+      case "trip":
+        return (
+          <Trip
+            tripId={this.state.tripId}
+            traveler={this.state.traveler}
+          ></Trip>
+        );
+      case "friends":
+        return <Friends></Friends>;
+      case "createTrip":
+        return (
+          <CreateTrip refreshTraveler={this.refreshTravelerJSON}></CreateTrip>
+        );
+      default:
+        return <HomePage></HomePage>;
+    }
   }
 
   refreshTravelerJSON = () => {
-      this.getTravelerJSON();
-  }
-  
+    this.getTravelerJSON();
+  };
+
   componentDidMount() {
-      this.getTravelerJSON();
+    this.getTravelerJSON();
   }
 
   render() {
@@ -113,6 +117,13 @@ class Home extends Component {
               out={this.logoutFunc}
               className="position-sticky"
             ></Navbar>
+            <img
+              src={navBarImage}
+              width="100%"
+              className="d-inline-block homepage-left-image"
+              alt="navBarImage"
+              id="navBarImage"
+            />
           </div>
         </Fade>
         <div className="homepage-right pt-5 pl-5 pr-5">
