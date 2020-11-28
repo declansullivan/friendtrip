@@ -25,13 +25,18 @@ class Notes extends Component {
     render() {
         return (
             <div>
-                <EditNotes show={this.state.showEditNotes} handleClose={this.closeEditNotesModal}></EditNotes>
+                <EditNotes 
+                    id={this.props.id}
+                    notes={this.props.notes}
+                    show={this.state.showEditNotes} 
+                    handleClose={this.closeEditNotesModal}
+                    refreshTrip={this.props.refreshTrip}/>
 
                 <Card>
                     <Card.Body>
                         <h5>Notes</h5>
                         <hr></hr>
-                        {this.props.itinerary}
+                        <div style={{whiteSpace: "pre-line"}}>{this.props.notes}</div>
                         <br></br><br></br>
                         <Button onClick={this.openEditNotesModal}>Edit</Button>
                     </Card.Body>

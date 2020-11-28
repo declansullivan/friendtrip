@@ -1,6 +1,6 @@
 var express = require('express');
-const { getTraveler, updateTraveler } = require('../db/models/traveler');
-const { getTripList, getTrip } = require('../db/models/trip');
+const { getTraveler, getTravelerList, updateTraveler } = require('../db/models/traveler');
+const { getTripList, getTrip, updateTrip } = require('../db/models/trip');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
@@ -23,6 +23,14 @@ router.post('/getTrips', function(req, res, next) {
     getTripList(req.body.tripIds, handleGetTrips);
 });
 
+router.post('/getTravelers', function(req, res, next) {
+    handleGetTravelers = (travelers) => {
+        res.json({ travelers });
+    }
+
+    getTravelerList(req.body.travelerIds, handleGetTravelers);
+});
+
 router.put('/addTraveler', function(req, res, next) {
     handleGetTraveler = (traveler) => {
         var trips;
@@ -41,6 +49,15 @@ router.put('/addTraveler', function(req, res, next) {
     }
 
     getTraveler(req.body.travelerId, handleGetTraveler);
+});
+
+router.post('/updateItinerary', function(req, res, next) {
+    handleUpdateItinerary = (error) => {
+        if (error) res.sendStatus(401);
+        else res.sendStatus(200);
+    }
+    
+    updateTrip(req.body, handleUpdateItinerary);
 });
 
 router.put('/addTripLeader', function(req, res, next) {

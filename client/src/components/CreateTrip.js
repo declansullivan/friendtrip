@@ -29,8 +29,8 @@ class CreateTrip extends Component {
       description: description.value,
     };
 
-    event.target.elements.name.value = "";
-    event.target.elements.description.value = "";
+    name.value = "";
+    description.value = "";
 
     fetch("http://localhost:9000/createTrip", {
       method: "PUT",

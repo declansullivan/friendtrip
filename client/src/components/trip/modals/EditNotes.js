@@ -6,8 +6,25 @@ class EditNotes extends Component {
         super(props);
     }
 
-    updateItinerary = () => {
+    updateItinerary = event => {
+        event.preventDefault();
 
+        const { text } = event.target.elements;
+        const data = {
+            id: this.props.id,
+            itinerary: text.value,
+        }
+
+        fetch("http://localhost:9000/trip/updateItinerary", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        }).then((res) => {
+            this.props.refreshTrip();
+            this.props.handleClose();
+        });
     }
 
     render() {
@@ -17,21 +34,24 @@ class EditNotes extends Component {
                 dialogClassName="modal-60w"
                 aria-labelledby="contained-modal-title-vcenter"
                 animation={false}
+                onHide={this.props.handleClose}
                 centered
                 >
-                <Modal.Body>
-                    <h4>Edit Notes</h4>
-                    <Form>
+                <Form onSubmit={this.updateItinerary}>
+                    <Modal.Body>
+                        <h4>Edit Notes</h4>
                         <Form.Group controlId="exampleForm.ControlTextarea1">
                             <Form.Label>Revise notes here</Form.Label>
-                            <Form.Control name="text" as="textarea" rows={6} />
+                            <Form.Control 
+                                defaultValue={this.props.notes}
+                                name="text" as="textarea" rows={6} />
                         </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={this.props.handleClose}>Close</Button>
-                    <Button onClick={this.updateItinerary} variant="success">Save</Button>
-                </Modal.Footer>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={this.props.handleClose}>Close</Button>
+                        <Button type="submit" variant="success">Save</Button>
+                    </Modal.Footer>
+                </Form>
             </Modal>
         )
     }
