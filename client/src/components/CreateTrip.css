@@ -1,0 +1,13 @@
+.createTrip-page-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.createTrip-form-header {
+  background-color: #166ae0;
+  color: white;
+}
+.createTrip-form-body {
+  background-color: #ebeaf7;
+}

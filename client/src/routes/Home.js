@@ -129,7 +129,7 @@ class Home extends Component {
         <div className="homepage-right pt-5 pl-5 pr-5">
           {this.renderContent()}
         </div>
-        <div className="homepage-account mt-3">
+        <div className="homepage-account mt-3 pr-3">
           <div className="homepage-profile p-1">
             <img
               src={profileLogo}
@@ -145,7 +145,7 @@ class Home extends Component {
                 this.state.traveler.lastName}
             </strong>
           </div>
-          <Dropdown className="ml-4 mr-5 d-inline-block">
+          <Dropdown className="ml-4 d-inline-block">
             <Dropdown.Toggle
               className="p-0"
               variant="light"

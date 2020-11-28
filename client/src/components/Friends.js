@@ -26,34 +26,59 @@ class Friends extends Component {
           </h1>
         </div>
         <hr></hr>
-        <Form className="align-items-center" style={{ width: "48rem" }}>
-          <h2>Add Friend</h2>
-          <Form.Row>
-            <Col xs={5}>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Control
-                  name="email"
-                  type="email"
-                  placeholder="Enter friend's email"
-                />
-              </Form.Group>
-            </Col>
-            <Col xs={2}>
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
-            </Col>
-          </Form.Row>
-        </Form>
-        <br></br>
-        <Card style={{ width: "48rem" }} variant="Light">
-          <Card.Body>
-            <Card.Title>Friend Name</Card.Title>
-            <Card.Text>
-              Some Friend Information... Emails etc. Will need to
-              programmatically create one of these for each friend.
-            </Card.Text>
-            <Button>Remove Friend</Button>
+
+        <Card style={{ width: "100%" }} variant="Light">
+          <Card.Header className="friend-list-header">
+            <h2> Friend's List</h2>
+            {/* (1) TODO: Connect this Form to an onClick that takes in the email and checks if it exists. If so, send friend request. Otherwise, alert error */}
+            <Form className="add-friend-form text-center">
+              <h5 className="m-0 ">Find Friends</h5>
+              <Form.Row className="m-0 p-0 ml-2">
+                <Form.Group className="m-0" controlId="formBasicEmail">
+                  <Form.Control
+                    name="email"
+                    type="email"
+                    placeholder="Enter friend's email"
+                  />
+                </Form.Group>
+                <Button className="ml-2" variant="primary" type="submit">
+                  Add
+                </Button>
+              </Form.Row>
+            </Form>
+            {/* (1) TODO: END*/}
+          </Card.Header>
+          <Card.Body className="friend-list-body">
+            {/* (2) TODO: Individual Friend Card, Need to programmatically create these (Use js map func). Don't worry about the styling, flexbox will wrap them*/}
+            <Card style={{ width: "20%", margin: "0 2.5%" }} variant="Light">
+              <Card.Body>
+                <Card.Title>Friend Name</Card.Title>
+                <Card.Text>Friend Information Here</Card.Text>
+                <Button>Remove Friend</Button>
+              </Card.Body>
+            </Card>
+            {/* (2) TODO: END*/}
+            <Card style={{ width: "20%", margin: "0 2.5%" }} variant="Light">
+              <Card.Body>
+                <Card.Title>Friend Name</Card.Title>
+                <Card.Text>Friend Information Here</Card.Text>
+                <Button>Remove Friend</Button>
+              </Card.Body>
+            </Card>
+            <Card style={{ width: "20%", margin: "0 2.5%" }} variant="Light">
+              <Card.Body>
+                <Card.Title>Friend Name</Card.Title>
+                <Card.Text>Friend Information Here</Card.Text>
+                <Button>Remove Friend</Button>
+              </Card.Body>
+            </Card>
+            <Card style={{ width: "20%", margin: "0 2.5%" }} variant="Light">
+              <Card.Body>
+                <Card.Title>Friend Name</Card.Title>
+                <Card.Text>Friend Information Here</Card.Text>
+                <Button>Remove Friend</Button>
+              </Card.Body>
+            </Card>
           </Card.Body>
         </Card>
         <img

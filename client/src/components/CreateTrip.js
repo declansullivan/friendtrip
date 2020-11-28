@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Form, Button, Col, Card, Alert } from "react-bootstrap";
 import createTripImage from "../Media/createTripImage.svg";
 import { Link } from "react-router-dom";
+import createTripIcon from "../Media/createTripIcon.svg";
+import "./CreateTrip.css";
 
 class CreateTrip extends Component {
   constructor(props) {
@@ -77,19 +79,33 @@ class CreateTrip extends Component {
 
   render() {
     return (
-      <div className="centerdiv ">
-        <Card
-          border="secondary"
-          style={{ width: "48rem", marginLeft: "auto", marginRight: "auto" }}
-        >
-          <Card.Header>
-            <Card.Title style={{ textAlign: "center" }}>Create Trip</Card.Title>
+      <div className="w-100 h-100 ">
+        <div className="createTrip-page-header">
+          <img
+            src={createTripIcon}
+            width="40"
+            height="40"
+            className="d-inline-block align-top mr-2"
+            alt="createTripIcon"
+            id="createTripIcon"
+          />
+          <h1 className="d-inline-block">
+            <strong> Create Trip</strong>
+          </h1>
+        </div>
+        <hr></hr>
+
+        <Card border="secondary" style={{ width: "100%" }}>
+          <Card.Header className="createTrip-form-header">
+            <h2> Create Trip Form </h2>
           </Card.Header>
-          <Card.Body>
+          <Card.Body className="createTrip-form-body">
             <Form onSubmit={this.createTrip}>
               <Form.Row>
                 <Form.Group as={Col} controlId="formGridname">
-                  <Form.Label>Trip Name</Form.Label>
+                  <Form.Label>
+                    <strong>Trip Name</strong>
+                  </Form.Label>
                   <Form.Control
                     name="name"
                     type="name"
@@ -99,7 +115,9 @@ class CreateTrip extends Component {
               </Form.Row>
               <Form.Row>
                 <Form.Group as={Col} controlId="formGridDescription">
-                  <Form.Label>Description</Form.Label>
+                  <Form.Label>
+                    <strong>Description</strong>
+                  </Form.Label>
                   <Form.Control
                     as="textarea"
                     rows={5}
@@ -122,8 +140,8 @@ class CreateTrip extends Component {
               </div>
             </Form>
           </Card.Body>
-
           <Alert
+            className="m-0"
             variant={this.state.status}
             show={this.state.visible}
             style={{ textAlign: "center" }}

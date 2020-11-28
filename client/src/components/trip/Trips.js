@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Alert, Container, Row, Col, Card } from "react-bootstrap";
+import { Container, Row, Col, Card, ListGroup } from "react-bootstrap";
 import tripPageImage from "../../Media/tripPageImage.svg";
 import tripIcon from "../../Media/tripIcon.svg";
 import "./Trips.css";
@@ -10,7 +10,6 @@ class Trips extends Component {
       trips: [],
     };
   }
-
   getTripsJSON = () => {
     fetch("http://localhost:9000/trip/getTrips", {
       method: "POST",
@@ -24,25 +23,25 @@ class Trips extends Component {
         this.setState({ trips: res.trips });
       });
   };
-
   createTrip(trip) {
     return (
-      <Alert
-        onClick={() => this.props.callback(trip.id)}
+      <ListGroup.Item
         key={trip.id}
-        className="tripThumbnail"
-        variant="secondary"
+        action
+        onClick={() => this.props.callback(trip.id)}
       >
-        <Row style={{ color: "black" }} className="align-items-center">
+        <Row
+          style={{ color: "black" }}
+          className="align-items-center text-center"
+        >
           <Col xs={2}>{trip.name}</Col>
           <Col xs={2}>Owner name</Col>
           <Col xs={2}>{Object.keys(trip.travelerIds).length}</Col>
           <Col>{trip.description}</Col>
         </Row>
-      </Alert>
+      </ListGroup.Item>
     );
   }
-
   renderTrips() {
     if (!this.state.trips) return;
 
@@ -52,11 +51,9 @@ class Trips extends Component {
     }
     return tripsJSX;
   }
-
   componentDidMount() {
     this.getTripsJSON();
   }
-
   render() {
     return (
       <div className="w-100 h-100">
@@ -74,14 +71,13 @@ class Trips extends Component {
           </h1>
         </div>
         <hr></hr>
-        <Card style={{ width: "100%" }}>
-          <Card.Header>
-            {" "}
-            <h2> My Trips </h2>{" "}
+        <Card className="trip-list" style={{ width: "100%" }}>
+          <Card.Header className="trip-list-header">
+            <h2> My Trips </h2>
           </Card.Header>
           <Card.Body>
             <Container fluid>
-              <Row>
+              <Row className="m-0 text-center">
                 <Col xs={2}>
                   <h5>Trip Name</h5>
                 </Col>
@@ -95,7 +91,6 @@ class Trips extends Component {
                   <h5>Description</h5>
                 </Col>
               </Row>
-
               {this.renderTrips()}
             </Container>
           </Card.Body>
