@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { Button, Image } from "react-bootstrap";
-import accountIcon from "../Media/accountIcon.svg";
 import tripIcon from "../Media/tripIcon.svg";
 import friendsIcon from "../Media/friendsIcon.svg";
-import logoutLogo from "../Media/logoutLogo.svg";
 import homeIcon from "../Media/homeIcon.svg";
 import createTripIcon from "../Media/createTripIcon.svg";
 import navbarRetractableIcon from "../Media/navbarRetractableIcon.svg";
@@ -26,7 +24,7 @@ class Navbar extends Component {
             alt="friendtripLogo"
             id="friendtripLogo"
           />
-            <h1 className="text-white"> FriendTrip</h1>
+            <h1 className="navbar-title text-white m-0"> FriendTrip</h1>
         </div>
         <Button
           className="shadow-none mt-3"

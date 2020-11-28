@@ -1,0 +1,18 @@
+.trip-list {
+    background-color: #EBEAF7;
+}
+.trip-page-header {
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.trip-list-header {
+    background-color: #166AE0;
+    color: white;
+}
+.trip-invite {
+    background-color: white;
+    align-items: center;
+    border: 1px solid rgba(0,0,0,.125);
+}
