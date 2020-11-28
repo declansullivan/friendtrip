@@ -1,76 +1,95 @@
 import React, { Component } from "react";
 import { Button, Image } from "react-bootstrap";
-import accountIcon from "../Media/accountIcon.svg"
+import accountIcon from "../Media/accountIcon.svg";
 import tripIcon from "../Media/tripIcon.svg";
 import friendsIcon from "../Media/friendsIcon.svg";
 import logoutLogo from "../Media/logoutLogo.svg";
+import homeIcon from "../Media/homeIcon.svg";
+import createTripIcon from "../Media/createTripIcon.svg";
+import navbarRetractableIcon from "../Media/navbarRetractableIcon.svg";
+import friendtripLogo from "../Media/friendtripLogo.svg";
 
+import "./Navbar.css";
 class Navbar extends Component {
-    constructor(props) {
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    render() {
-        return (
-            <div className="navbar mt-3">
-                <Button className="navbar-btn shadow-none" block onClick={(e) => this.props.page('account')}>
-                    <img
-                        src={accountIcon}
-                        width="25"
-                        height="25"
-                        className="d-inline-block align-top mr-2"
-                        alt="accountIcon logo"
-                        id="accountIcon"
-                    />
-                    Account
-                    </Button>
-                <Button className="navbar-btn shadow-none" block onClick={(e) => this.props.page('trips')}>
-                    <img
-                        src={tripIcon}
-                        width="25"
-                        height="25"
-                        className="d-inline-block align-top mr-2"
-                        alt="tripIcon logo"
-                        id="tripIcon"
-                    />
-                    Trips
-                    </Button>
-                <Button className="navbar-btn shadow-none" block onClick={(e) => this.props.page('friends')}>
-                    <img
-                        src={friendsIcon}
-                        width="25"
-                        height="25"
-                        className="d-inline-block align-top mr-2"
-                        alt="friendIcon logo"
-                        id="friendIcon"
-                    />
-                    Friends
-                    </Button>
-                <Button className="navbar-btn shadow-none" block onClick={(e) => this.props.page('createTrip')}>
-                    <img
-                        src={logoutLogo}
-                        width="25"
-                        height="25"
-                        className="d-inline-block align-top mr-2"
-                        alt="createTrip logo"
-                        id="createTrip"
-                    />
-                    Create Trip
-                    </Button>
-                <Button className="navbar-btn shadow-none" block onClick={(e) => this.props.out()}>
-                    <img
-                        src={logoutLogo}
-                        width="25"
-                        height="25"
-                        className="d-inline-block align-top mr-2"
-                        alt="logoutLogo logo"
-                        id="logoutLogo"
-                    />
-                    Logout
-                </Button>
-            </div>
-        )
-    }
+  render() {
+    return (
+      <div className="navbar mt-3">
+        <div className="navbar-header">
+          <img
+            src={friendtripLogo}
+            width="20%"
+            className="d-inline-block rounded-circle align-top mr-2"
+            alt="friendtripLogo"
+            id="friendtripLogo"
+          />
+            <h1 className="text-white"> FriendTrip</h1>
+        </div>
+        <Button
+          className="shadow-none mt-3"
+          block
+          onClick={(e) => this.props.page("home")}
+        >
+          <img
+            src={homeIcon}
+            width="25"
+            height="25"
+            className="d-inline-block align-top mr-2"
+            alt="homeIcon"
+            id="homeIcon"
+          />
+          <strong> Home </strong>
+        </Button>
+        <Button
+          className="shadow-none"
+          block
+          onClick={(e) => this.props.page("trips")}
+        >
+          <img
+            src={tripIcon}
+            width="25"
+            height="25"
+            className="d-inline-block align-top mr-2"
+            alt="tripIcon"
+            id="tripIcon"
+          />
+          <strong> Trips</strong>
+        </Button>
+        <Button
+          className="shadow-none"
+          block
+          onClick={(e) => this.props.page("friends")}
+        >
+          <img
+            src={friendsIcon}
+            width="25"
+            height="25"
+            className="d-inline-block align-top mr-2"
+            alt="friendIcon"
+            id="friendIcon"
+          />
+          <strong>Friends</strong>
+        </Button>
+        <Button
+          className="shadow-none"
+          block
+          onClick={(e) => this.props.page("createTrip")}
+        >
+          <img
+            src={createTripIcon}
+            width="20"
+            height="20"
+            className="d-inline-block align-top mr-2"
+            alt="createTripIcon"
+            id="createTripIcon"
+          />
+          <strong>Create Trip</strong>
+        </Button>
+      </div>
+    );
+  }
 }
-
 export default Navbar;
