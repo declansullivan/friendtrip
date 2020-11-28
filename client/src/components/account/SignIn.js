@@ -36,9 +36,14 @@ class SignIn extends Component {
       });
   };
 
+  redirectOnLogin = () => {
+    if (localStorage.getItem("id")) this.props.history.push("/home");
+  }
+
   render() {
     return (
         <Container fluid className="vh-100">
+          {this.redirectOnLogin()}
           <Row className="h-100">
             <Col xs={4} className="p-0">
               <Fade left>
