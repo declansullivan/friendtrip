@@ -92,7 +92,7 @@ class Trips extends Component {
   render() {
     return (
       <div className="w-100 h-100">
-        <div className="trip-page-header">
+        <div className="trips-page-header">
           <img
             src={tripIcon}
             width="40"
@@ -109,8 +109,8 @@ class Trips extends Component {
         <hr></hr>
 
         {/* TRIP INVITATIONS */}
-        <Card className="trip-list" style={{ width: "100%" }}>
-          <Card.Header className="trip-list-header">
+        <Card className="trips-list" style={{ width: "100%" }}>
+          <Card.Header className="trips-list-header">
             <h2> Trip Invitations </h2>
           </Card.Header>
           <Card.Body>
@@ -129,7 +129,7 @@ class Trips extends Component {
               </Row>
 
               {/* Need to programmatically create rows. */}
-              <Row className="trip-invite m-0 text-center p-1">
+              <Row className="trips-invite m-0 text-center p-1">
                 <Col xs={2}>Username</Col>
                 <Col xs={2}>Trip Name</Col>
                 <Col xs={5}>Trip Description</Col>
@@ -142,7 +142,7 @@ class Trips extends Component {
               </Row>
 
               {/* Need to programmatically create rows. */}
-              <Row className="trip-invite m-0 text-center p-1">
+              <Row className="trips-invite m-0 text-center p-1">
                 <Col xs={2}>Username</Col>
                 <Col xs={2}>Trip Name</Col>
                 <Col xs={5}>Trip Description</Col>
@@ -158,8 +158,8 @@ class Trips extends Component {
         </Card>
 
         {/* VIEW MY TRIPS */}
-        <Card className="trip-list mt-3" style={{ width: "100%" }}>
-          <Card.Header className="trip-list-header">
+        <Card className="trips-list mt-3" style={{ width: "100%" }}>
+          <Card.Header className="trips-list-header">
             <h2> My Trips </h2>
           </Card.Header>
           <Card.Body>

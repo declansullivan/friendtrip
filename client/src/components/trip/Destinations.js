@@ -3,7 +3,7 @@ import { Button, Card, Col, Row, Container, Alert} from "react-bootstrap";
 
 import ViewDestination from "./modals/ViewDestination";
 import AddDestination from "./modals/AddDestination";
-
+import "./Destinations.css";
 class Destinations extends Component {
     constructor(props) {
         super(props);
@@ -42,8 +42,11 @@ class Destinations extends Component {
                 </ViewDestination>
                 <AddDestination kind="Add" show={this.state.showAddDestination} handleClose={this.closeAddDestinationModal}></AddDestination>
 
-                <Card>
-                    <Card.Body>
+                <Card className="destinations-list">
+                    <Card.Header className="destinations-list-header">
+                        <h5> Destinations</h5>
+                    </Card.Header>
+                    <Card.Body className="destinations-list-body">
                         <Container fluid>
                             <Row>
                                 <Col xs={2}><h5>Destination</h5></Col>

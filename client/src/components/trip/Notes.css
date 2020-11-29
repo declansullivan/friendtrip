@@ -1,0 +1,11 @@
+.notes-list {
+    background-color: #EBEAF7;
+    border: 1px solid #81a6da;
+}
+.notes-list-header {
+    background-color: #166AE0;
+    color: white;
+}
+.notes-list-body {
+    background-color: #ffffff;
+}

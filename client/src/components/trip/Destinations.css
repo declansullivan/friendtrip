@@ -1,0 +1,11 @@
+.destinations-list {
+    background-color: #EBEAF7;
+    border: 1px solid #81a6da;
+}
+.destinations-list-header {
+    background-color: #166AE0;
+    color: white;
+}
+.destinations-list-body {
+    background-color: #ffffff;
+}
