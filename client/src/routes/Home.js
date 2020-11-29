@@ -50,6 +50,8 @@ class Home extends Component {
       },
       body: JSON.stringify({ id: this.getUserId() }),
     }).then((res) => res.json()).then((res) => {
+      console.log("new traveler")
+      console.log(res);
       this.setState({ traveler: res });
     });
   };
@@ -59,8 +61,11 @@ class Home extends Component {
   };
 
   selectTrip = (tripId) => {
-    this.setState({ tripId });
-    this.setState({ render: "trip" });
+    this.setState({ tripId, render: "trip" });
+  };
+
+  refreshTravelerJSON = () => {
+    this.getTravelerJSON();
   };
 
   getUserId = () => {
@@ -99,10 +104,14 @@ class Home extends Component {
             tripId={this.state.tripId}
             traveler={this.state.traveler}
             history={this.props.history}
-          ></Trip>
+          />
         );
       case "friends":
-        return <Friends></Friends>;
+        return (
+          <Friends
+            refreshTraveler={this.refreshTravelerJSON}
+          />
+        );
       case "createTrip":
         return (
           <CreateTrip refreshTraveler={this.refreshTravelerJSON}></CreateTrip>
@@ -111,10 +120,6 @@ class Home extends Component {
         return <HomePage></HomePage>;
     }
   }
-
-  refreshTravelerJSON = () => {
-    this.getTravelerJSON();
-  };
 
   componentDidMount() {
     this.getTravelerJSON();

@@ -149,9 +149,10 @@ router.post("/acceptInvite", function (req, res, next) {
   handleGetTraveler = (traveler) => {
     // Remove invitation
     var invitations = [];
-    if (traveler.invitations) invitations = traveler.invitations;
-    for (const invite of invitations) {
-      if (invite !== req.body.tripId) invitations.push(invite);
+    if (traveler.invitations) {
+      for (const invite of traveler.invitations) {
+        if (invite !== req.body.tripId) invitations.push(invite);
+      }
     }
 
     // Add Trip
@@ -189,10 +190,12 @@ router.post("/acceptInvite", function (req, res, next) {
 router.post("/rejectInvite", function (req, res, next) {
   handleGetTraveler = (traveler) => {
     var invitations = [];
-    if (traveler.invitations) invitations = traveler.invitations;
-    for (const invite of invitations) {
-      if (invite !== req.body.tripId) invitations.push(invite);
+    if (traveler.invitations) {
+      for (const invite of traveler.invitations) {
+        if (invite !== req.body.tripId) invitations.push(invite);
+      }
     }
+
     const data = { id: req.body.travelerId, invitations };
     updateTraveler(data, handleUpdateTraveler);
   }

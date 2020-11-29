@@ -7,6 +7,7 @@ class Travelers extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            render: false,
             showAddTraveler: false,
             travelers: [],
             friendIds: []
@@ -33,13 +34,14 @@ class Travelers extends Component {
             body: JSON.stringify({ travelerIds: this.props.travelerIds }),
         }).then((res) => res.json()).then((res) => {
             this.setState({ travelers: res.travelers });
+            
             var friends;
-            if (!res.friendIds) friends = [];
-            else friends = res.friendIds;
+            if (!this.props.friendIds) friends = [];
+            else friends = this.props.friendIds;
             
             // Friend Ids that aren't in the Trip
             friends.filter(value => !res.travelers.includes(value))
-            this.setState({ friendIds: friends })
+            this.setState({ friendIds: friends, render: true })
         });
     }
 
@@ -68,13 +70,13 @@ class Travelers extends Component {
     }
 
     render() {
+        if (!this.state.render) return (<div></div>)
         return (
             <div>
                 <AddTraveler 
                     id={this.props.id}
                     friendIds={this.state.friendIds}
                     show={this.state.showAddTraveler} 
-                    refreshTrip={this.props.refreshTrip}
                     handleClose={this.closeAddTravelerModal}/>
 
                 <Card className="travelers-list">

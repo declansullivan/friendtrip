@@ -10,7 +10,7 @@ class Trips extends Component {
     this.state = {
       trips: [],
       invitedTrips: [],
-      owners: {},
+      owners: {}
     };
   }
 
@@ -22,20 +22,31 @@ class Trips extends Component {
     return owners;
   };
 
-  getTripsJSON = () => {
+  getTripsJSON = (tripIds, invitations) => {
     fetch("http://localhost:9000/trip/getTrips", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ tripIds: this.props.tripIds }),
+      body: JSON.stringify({ tripIds }),
     }).then((res) => res.json()).then((res) => {
-      this.setState({ trips: res.trips });
-      this.getOwnerNames();
+      this.getInvitedTripsJSON(res.trips, invitations)
     });
   };
 
-  getOwnerNames = () => {
+  getInvitedTripsJSON = (trips, tripIds) => {
+    fetch("http://localhost:9000/trip/getTrips", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ tripIds }),
+    }).then((res) => res.json()).then((res) => {
+      this.getOwnerNames(trips, res.trips);
+    });
+  }
+
+  getOwnerNames = (trips, invitedTrips) => {
     fetch("http://localhost:9000/trip/getTravelers", {
       method: "POST",
       headers: {
@@ -47,47 +58,20 @@ class Trips extends Component {
       for (const traveler of res.travelers) {
         owners[traveler.id] = traveler.firstName + " " + traveler.lastName;
       }
-      this.setState({ owners });
+      this.setState({ trips, invitedTrips, owners });
     });
   };
 
-  getInvitedTripsJSON = () => {
-    fetch("http://localhost:9000/trip/getTrips", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ tripIds: this.props.invitations }),
-    }).then((res) => res.json()).then((res) => {
-      this.setState({ invitedTrips: res.trips });
-    });
-  }
-
-  acceptInvitation = (tripId) => {
+  handleInvitation = (tripId, method) => {
     const data = { travelerId: this.getUserId(), tripId }
-    fetch("http://localhost:9000/trip/acceptInvite", {
+    fetch("http://localhost:9000/trip/" + method, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    }).then((res) => res.json()).then((res) => {
-      this.getTripsJSON();
-      this.getInvitedTripsJSON();
-    });
-  }
-
-  declineInvitation = (tripId) => {
-    const data = { travelerId: this.getUserId(), tripId }
-    fetch("http://localhost:9000/trip/rejectInvite", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }).then((res) => res.json()).then((res) => {
-      this.getTripsJSON();
-      this.getInvitedTripsJSON();
+    }).then((res) => {
+      this.props.refreshTraveler();
     });
   }
 
@@ -119,14 +103,14 @@ class Trips extends Component {
 
   createInvitation(invite) {
     return (
-      <Row className="trips-invite m-0 text-center p-1" key={invite.id}>
+      <Row className="trips-invite m-0 text-center p-1" key={invite.id} id={"row" + invite.id}>
       <Col xs={2}>{invite.name}</Col>
       <Col xs={5}>{invite.description}</Col>
       <Col>
-        <Button onClick={() => {this.acceptInvitation(invite.id)}} variant="success">
+        <Button onClick={() => {this.handleInvitation(invite.id, "acceptInvite")}} variant="success">
           Accept
         </Button>{" "}
-        <Button onClick={() => {this.declineInvitation(invite.id)}} className="ml-3" variant="danger">
+        <Button onClick={() => {this.handleInvitation(invite.id, "rejectInvite")}} className="ml-3" variant="danger">
           Decline
         </Button>
       </Col>
@@ -152,9 +136,16 @@ class Trips extends Component {
     return invitesJSX;
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log("sent props");
+    console.log(nextProps)
+    this.getTripsJSON(nextProps.tripIds, nextProps.invitations);
+  }
+
   componentDidMount() {
-    this.getTripsJSON();
-    this.getInvitedTripsJSON();
+    console.log("mounted")
+    console.log(this.props);
+    this.getTripsJSON(this.props.tripIds, this.props.invitations);
   }
 
   render() {

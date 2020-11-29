@@ -38,16 +38,14 @@ class CreateTrip extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.status === 200) {
-          this.addTravelerToTrip(travelerId, res.tripId);
-          this.showAlert("Successfully created Trip!", "success");
-        } else {
-          this.showAlert("Failed to create Trip.", "danger");
-        }
-      });
+    }).then((res) => res.json()).then((res) => {
+      if (res.status === 200) {
+        this.addTravelerToTrip(travelerId, res.tripId);
+        this.showAlert("Successfully created Trip!", "success");
+      } else {
+        this.showAlert("Failed to create Trip.", "danger");
+      }
+    });
   };
 
   addTravelerToTrip = (travelerId, tripId) => {

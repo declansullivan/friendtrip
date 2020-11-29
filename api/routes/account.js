@@ -1,5 +1,5 @@
 var express = require('express');
-const { getTraveler } = require('../db/models/traveler');
+const { getTraveler, updateTraveler } = require('../db/models/traveler');
 var router = express.Router();
 
 router.post('/getAccount', function(req, res, next) {
@@ -15,7 +15,43 @@ router.post('/editAccount', function(req, res, next) {
 });
 
 router.post('/addFriend', function(req, res, next) {
-    res.send("Not Implemented!");
+    handleValidTraveler = (traveler) => {
+        // Traveler invited must exist
+        if (!traveler) {
+            res.sendStatus(404);
+            return;
+        }
+
+        getTraveler(req.body.id, handleGetTraveler);
+    }
+
+    handleGetTraveler = (traveler) => {
+        if (!traveler.friendIds) traveler.friendIds = [];
+
+        // No duplicate friends.
+        for (const friend of traveler.friendIds) {
+            if (friend === req.body.friendId) {
+                res.sendStatus(202);
+                return;
+            }
+        }
+
+        traveler.friendIds.push(req.body.friendId);
+        updateTraveler(traveler, handleUpdateTraveler);
+    }
+
+    handleUpdateTraveler = (error) => {
+        if (error) res.sendStatus(401);
+        else res.sendStatus(200);
+    }
+
+    // No self friend requests.
+    if (req.body.id === req.body.friendId) {
+        res.sendStatus(403);
+        return;
+    }
+
+    getTraveler(req.body.friendId, handleValidTraveler);
 });
 
 router.delete('/removeFriend', function(req, res, next) {

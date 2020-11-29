@@ -22,14 +22,13 @@ class AddTraveler extends Component {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
-        }).then((res) => res.json()).then((res) => {
-            if (res.status == 200) 
+        }).then((res) => {
+            if (res.status === 200) 
                 this.showAlert("Successfully invited Traveler!", "success");
             else if (res.status === 202) 
                 this.showAlert("Traveler is already invited.", "warning")
             else 
                 this.showAlert("Failed to invite Traveler.", "danger")
-            this.props.refreshTrip();
         });
     }
 
@@ -49,14 +48,12 @@ class AddTraveler extends Component {
         const name = friend.firstName + " " + friend.lastName;
 
         return (
-            <ListGroup>
                 <ListGroup.Item 
                     key={friend.id}
                     onClick={() => {this.addTraveler(friend.id)}}
                     action variant="info">
                     {name} - {friend.email}
                 </ListGroup.Item>
-            </ListGroup>
         )
     }
 
@@ -97,7 +94,9 @@ class AddTraveler extends Component {
                 >
                 <Modal.Body>
                     <h4>Click a Friend to add to them to the Trip</h4>
-                    {this.renderFriends()}
+                    <ListGroup> 
+                        {this.renderFriends()}
+                    </ListGroup>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={this.props.handleClose}>Close</Button>
