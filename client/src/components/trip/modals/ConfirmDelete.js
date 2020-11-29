@@ -16,6 +16,7 @@ class ConfirmDelete extends Component {
                 show={this.props.show}
                 dialogClassName="modal-60w"
                 aria-labelledby="contained-modal-title-vcenter"
+                onHide={this.props.handleClose}
                 animation={false}
                 centered
                 >

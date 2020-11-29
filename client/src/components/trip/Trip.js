@@ -16,6 +16,7 @@ class Trip extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            render: false,
             showDeleteTrip: false,
             showEditTrip: false,
             showAddItem: false,
@@ -81,10 +82,10 @@ class Trip extends Component {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ tripId: this.props.tripId }),
-        }).then((res) => res.json())
-            .then((res) => {
-                this.setState({ tripData: res.trip });
-            });
+        }).then((res) => res.json()).then((res) => {
+            this.setState({ tripData: res.trip });
+            this.setState({ render: true });
+        });
     }
 
     refreshTripJSON = () => {
@@ -96,6 +97,7 @@ class Trip extends Component {
     }
 
     render() {
+        if (!this.state.render) return (<div></div>)
         return (
             <div className="mt-3">
                 <ConfirmDelete show={this.state.showDeleteTrip} handleClose={this.closeDeleteTripModal}></ConfirmDelete>
@@ -145,6 +147,7 @@ class Trip extends Component {
                                 </Col>
                                 <Col>
                                     <Travelers
+                                        id={this.state.tripData.id}
                                         travelerIds={this.state.tripData.travelerIds}
                                         friendIds={this.props.traveler.friendIds}
                                         refreshTrip={this.refreshTripJSON}/>

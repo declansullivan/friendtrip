@@ -7,7 +7,8 @@ class Travelers extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showAddTraveler: false
+            showAddTraveler: false,
+            travelers: []
         }
 
         this.openAddTravelerModal = this.openAddTravelerModal.bind(this);
@@ -22,17 +23,54 @@ class Travelers extends Component {
         this.setState({showAddTraveler: true});
     }
 
+    getTravelersJSON = () => {
+        fetch("http://localhost:9000/trip/getTravelers", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ travelerIds: this.props.travelerIds }),
+        }).then((res) => res.json()).then((res) => {
+            this.setState({ travelers: res.travelers });
+        });
+    }
+
+    createTraveler = (traveler) => {
+        const name = traveler.firstName + " "+ traveler.lastName;
+        return (
+            <ListGroup.Item key={traveler.id}>
+                <span id={traveler.id} className="close">❌</span>
+                {name}
+            </ListGroup.Item>
+        )
+    }
+
+    renderTravelers = () => {
+        if (!this.state.travelers) return;
+
+        var travelersJSX = [];
+        for (const traveler of this.state.travelers) {
+          travelersJSX.push(this.createTraveler(traveler));
+        }
+        return travelersJSX;
+    }
+    
+    componentDidMount() {
+        this.getTravelersJSON();
+    }
+
     render() {
         return (
             <div>
-                <AddTraveler show={this.state.showAddTraveler} handleClose={this.closeAddTravelerModal}></AddTraveler>
+                <AddTraveler 
+                    id={this.props.id}
+                    show={this.state.showAddTraveler} 
+                    handleClose={this.closeAddTravelerModal}/>
 
                 <Card>
                     <Card.Header>Travelers</Card.Header>
                     <ListGroup variant="flush">
-                        {/* Need to create rows programmatically */}
-                        <ListGroup.Item><span className="close">❌</span>Declan</ListGroup.Item>
-                        <ListGroup.Item><span className="close">❌</span>More Travelers</ListGroup.Item>
+                        { this.renderTravelers() }
                         <Button variant="light" onClick={this.openAddTravelerModal}>Add Traveler</Button>
                     </ListGroup>
                 </Card>
