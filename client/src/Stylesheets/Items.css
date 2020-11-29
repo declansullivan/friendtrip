@@ -1,0 +1,11 @@
+.item-list {
+    background-color: #FFFFFF;
+    border: 1px solid #81a6da;
+}
+.item-list-header {
+    background-color: #166AE0;
+    color: white;
+}
+.item-list-body {
+    background-color: #ffffff;
+}

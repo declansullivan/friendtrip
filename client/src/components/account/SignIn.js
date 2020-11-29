@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import friendtripLogo from "../../Media/friendtripLogo.svg";
 import loginImage from "../../Media/loginImage.svg";
 import Fade from "react-reveal/Fade";
-import "./SignIn.css";
+import "../../Stylesheets/SignIn.css";
 class SignIn extends Component {
   constructor(props) {
     super(props);

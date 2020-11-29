@@ -14,7 +14,7 @@ import AddExpense from "./modals/AddExpense";
 
 import Fade from "react-reveal/Fade";
 import tripIcon from "../../Media/tripIcon.svg";
-import "./Trip.css";
+import "../../Stylesheets/Trip.css";
 class Trip extends Component {
   constructor(props) {
     super(props);

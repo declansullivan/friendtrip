@@ -17,7 +17,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("../../Media//loginImage.svg");
+  background-image: url("../Media/loginImage.svg");
   background-repeat: no-repeat;
   background-size: cover;
 }

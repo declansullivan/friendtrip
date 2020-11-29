@@ -3,7 +3,7 @@ import { Button, Card, Col, Row, Container, Alert} from "react-bootstrap";
 
 import ViewDestination from "./modals/ViewDestination";
 import AddDestination from "./modals/AddDestination";
-import "./Destinations.css";
+import "../../Stylesheets/Destinations.css";
 class Destinations extends Component {
     constructor(props) {
         super(props);

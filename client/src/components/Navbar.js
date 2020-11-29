@@ -6,8 +6,8 @@ import homeIcon from "../Media/homeIcon.svg";
 import createTripIcon from "../Media/createTripIcon.svg";
 import navbarRetractableIcon from "../Media/navbarRetractableIcon.svg";
 import friendtripLogo from "../Media/friendtripLogo.svg";
+import "../Stylesheets/Navbar.css";
 
-import "./Navbar.css";
 class Navbar extends Component {
   constructor(props) {
     super(props);

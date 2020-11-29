@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container, Row, Col, Card, ListGroup, Button } from "react-bootstrap";
 import tripPageImage from "../../Media/tripPageImage.svg";
 import tripIcon from "../../Media/tripIcon.svg";
-import "./Trips.css";
+import "../../Stylesheets/Trips.css";
 
 class Trips extends Component {
   constructor(props) {

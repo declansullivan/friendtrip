@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Card, Col, Row, Tab, ListGroup, Button } from "react-bootstrap";
 
 import AddItem from "./modals/AddItem";
+import "../../Stylesheets/Items.css";
 
 class Items extends Component {
     constructor(props) {
@@ -28,9 +29,9 @@ class Items extends Component {
             <div>
             <AddItem kind="Edit" show={this.state.showAddItem} handleClose={this.closeAddItemModal}></AddItem>
 
-            <Card>
-                <Card.Header> <h5>{this.props.category} List</h5> </Card.Header>
-                <Card.Body>
+            <Card className="item-list">
+                <Card.Header className="item-list-header"> <h5>{this.props.category} List</h5> </Card.Header>
+                <Card.Body className="item-list-body">
                     <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1" transition={false}>
                         <Row>
                             <Col sm={5}>

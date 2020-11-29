@@ -1,20 +1,20 @@
 import React, { Component } from "react";
 import { Dropdown } from "react-bootstrap";
 import ScrollToTop from "../components/ScrollToTop";
-import Navbar from "../components/Navbar.js";
-import Account from "../components/account/Account";
+import Navbar from "../components/Navbar";
+import Account from "../components/Account/Account";
 import Friends from "../components/Friends";
 import Trips from "../components/trip/Trips";
 import Trip from "../components/trip/Trip";
 import HomePage from "../components/HomePage";
-import CreateTrip from "../components/CreateTrip";
+import CreateTrip from "../components/trip/CreateTrip";
 import dropdownIcon from "../Media/dropdownIcon.svg";
 import accountIcon from "../Media/accountIcon.svg";
 import logoutLogo from "../Media/logoutLogo.svg";
 import profileLogo from "../Media/profileIcon.svg";
 import navBarImage from "../Media/loginImage.svg";
 import Fade from "react-reveal/Fade";
-import "./Home.css";
+import "../Stylesheets/Home.css";
 
 class Home extends Component {
   constructor(props) {

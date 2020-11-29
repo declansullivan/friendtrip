@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Card } from "react-bootstrap";
 
 import EditNotes from "./modals/EditNotes";
-import "./Notes.css";
+import "../../Stylesheets/Notes.css";
 class Notes extends Component {
   constructor(props) {
     super(props);
