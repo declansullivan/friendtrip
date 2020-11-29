@@ -3,10 +3,6 @@ const { getTraveler, getTravelerList, updateTraveler } = require('../db/models/t
 const { getTripList, getTrip, updateTrip } = require('../db/models/trip');
 var router = express.Router();
 
-router.get('/', function(req, res, next) {
-    res.send("Trip page.");
-});
-
 router.post('/getTrip', function(req, res, next) {
     handleGetTrip = (trip) => {
         res.json({ trip });
@@ -33,12 +29,8 @@ router.post('/getTravelers', function(req, res, next) {
 
 router.put('/addTraveler', function(req, res, next) {
     handleGetTraveler = (traveler) => {
-        var trips;
-        if (!traveler.tripIds) trips = [];
-        else trips = traveler.tripIds;
-
-        trips.push(req.body.tripId);
-        traveler.tripIds = trips;
+        if (!traveler.tripIds) traveler.tripIds = [];
+        traveler.tripIds.push(req.body.tripId);
 
         updateTraveler(traveler, handleUpdateTraveler);
     }
@@ -60,11 +52,23 @@ router.post('/updateItinerary', function(req, res, next) {
     updateTrip(req.body, handleUpdateItinerary);
 });
 
-router.put('/addTripLeader', function(req, res, next) {
-    res.send("Not Implemented!");
+router.post('/sendInvite', function(req, res, next) {
+    handleGetTraveler = (traveler) => {
+        if (!traveler.invitations) traveler.invitations = [];
+        traveler.invitations.push(req.body.tripId);
+
+        updateTraveler(traveler, handleUpdateTraveler);
+    }
+
+    handleUpdateTraveler = (error) => {
+        if (error) res.sendStatus(401);
+        else res.sendStatus(200);
+    }
+
+    getTraveler(req.body.id, handleGetTraveler);
 });
 
-router.get('/viewTravelers', function(req, res, next) {
+router.put('/addTripLeader', function(req, res, next) {
     res.send("Not Implemented!");
 });
 

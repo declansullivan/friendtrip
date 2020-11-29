@@ -2,11 +2,6 @@ var express = require('express');
 const { getTraveler } = require('../db/models/traveler');
 var router = express.Router();
 
-router.get('/', function(req, res, next) {
-    res.send("Accounts page.");
-//   res.render('account', { title: 'Express' });
-});
-
 router.post('/getAccount', function(req, res, next) {
     handleGetAccount = (account) => {
         res.json(account);

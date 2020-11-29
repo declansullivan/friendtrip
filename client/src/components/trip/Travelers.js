@@ -8,7 +8,8 @@ class Travelers extends Component {
         super(props);
         this.state = {
             showAddTraveler: false,
-            travelers: []
+            travelers: [],
+            friendIds: []
         }
 
         this.openAddTravelerModal = this.openAddTravelerModal.bind(this);
@@ -32,11 +33,18 @@ class Travelers extends Component {
             body: JSON.stringify({ travelerIds: this.props.travelerIds }),
         }).then((res) => res.json()).then((res) => {
             this.setState({ travelers: res.travelers });
+            var friends;
+            if (!res.friendIds) friends = [];
+            else friends = res.friendIds;
+            
+            // Friend Ids that aren't in the Trip
+            friends.filter(value => !res.travelers.includes(value))
+            this.setState({ friendIds: friends })
         });
     }
 
     createTraveler = (traveler) => {
-        const name = traveler.firstName + " "+ traveler.lastName;
+        const name = traveler.firstName + " " + traveler.lastName;
         return (
             <ListGroup.Item key={traveler.id}>
                 <span id={traveler.id} className="close">❌</span>
@@ -64,6 +72,7 @@ class Travelers extends Component {
             <div>
                 <AddTraveler 
                     id={this.props.id}
+                    friendIds={this.state.friendIds}
                     show={this.state.showAddTraveler} 
                     handleClose={this.closeAddTravelerModal}/>
 
