@@ -86,6 +86,7 @@ class Home extends Component {
           <Trip
             tripId={this.state.tripId}
             traveler={this.state.traveler}
+            history={this.props.history}
           ></Trip>
         );
       case "friends":

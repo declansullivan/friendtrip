@@ -41,31 +41,40 @@ class Trip extends Component {
     this.openAddExpenseModal = this.openAddExpenseModal.bind(this);
     this.closeAddExpenseModal = this.closeAddExpenseModal.bind(this);
   }
+
   // Handle modal visibility
   closeDeleteTripModal = () => {
     this.setState({ showDeleteTrip: false });
   };
+
   openDeleteTripModal = () => {
     this.setState({ showDeleteTrip: true });
   };
+
   closeEditTripModal = () => {
     this.setState({ showEditTrip: false });
   };
+
   openEditTripModal = () => {
     this.setState({ showEditTrip: true });
   };
+
   closeAddItemModal = () => {
     this.setState({ showAddItem: false });
   };
+
   openAddItemModal = () => {
     this.setState({ showAddItem: true });
   };
+
   closeAddExpenseModal = () => {
     this.setState({ showAddExpense: false });
   };
+
   openAddExpenseModal = () => {
     this.setState({ showAddExpense: true });
   };
+
   // Retrieve all releveant data
   getTripJSON = () => {
     fetch("http://localhost:9000/trip/getTrip", {
@@ -81,12 +90,15 @@ class Trip extends Component {
         this.setState({ render: true });
       });
   };
+
   refreshTripJSON = () => {
     this.getTripJSON();
   };
+
   componentDidMount() {
     this.getTripJSON();
   }
+
   render() {
     if (!this.state.render) return <div></div>;
     return (
@@ -107,7 +119,11 @@ class Trip extends Component {
         </div>
         <hr></hr>
         <ConfirmDelete
+          tripId={this.state.tripData.id}
+          travelerIds={this.state.tripData.travelerIds}
+          history={this.props.history}
           show={this.state.showDeleteTrip}
+          refreshTrip={this.refreshTripJSON}
           handleClose={this.closeDeleteTripModal}
         ></ConfirmDelete>
         <EditTrip

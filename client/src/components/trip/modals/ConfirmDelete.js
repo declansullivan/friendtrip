@@ -2,39 +2,54 @@ import React, { Component } from "react";
 import { Button, Modal } from "react-bootstrap";
 
 class ConfirmDelete extends Component {
-    constructor(props) {
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    deleteTrip = () => {
+  deleteTrip = (event) => {
+      event.preventDefault();
+      const data = {
+        tripId: this.props.tripId,
+        travelerIds: this.props.travelerIds,
+      };
+      fetch("http://localhost:9000/trip/deleteTrip", {
+          method: "DELETE",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+      }).then((res) => {
+          this.props.history.push("/");
+          this.props.handleClose();
+      });
+  };
 
-    }
-
-    render() {
-        return (
-            <Modal
-                show={this.props.show}
-                dialogClassName="modal-60w"
-                aria-labelledby="contained-modal-title-vcenter"
-                onHide={this.props.handleClose}
-                animation={false}
-                centered
-                >
-                <Modal.Body>
-                    <h4>Are you sure you want to delete this trip?</h4>
-                    <p>
-                        Deleting the trip will delete all information associated with the Trip,
-                        including Items, Expenses, and Destinations.
-                    </p>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={this.props.handleClose}>Cancel</Button>
-                    <Button variant="danger" onClick={this.deleteTrip}>Delete Trip</Button>
-                </Modal.Footer>
-            </Modal>
-        )
-    }
+  render() {
+    return (
+      <Modal
+        show={this.props.show}
+        dialogClassName="modal-60w"
+        aria-labelledby="contained-modal-title-vcenter"
+        onHide={this.props.handleClose}
+        animation={false}
+        centered
+      >
+        <Modal.Body>
+          <h4>Are you sure you want to delete this Trip?</h4>
+          <hr></hr>
+            <p>
+            Deleting the trip will delete all information associated with the
+            Trip, including Items, Expenses, and Destinations.
+            </p>
+          <hr></hr>
+          <Button className="" variant="danger" onClick={this.deleteTrip}>
+            Delete Trip
+          </Button>
+          <Button className="ml-3" onClick={this.props.handleClose}>Cancel</Button>
+        </Modal.Body>
+      </Modal>
+    );
+  }
 }
 
 export default ConfirmDelete;
-

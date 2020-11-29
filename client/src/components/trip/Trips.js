@@ -9,7 +9,7 @@ class Trips extends Component {
     super(props);
     this.state = {
       trips: [],
-      owners: {}
+      owners: {},
     };
   }
 
@@ -23,6 +23,7 @@ class Trips extends Component {
     })
       .then((res) => res.json())
       .then((res) => {
+        console.log(res.trips);
         this.setState({ trips: res.trips });
         this.getOwnerNames();
       });
@@ -34,7 +35,7 @@ class Trips extends Component {
       owners.push(trip.travelerId);
     }
     return owners;
-  }
+  };
 
   getOwnerNames = () => {
     fetch("http://localhost:9000/trip/getTravelers", {
@@ -46,32 +47,33 @@ class Trips extends Component {
     })
       .then((res) => res.json())
       .then((res) => {
-        const owners = {}
+        const owners = {};
         for (const traveler of res.travelers) {
-          owners[traveler.id] = traveler.firstName + " " + traveler.lastName
+          owners[traveler.id] = traveler.firstName + " " + traveler.lastName;
         }
         this.setState({ owners });
       });
-  }
+  };
 
   createTrip(trip) {
-    const ownerName = this.state.owners[trip.travelerId]
+    const ownerName = this.state.owners[trip.travelerId];
     return (
-      <ListGroup.Item
-        key={trip.id}
-        action
-        onClick={() => this.props.callback(trip.id)}
-      >
-        <Row
-          style={{ color: "black" }}
-          className="align-items-center text-center"
+        <ListGroup.Item
+          className="d-inline-block w-80"
+          key={trip.id}
+          action
+          onClick={() => this.props.callback(trip.id)}
         >
-          <Col xs={2}>{trip.name}</Col>
-          <Col xs={2}>{ownerName}</Col>
-          <Col xs={2}>{Object.keys(trip.travelerIds).length}</Col>
-          <Col>{trip.description}</Col>
-        </Row>
-      </ListGroup.Item>
+          <Row
+            style={{ color: "black" }}
+            className="align-items-center text-center"
+          >
+            <Col xs={2}>{trip.name}</Col>
+            <Col xs={2}>{ownerName}</Col>
+            <Col xs={2}>{Object.keys(trip.travelerIds).length}</Col>
+            <Col>{trip.description}</Col>
+          </Row>
+        </ListGroup.Item>
     );
   }
 
