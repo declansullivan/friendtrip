@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ScrollToTopIcon from "../Media/scrollToTopIcon.svg";
-import "./ScrollToTop.css";
+import "../Stylesheets/ScrollToTop.css";
 import { Fade } from "react-reveal";
 
 export default class ScrollToTop extends Component {

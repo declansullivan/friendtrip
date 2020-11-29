@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Card, Col, Row, Tab, ListGroup, Button } from "react-bootstrap";
 
 import AddExpense from "./modals/AddExpense";
-
+import "../../Stylesheets/Expenses.css";
 class Expenses extends Component {
     constructor(props) {
         super(props);
@@ -27,9 +27,9 @@ class Expenses extends Component {
             <div>
             <AddExpense kind="Edit" show={this.state.showAddExpense} handleClose={this.closeAddExpenseModal}></AddExpense>
 
-            <Card>
-            <Card.Header> <h5> Expenses </h5> </Card.Header>
-                <Card.Body>
+            <Card className="expenses-list">
+            <Card.Header className="expenses-list-header"> <h5> Expenses </h5> </Card.Header>
+                <Card.Body className="expenses-list-body">
                     <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
                         <Row>
                             <Col sm={5}>

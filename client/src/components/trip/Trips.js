@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import { Container, Row, Col, Card, ListGroup, Button } from "react-bootstrap";
 import tripPageImage from "../../Media/tripPageImage.svg";
 import tripIcon from "../../Media/tripIcon.svg";
-import "./Trips.css";
+import "../../Stylesheets/Trips.css";
 
 class Trips extends Component {
   constructor(props) {
     super(props);
     this.state = {
       trips: [],
-      owners: {}
+      owners: {},
     };
   }
 
@@ -34,7 +34,7 @@ class Trips extends Component {
       owners.push(trip.travelerId);
     }
     return owners;
-  }
+  };
 
   getOwnerNames = () => {
     fetch("http://localhost:9000/trip/getTravelers", {
@@ -46,45 +46,44 @@ class Trips extends Component {
     })
       .then((res) => res.json())
       .then((res) => {
-        const owners = {}
+        const owners = {};
         for (const traveler of res.travelers) {
-          owners[traveler.id] = traveler.firstName + " " + traveler.lastName
+          owners[traveler.id] = traveler.firstName + " " + traveler.lastName;
         }
         this.setState({ owners });
       });
-  }
+  };
 
   createTrip(trip) {
-    const ownerName = this.state.owners[trip.travelerId]
+    const ownerName = this.state.owners[trip.travelerId];
     return (
-      <ListGroup.Item
-        key={trip.id}
-        action
-        onClick={() => this.props.callback(trip.id)}
-      >
-        <Row
-          style={{ color: "black" }}
-          className="align-items-center text-center"
+        <ListGroup.Item
+          className="d-inline-block w-80"
+          key={trip.id}
+          action
+          onClick={() => this.props.callback(trip.id)}
         >
-          <Col xs={2}>{trip.name}</Col>
-          <Col xs={2}>{ownerName}</Col>
-          <Col xs={2}>{Object.keys(trip.travelerIds).length}</Col>
-          <Col>{trip.description}</Col>
-        </Row>
-      </ListGroup.Item>
+          <Row
+            style={{ color: "black" }}
+            className="align-items-center text-center"
+          >
+            <Col xs={2}>{trip.name}</Col>
+            <Col xs={2}>{ownerName}</Col>
+            <Col xs={2}>{Object.keys(trip.travelerIds).length}</Col>
+            <Col>{trip.description}</Col>
+          </Row>
+        </ListGroup.Item>
     );
   }
 
   renderTrips() {
     if (!this.state.trips) return;
-
     var tripsJSX = [];
     for (const trip of this.state.trips) {
       tripsJSX.push(this.createTrip(trip));
     }
     return tripsJSX;
   }
-
   componentDidMount() {
     this.getTripsJSON();
   }
@@ -92,7 +91,7 @@ class Trips extends Component {
   render() {
     return (
       <div className="w-100 h-100">
-        <div className="trip-page-header">
+        <div className="trips-page-header">
           <img
             src={tripIcon}
             width="40"
@@ -109,8 +108,8 @@ class Trips extends Component {
         <hr></hr>
 
         {/* TRIP INVITATIONS */}
-        <Card className="trip-list" style={{ width: "100%" }}>
-          <Card.Header className="trip-list-header">
+        <Card className="trips-list" style={{ width: "100%" }}>
+          <Card.Header className="trips-list-header">
             <h2> Trip Invitations </h2>
           </Card.Header>
           <Card.Body>
@@ -129,7 +128,7 @@ class Trips extends Component {
               </Row>
 
               {/* Need to programmatically create rows. */}
-              <Row className="trip-invite m-0 text-center p-1">
+              <Row className="trips-invite m-0 text-center p-1">
                 <Col xs={2}>Username</Col>
                 <Col xs={2}>Trip Name</Col>
                 <Col xs={5}>Trip Description</Col>
@@ -142,7 +141,7 @@ class Trips extends Component {
               </Row>
 
               {/* Need to programmatically create rows. */}
-              <Row className="trip-invite m-0 text-center p-1">
+              <Row className="trips-invite m-0 text-center p-1">
                 <Col xs={2}>Username</Col>
                 <Col xs={2}>Trip Name</Col>
                 <Col xs={5}>Trip Description</Col>
@@ -158,8 +157,8 @@ class Trips extends Component {
         </Card>
 
         {/* VIEW MY TRIPS */}
-        <Card className="trip-list mt-3" style={{ width: "100%" }}>
-          <Card.Header className="trip-list-header">
+        <Card className="trips-list mt-3" style={{ width: "100%" }}>
+          <Card.Header className="trips-list-header">
             <h2> My Trips </h2>
           </Card.Header>
           <Card.Body>

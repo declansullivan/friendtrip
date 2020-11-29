@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Button, Card, ListGroup } from "react-bootstrap";
-import "./Account.css";
+import "../../Stylesheets/Account.css";
 import editIcon from "../../Media/accountEditIcon.svg";
 
 class Account extends Component {

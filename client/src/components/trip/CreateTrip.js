@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Form, Button, Col, Card, Alert } from "react-bootstrap";
-import createTripImage from "../Media/createTripImage.svg";
+import createTripImage from "../../Media/createTripImage.svg";
 import { Link } from "react-router-dom";
-import createTripIcon from "../Media/createTripIcon.svg";
-import "./CreateTrip.css";
+import createTripIcon from "../../Media/createTripIcon.svg";
+import "../../Stylesheets/CreateTrip.css";
 
 class CreateTrip extends Component {
   constructor(props) {

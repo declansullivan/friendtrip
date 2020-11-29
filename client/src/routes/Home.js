@@ -1,26 +1,27 @@
 import React, { Component } from "react";
 import { Dropdown } from "react-bootstrap";
 import ScrollToTop from "../components/ScrollToTop";
-import Navbar from "../components/Navbar.js";
+import Navbar from "../components/Navbar";
 import Account from "../components/account/Account";
 import Friends from "../components/Friends";
 import Trips from "../components/trip/Trips";
 import Trip from "../components/trip/Trip";
 import HomePage from "../components/HomePage";
-import CreateTrip from "../components/CreateTrip";
+import CreateTrip from "../components/trip/CreateTrip";
 import dropdownIcon from "../Media/dropdownIcon.svg";
 import accountIcon from "../Media/accountIcon.svg";
 import logoutLogo from "../Media/logoutLogo.svg";
 import profileLogo from "../Media/profileIcon.svg";
 import navBarImage from "../Media/loginImage.svg";
 import Fade from "react-reveal/Fade";
-import "./Home.css";
+import "../Stylesheets/Home.css";
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.page = this.switchPage.bind(this);
     this.logout = this.logoutFunc.bind(this);
+    this.renderOnDeleteTrip = this.renderOnDeleteTrip.bind(this);
     this.state = {
       render: "",
       tripId: "",
@@ -65,10 +66,23 @@ class Home extends Component {
     this.setState({ tripId });
     this.setState({ render: "trip" });
   };
-
   getUserId = () => {
     return localStorage.getItem("id");
   };
+
+  renderOnDeleteTrip = () => {
+    fetch("http://localhost:9000/account/getAccount", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: this.getUserId() }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        this.setState({ traveler: res, render: "trips" });
+      });
+  }
 
   renderContent() {
     switch (this.state.render) {
@@ -84,8 +98,10 @@ class Home extends Component {
       case "trip":
         return (
           <Trip
+            renderOnDeleteTrip={this.renderOnDeleteTrip}
             tripId={this.state.tripId}
             traveler={this.state.traveler}
+            history={this.props.history}
           ></Trip>
         );
       case "friends":

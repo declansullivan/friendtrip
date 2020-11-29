@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { ListGroup, Button, Card} from "react-bootstrap";
 
 import AddTraveler from "./modals/AddTraveler"
-
+import "../../Stylesheets/Travelers.css";
 class Travelers extends Component {
     constructor(props) {
         super(props);
@@ -76,8 +76,8 @@ class Travelers extends Component {
                     show={this.state.showAddTraveler} 
                     handleClose={this.closeAddTravelerModal}/>
 
-                <Card>
-                    <Card.Header>Travelers</Card.Header>
+                <Card className="travelers-list">
+                    <Card.Header className="travelers-list-header">Travelers</Card.Header>
                     <ListGroup variant="flush">
                         { this.renderTravelers() }
                         <Button variant="light" onClick={this.openAddTravelerModal}>Add Traveler</Button>
