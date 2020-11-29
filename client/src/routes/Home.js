@@ -66,6 +66,7 @@ class Home extends Component {
     this.setState({ tripId });
     this.setState({ render: "trip" });
   };
+
   getUserId = () => {
     return localStorage.getItem("id");
   };
@@ -92,6 +93,8 @@ class Home extends Component {
         return (
           <Trips
             tripIds={this.state.traveler.tripIds}
+            invitations={this.state.traveler.invitations}
+            refreshTraveler={this.refreshTravelerJSON}
             callback={this.selectTrip}
           ></Trips>
         );

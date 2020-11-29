@@ -137,11 +137,64 @@ router.post("/alertTraveler", function (req, res, next) {
 });
 
 router.post("/acceptInvite", function (req, res, next) {
-  res.send("Not Implemented!");
+  // Get Traveler
+  handleGetTraveler = (traveler) => {
+    // Remove invitation
+    var invitations = [];
+    if (traveler.invitations) invitations = traveler.invitations;
+    for (const invite of invitations) {
+      if (invite !== req.body.tripId) invitations.push(invite);
+    }
+
+    // Add Trip
+    var tripIds = [];
+    if (traveler.tripIds) tripIds = traveler.tripIds;
+    tripIds.push(req.body.tripId);
+
+    // Callback
+    const data = { id: req.body.travelerId, invitations, tripIds };
+    updateTraveler(data, handleUpdateTraveler);
+  }
+
+  handleUpdateTraveler = (error) => {}
+
+  handleGetTrip = (trip) => {
+    // Add Traveler
+    var travelerIds = trip.travelerIds;
+    travelerIds.push(req.body.travelerId);
+
+    // Callback
+    const data = { id: req.body.tripId, travelerIds }
+    updateTrip(data, handleUpdateTrip);
+  }
+
+  handleUpdateTrip = (error) => {
+    if (error) res.sendStatus(401);
+    else res.sendStatus(200);
+  }
+  
+  // Add Trip to Traveler, add Traveler to Trip
+  getTraveler(req.body.travelerId, handleGetTraveler);
+  getTrip(req.body.tripId, handleGetTrip);
 });
 
 router.post("/rejectInvite", function (req, res, next) {
-  res.send("Not Implemented!");
+  handleGetTraveler = (traveler) => {
+    var invitations = [];
+    if (traveler.invitations) invitations = traveler.invitations;
+    for (const invite of invitations) {
+      if (invite !== req.body.tripId) invitations.push(invite);
+    }
+    const data = { id: req.body.travelerId, invitations };
+    updateTraveler(data, handleUpdateTraveler);
+  }
+
+  handleUpdateTraveler = (error) => {
+    if (error) res.sendStatus(401);
+    else res.sendStatus(200);
+  }
+  
+  getTraveler(req.body.travelerId, handleGetTraveler);
 });
 
 module.exports = router;

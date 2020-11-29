@@ -9,24 +9,10 @@ class Trips extends Component {
     super(props);
     this.state = {
       trips: [],
+      invitedTrips: [],
       owners: {},
     };
   }
-
-  getTripsJSON = () => {
-    fetch("http://localhost:9000/trip/getTrips", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ tripIds: this.props.tripIds }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        this.setState({ trips: res.trips });
-        this.getOwnerNames();
-      });
-  };
 
   getOwnerIds = () => {
     var owners = [];
@@ -36,6 +22,19 @@ class Trips extends Component {
     return owners;
   };
 
+  getTripsJSON = () => {
+    fetch("http://localhost:9000/trip/getTrips", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ tripIds: this.props.tripIds }),
+    }).then((res) => res.json()).then((res) => {
+      this.setState({ trips: res.trips });
+      this.getOwnerNames();
+    });
+  };
+
   getOwnerNames = () => {
     fetch("http://localhost:9000/trip/getTravelers", {
       method: "POST",
@@ -43,15 +42,57 @@ class Trips extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ travelerIds: this.getOwnerIds() }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        const owners = {};
-        for (const traveler of res.travelers) {
-          owners[traveler.id] = traveler.firstName + " " + traveler.lastName;
-        }
-        this.setState({ owners });
-      });
+    }).then((res) => res.json()).then((res) => {
+      const owners = {};
+      for (const traveler of res.travelers) {
+        owners[traveler.id] = traveler.firstName + " " + traveler.lastName;
+      }
+      this.setState({ owners });
+    });
+  };
+
+  getInvitedTripsJSON = () => {
+    fetch("http://localhost:9000/trip/getTrips", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ tripIds: this.props.invitations }),
+    }).then((res) => res.json()).then((res) => {
+      this.setState({ invitedTrips: res.trips });
+    });
+  }
+
+  acceptInvitation = (tripId) => {
+    const data = { travelerId: this.getUserId(), tripId }
+    fetch("http://localhost:9000/trip/acceptInvite", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => res.json()).then((res) => {
+      this.getTripsJSON();
+      this.getInvitedTripsJSON();
+    });
+  }
+
+  declineInvitation = (tripId) => {
+    const data = { travelerId: this.getUserId(), tripId }
+    fetch("http://localhost:9000/trip/rejectInvite", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => res.json()).then((res) => {
+      this.getTripsJSON();
+      this.getInvitedTripsJSON();
+    });
+  }
+
+  getUserId = () => {
+    return localStorage.getItem("id");
   };
 
   createTrip(trip) {
@@ -76,6 +117,23 @@ class Trips extends Component {
     );
   }
 
+  createInvitation(invite) {
+    return (
+      <Row className="trips-invite m-0 text-center p-1" key={invite.id}>
+      <Col xs={2}>{invite.name}</Col>
+      <Col xs={5}>{invite.description}</Col>
+      <Col>
+        <Button onClick={() => {this.acceptInvitation(invite.id)}} variant="success">
+          Accept
+        </Button>{" "}
+        <Button onClick={() => {this.declineInvitation(invite.id)}} className="ml-3" variant="danger">
+          Decline
+        </Button>
+      </Col>
+    </Row>
+    )
+  }
+
   renderTrips() {
     if (!this.state.trips) return;
     var tripsJSX = [];
@@ -84,8 +142,19 @@ class Trips extends Component {
     }
     return tripsJSX;
   }
+
+  renderInvitations() {
+    if (!this.state.invitedTrips) return;
+    var invitesJSX = [];
+    for (const invite of this.state.invitedTrips) {
+      invitesJSX.push(this.createInvitation(invite));
+    }
+    return invitesJSX;
+  }
+
   componentDidMount() {
     this.getTripsJSON();
+    this.getInvitedTripsJSON();
   }
 
   render() {
@@ -101,7 +170,7 @@ class Trips extends Component {
             id="tripIcon"
           />
           <h1 className="d-inline-block">
-            <strong> Trips</strong>
+            <strong>Trips</strong>
           </h1>
         </div>
 
@@ -116,9 +185,6 @@ class Trips extends Component {
             <Container fluid>
               <Row className="m-0 text-center">
                 <Col xs={2}>
-                  <h5>Inviter</h5>
-                </Col>
-                <Col xs={2}>
                   <h5>Trip Name</h5>
                 </Col>
                 <Col xs={5}>
@@ -126,32 +192,7 @@ class Trips extends Component {
                 </Col>
                 <Col></Col>
               </Row>
-
-              {/* Need to programmatically create rows. */}
-              <Row className="trips-invite m-0 text-center p-1">
-                <Col xs={2}>Username</Col>
-                <Col xs={2}>Trip Name</Col>
-                <Col xs={5}>Trip Description</Col>
-                <Col>
-                  <Button variant="success">Accept</Button>{" "}
-                  <Button className="ml-3" variant="danger">
-                    Decline
-                  </Button>
-                </Col>
-              </Row>
-
-              {/* Need to programmatically create rows. */}
-              <Row className="trips-invite m-0 text-center p-1">
-                <Col xs={2}>Username</Col>
-                <Col xs={2}>Trip Name</Col>
-                <Col xs={5}>Trip Description</Col>
-                <Col>
-                  <Button variant="success">Accept</Button>{" "}
-                  <Button className="ml-3" variant="danger">
-                    Decline
-                  </Button>
-                </Col>
-              </Row>
+              {this.renderInvitations()}
             </Container>
           </Card.Body>
         </Card>
