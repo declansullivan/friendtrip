@@ -23,7 +23,6 @@ class Trips extends Component {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res.trips);
         this.setState({ trips: res.trips });
         this.getOwnerNames();
       });
@@ -79,14 +78,12 @@ class Trips extends Component {
 
   renderTrips() {
     if (!this.state.trips) return;
-
     var tripsJSX = [];
     for (const trip of this.state.trips) {
       tripsJSX.push(this.createTrip(trip));
     }
     return tripsJSX;
   }
-
   componentDidMount() {
     this.getTripsJSON();
   }

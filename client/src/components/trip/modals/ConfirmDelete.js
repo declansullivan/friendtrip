@@ -19,8 +19,7 @@ class ConfirmDelete extends Component {
           },
           body: JSON.stringify(data),
       }).then((res) => {
-          this.props.history.push("/");
-          this.props.handleClose();
+          this.props.renderOnDeleteTrip();
       });
   };
 

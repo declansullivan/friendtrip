@@ -21,6 +21,7 @@ class Home extends Component {
     super(props);
     this.page = this.switchPage.bind(this);
     this.logout = this.logoutFunc.bind(this);
+    this.renderOnDeleteTrip = this.renderOnDeleteTrip.bind(this);
     this.state = {
       render: "",
       tripId: "",
@@ -65,10 +66,23 @@ class Home extends Component {
     this.setState({ tripId });
     this.setState({ render: "trip" });
   };
-
   getUserId = () => {
     return localStorage.getItem("id");
   };
+
+  renderOnDeleteTrip = () => {
+    fetch("http://localhost:9000/account/getAccount", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: this.getUserId() }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        this.setState({ traveler: res, render: "trips" });
+      });
+  }
 
   renderContent() {
     switch (this.state.render) {
@@ -84,6 +98,7 @@ class Home extends Component {
       case "trip":
         return (
           <Trip
+            renderOnDeleteTrip={this.renderOnDeleteTrip}
             tripId={this.state.tripId}
             traveler={this.state.traveler}
             history={this.props.history}

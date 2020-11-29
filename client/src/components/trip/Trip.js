@@ -101,6 +101,7 @@ class Trip extends Component {
 
   render() {
     if (!this.state.render) return <div></div>;
+    if(!this.state.tripData.id) this.refreshTripJSON();
     return (
       //   <Fade>
       <div className="w-100 h-100">
@@ -124,6 +125,7 @@ class Trip extends Component {
           history={this.props.history}
           show={this.state.showDeleteTrip}
           refreshTrip={this.refreshTripJSON}
+          renderOnDeleteTrip={this.props.renderOnDeleteTrip}
           handleClose={this.closeDeleteTripModal}
         ></ConfirmDelete>
         <EditTrip
