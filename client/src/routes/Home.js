@@ -32,16 +32,14 @@ class Home extends Component {
   logoutFunc = () => {
     fetch("http://localhost:9000/logout", {
       method: "POST",
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.status === 200) {
-          localStorage.clear();
-          this.props.history.push("/");
-        } else {
-          alert("Logout failed.");
-        }
-      });
+    }).then((res) => res.json()).then((res) => {
+      if (res.status === 200) {
+        localStorage.clear();
+        this.props.history.push("/");
+      } else {
+        alert("Logout failed.");
+      }
+    });
   };
 
   getTravelerJSON = () => {
@@ -51,11 +49,9 @@ class Home extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ id: this.getUserId() }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        this.setState({ traveler: res });
-      });
+    }).then((res) => res.json()).then((res) => {
+      this.setState({ traveler: res });
+    });
   };
 
   switchPage = (event) => {
@@ -78,11 +74,9 @@ class Home extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ id: this.getUserId() }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        this.setState({ traveler: res, render: "trips" });
-      });
+    }).then((res) => res.json()).then((res) => {
+      this.setState({ traveler: res, render: "trips" });
+    });
   }
 
   renderContent() {
