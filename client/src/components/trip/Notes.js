@@ -38,7 +38,7 @@ class Notes extends Component {
             <h5>Notes</h5>
           </Card.Header>
           <Card.Body className="notes-list-body">
-            <div>{this.props.notes}</div>
+            <div style={{whiteSpace: "pre-line"}}>{this.props.notes}</div>
             <br></br>
             <Button onClick={this.openEditNotesModal}>Edit</Button>
           </Card.Body>

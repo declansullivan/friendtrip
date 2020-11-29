@@ -9,3 +9,7 @@
 .destinations-list-body {
     background-color: #ffffff;
 }
+
+.tripThumbnail:hover {
+    cursor: pointer;
+}
