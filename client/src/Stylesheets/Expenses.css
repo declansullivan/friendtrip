@@ -1,0 +1,11 @@
+.expenses-list {
+    background-color: #EBEAF7;
+    border: 1px solid #81a6da;
+}
+.expenses-list-header {
+    background-color: #166AE0;
+    color: white;
+}
+.expenses-list-body {
+    background-color: #ffffff;
+}

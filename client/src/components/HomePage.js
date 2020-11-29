@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import HomePageImage from "../Media/homePageImage.svg";
 import homeIcon from "../Media/homeIcon.svg";
 
-import "./HomePage.css";
+import "../Stylesheets/HomePage.css";
 
 class HomePage extends Component {
   constructor(props) {
@@ -12,14 +12,14 @@ class HomePage extends Component {
   render() {
     return (
       <div className="w-100 h-100">
-                <div className="friends-page-header">
+                <div className="home-page-header ">
           <img
             src={homeIcon}
             width="40"
             height="40"
             className="d-inline-block align-top mr-2"
-            alt="friendsIcon"
-            id="friendsIcon"
+            alt="homeIcon"
+            id="homeIcon"
           />
           <h1 className="d-inline-block">
             <strong> Home</strong>
@@ -30,8 +30,8 @@ class HomePage extends Component {
           src={HomePageImage}
           width="50%"
           className="d-inline-block page-background-image"
-          alt="navBarImage"
-          id="navBarImage"
+          alt="HomePageImage"
+          id="HomePageImage"
         />
       </div>
     );

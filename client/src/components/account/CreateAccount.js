@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import "./CreateAccount.css";
+import "../../Stylesheets/CreateAccount.css";
 import Fade from "react-reveal/Fade";
 import friendtripLogo from "../../Media/friendtripLogo.svg";
 class CreateAccount extends Component {

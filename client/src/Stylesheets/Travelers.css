@@ -1,0 +1,11 @@
+.travelers-list {
+    background-color: #EBEAF7;
+    border: 1px solid #81a6da;
+}
+.travelers-list-header {
+    background-color: #166AE0;
+    color: white;
+}
+.travelers-list-body {
+    background-color: #ffffff;
+}

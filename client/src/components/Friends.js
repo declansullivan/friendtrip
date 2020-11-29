@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container, Row, Col, Button, Card, Form } from "react-bootstrap";
 import friendsPageImage from "../Media/friendsPageImage.svg";
 import friendsIcon from "../Media/friendsIcon.svg";
-import "./Friends.css";
+import "../Stylesheets/Friends.css";
 
 class Friends extends Component {
   constructor(props) {

@@ -1,0 +1,13 @@
+.trip-page-header {
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.trip-list {
+    background-color: #EBEAF7;
+}
+.trip-list-header {
+    background-color: #166AE0;
+    color: white;
+}
