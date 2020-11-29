@@ -74,6 +74,7 @@ class Travelers extends Component {
                     id={this.props.id}
                     friendIds={this.state.friendIds}
                     show={this.state.showAddTraveler} 
+                    refreshTrip={this.props.refreshTrip}
                     handleClose={this.closeAddTravelerModal}/>
 
                 <Card className="travelers-list">

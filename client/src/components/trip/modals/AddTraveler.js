@@ -21,6 +21,7 @@ class AddTraveler extends Component {
             body: JSON.stringify(data),
         }).then((res) => res.json()).then((res) => {
             this.setState({ friends: res.travelers, render: true });
+            this.props.refreshTrip();
         });
     }
 
