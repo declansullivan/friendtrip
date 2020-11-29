@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Dropdown } from "react-bootstrap";
 import ScrollToTop from "../components/ScrollToTop";
 import Navbar from "../components/Navbar";
-import Account from "../components/Account/Account";
+import Account from "../components/account/Account";
 import Friends from "../components/Friends";
 import Trips from "../components/trip/Trips";
 import Trip from "../components/trip/Trip";

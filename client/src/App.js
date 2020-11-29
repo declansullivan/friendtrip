@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Stylesheets/App.css'
 
-import CreateAccount from "./components/Account/CreateAccount";
-import SignIn from "./components/Account/SignIn";
+import CreateAccount from "./components/account/CreateAccount";
+import SignIn from "./components/account/SignIn";
 import Home from "./routes/Home.js"
 
 class App extends Component {
