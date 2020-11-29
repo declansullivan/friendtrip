@@ -1,11 +1,14 @@
 import React, { Component } from "react";
-import { Button, Modal, ListGroup } from "react-bootstrap";
+import { Button, Modal, ListGroup, Alert } from "react-bootstrap";
 
 class AddTraveler extends Component {
     constructor(props) {
         super(props);
         this.state = {
             render: false,
+            visible: false,
+            message: "",
+            status: "",
             friends: []
         }
     }
@@ -20,7 +23,12 @@ class AddTraveler extends Component {
             },
             body: JSON.stringify(data),
         }).then((res) => res.json()).then((res) => {
-            this.setState({ friends: res.travelers, render: true });
+            if (res.status == 200) 
+                this.showAlert("Successfully invited Traveler!", "success");
+            else if (res.status === 202) 
+                this.showAlert("Traveler is already invited.", "warning")
+            else 
+                this.showAlert("Failed to invite Traveler.", "danger")
             this.props.refreshTrip();
         });
     }
@@ -62,6 +70,16 @@ class AddTraveler extends Component {
         return friendsJSX;
     }
 
+    showAlert = (message, status) => {
+        this.setState({ message });
+        this.setState({ status });
+        this.setState({ visible: true }, () => {
+        window.setTimeout(() => {
+            this.setState({ visible: false });
+        }, 2000);
+        });
+    };
+
     componentDidMount() {
         this.getFriendsJSON();
     }
@@ -84,6 +102,14 @@ class AddTraveler extends Component {
                 <Modal.Footer>
                     <Button onClick={this.props.handleClose}>Close</Button>
                 </Modal.Footer>
+                <Alert
+                    className="m-0"
+                    variant={this.state.status}
+                    show={this.state.visible}
+                    style={{ textAlign: "center" }}
+                >
+                    {this.state.message}
+                </Alert>
             </Modal>
         )
     }

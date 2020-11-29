@@ -68,8 +68,16 @@ router.post("/updateItinerary", function (req, res, next) {
 router.post('/sendInvite', function(req, res, next) {
     handleGetTraveler = (traveler) => {
         if (!traveler.invitations) traveler.invitations = [];
-        traveler.invitations.push(req.body.tripId);
+        
+        // Don't give a Traveler multiple of the same invite.
+        for (const invite of traveler.invitations) {
+          if (invite === req.body.tripId) {
+            res.sendStatus(202);
+            return;
+          }
+        }
 
+        traveler.invitations.push(req.body.tripId);
         updateTraveler(traveler, handleUpdateTraveler);
     }
 
