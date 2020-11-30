@@ -198,7 +198,11 @@ class Trip extends Component {
         ></EditTrip>
         <AddItem
           kind="Add"
+          travelerIds={this.state.tripData.travelerIds}
+          travelerId={this.props.traveler.id}
+          tripId={this.state.tripData.id}
           show={this.state.showAddItem}
+          refreshTrip={this.refreshTripJSON}
           handleClose={this.closeAddItemModal}
         ></AddItem>
         <AddExpense
@@ -268,10 +272,10 @@ class Trip extends Component {
 
               <Row>
                 <Col>
-                  <Button onClick={this.openAddItemModal}>Add Item</Button>{" "}
-                  <Button onClick={this.openAddExpenseModal}>
+                  <Button className="mr-1" onClick={this.openAddItemModal}>Add Item</Button>
+                  <Button className="mr-1" onClick={this.openAddExpenseModal}>
                     Add Expense
-                  </Button>{" "}
+                  </Button>
                   <Button onClick={this.openEditTripModal}>Edit Trip</Button>
                   {this.showLeaveTrip()}
                   {this.showDeleteTrip()}

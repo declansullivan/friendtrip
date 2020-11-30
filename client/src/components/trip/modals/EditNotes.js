@@ -8,7 +8,6 @@ class EditNotes extends Component {
 
     updateItinerary = event => {
         event.preventDefault();
-
         const { text } = event.target.elements;
         const data = {
             id: this.props.id,
