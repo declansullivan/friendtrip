@@ -81,7 +81,6 @@ class Trips extends Component {
 
   createTrip = (trip) => {
     const ownerName = this.state.owners[trip.travelerId];
-    console.log(ownerName);
     return (
         <ListGroup.Item
           className="d-inline-block w-80"
