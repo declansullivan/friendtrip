@@ -40,10 +40,10 @@ router.post("/getTravelers", function (req, res, next) {
   getTravelerList(req.body.travelerIds, handleGetTravelers);
 });
 
-router.put('/addTraveler', function(req, res, next) {
-    handleGetTraveler = (traveler) => {
-        if (!traveler.tripIds) traveler.tripIds = [];
-        traveler.tripIds.push(req.body.tripId);
+router.put("/addTraveler", function (req, res, next) {
+  handleGetTraveler = (traveler) => {
+    if (!traveler.tripIds) traveler.tripIds = [];
+    traveler.tripIds.push(req.body.tripId);
 
     updateTraveler(traveler, handleUpdateTraveler);
   };
@@ -65,32 +65,32 @@ router.post("/updateItinerary", function (req, res, next) {
   updateTrip(req.body, handleUpdateItinerary);
 });
 
-router.post('/sendInvite', function(req, res, next) {
-    handleGetTraveler = (traveler) => {
-        if (!traveler.invitations) traveler.invitations = [];
-        
-        // Don't give a Traveler multiple of the same invite.
-        for (const invite of traveler.invitations) {
-          if (invite === req.body.tripId) {
-            res.sendStatus(202);
-            return;
-          }
-        }
+router.post("/sendInvite", function (req, res, next) {
+  handleGetTraveler = (traveler) => {
+    if (!traveler.invitations) traveler.invitations = [];
 
-        traveler.invitations.push(req.body.tripId);
-        updateTraveler(traveler, handleUpdateTraveler);
+    // Don't give a Traveler multiple of the same invite.
+    for (const invite of traveler.invitations) {
+      if (invite === req.body.tripId) {
+        res.sendStatus(202);
+        return;
+      }
     }
 
-    handleUpdateTraveler = (error) => {
-        if (error) res.sendStatus(401);
-        else res.sendStatus(200);
-    }
+    traveler.invitations.push(req.body.tripId);
+    updateTraveler(traveler, handleUpdateTraveler);
+  };
 
-    getTraveler(req.body.id, handleGetTraveler);
+  handleUpdateTraveler = (error) => {
+    if (error) res.sendStatus(401);
+    else res.sendStatus(200);
+  };
+
+  getTraveler(req.body.id, handleGetTraveler);
 });
 
-router.put('/addTripLeader', function(req, res, next) {
-    res.send("Not Implemented!");
+router.put("/addTripLeader", function (req, res, next) {
+  res.send("Not Implemented!");
 });
 
 router.delete("/deleteTraveler", function (req, res, next) {
@@ -108,7 +108,7 @@ router.delete("/deleteTrip", function (req, res, next) {
         trips = travelerList[i].tripIds;
         tripsLength = Object.keys(trips).length;
         // For each trip they are on, look for the trip to delete and delete it
-        var newTrips = []
+        var newTrips = [];
         for (let j = 0; j < tripsLength; j++) {
           if (req.body.tripId !== trips[j]) {
             newTrips.push(trips[j]);
@@ -133,7 +133,60 @@ router.delete("/deleteTrip", function (req, res, next) {
 });
 
 router.post("/leaveTrip", function (req, res, next) {
-  res.send("Not Implemented!");
+  // For a Traveler Object, remove the trip from their tripIds
+  handleGetTraveler = (traveler) => {
+    let trips;
+    let tripsLength;
+    if (traveler.tripIds) {
+      trips = traveler.tripIds;
+      tripsLength = Object.keys(trips).length;
+      let newTrips = [];
+      for (let i = 0; i < tripsLength; i++) {
+        if (trips[i] !== req.body.tripId) newTrips.push(trips[i]);
+      }
+      traveler.tripIds = newTrips;
+      updateTraveler(traveler, handleUpdateTraveler);
+    }
+  };
+  handleUpdateTraveler = (error) => {};
+  getTraveler(req.body.travelerId, handleGetTraveler);
+
+  // For a Trip Object, remove the traveler from travelerIds and from tripLeaders (if trip leader)
+  handleGetTrip = (trip) => {
+    // Handle removing traveler from Trip Object's travelerIds
+    let travelerIds;
+    let travelerIdsLength;
+    let newTravelerIds = [];
+    if (trip.travelerIds) {
+      travelerIds = trip.travelerIds;
+      travelerIdsLength = Object.keys(travelerIds).length;
+      for (let j = 0; j < travelerIdsLength; j++) {
+        if (req.body.travelerId !== travelerIds[j])
+          newTravelerIds.push(travelerIds[j]);
+      }
+      trip.travelerIds = newTravelerIds;
+    }
+    // Handle removing Trip Leader from Trip Object's trip leaders
+    let tripLeaders;
+    let tripLeadersLength;
+    let newTripLeaders = [];
+    if (req.body.isTripLeader && trip.tripLeaders) {
+      tripLeaders = trip.tripLeaders;
+      tripLeadersLength = Object.keys(tripLeaders).length;
+      for (let k = 0; k < tripLeadersLength; k++) {
+        if (req.body.travelerId !== tripLeaders[k])
+          newTripLeaders.push(tripLeaders[k]);
+      }
+      trip.tripLeaders = newTripLeaders;
+    }
+    // Update the Trip Object
+    updateTrip(trip, handleUpdateTrip);
+  };
+  handleUpdateTrip = (error) => {
+    if (error) res.sendStatus(401);
+    else res.sendStatus(200);
+  };
+  getTrip(req.body.tripId, handleGetTrip);
 });
 
 router.get("/exportTrip", function (req, res, next) {
@@ -163,9 +216,9 @@ router.post("/acceptInvite", function (req, res, next) {
     // Callback
     const data = { id: req.body.travelerId, invitations, tripIds };
     updateTraveler(data, handleUpdateTraveler);
-  }
+  };
 
-  handleUpdateTraveler = (error) => {}
+  handleUpdateTraveler = (error) => {};
 
   handleGetTrip = (trip) => {
     // Add Traveler
@@ -173,15 +226,15 @@ router.post("/acceptInvite", function (req, res, next) {
     travelerIds.push(req.body.travelerId);
 
     // Callback
-    const data = { id: req.body.tripId, travelerIds }
+    const data = { id: req.body.tripId, travelerIds };
     updateTrip(data, handleUpdateTrip);
-  }
+  };
 
   handleUpdateTrip = (error) => {
     if (error) res.sendStatus(401);
     else res.sendStatus(200);
-  }
-  
+  };
+
   // Add Trip to Traveler, add Traveler to Trip
   getTraveler(req.body.travelerId, handleGetTraveler);
   getTrip(req.body.tripId, handleGetTrip);
@@ -198,13 +251,13 @@ router.post("/rejectInvite", function (req, res, next) {
 
     const data = { id: req.body.travelerId, invitations };
     updateTraveler(data, handleUpdateTraveler);
-  }
+  };
 
   handleUpdateTraveler = (error) => {
     if (error) res.sendStatus(401);
     else res.sendStatus(200);
-  }
-  
+  };
+
   getTraveler(req.body.travelerId, handleGetTraveler);
 });
 

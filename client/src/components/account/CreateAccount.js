@@ -36,6 +36,9 @@ class CreateAccount extends Component {
         if (res.code === "auth/weak-password") {
           alert("Your password is too weak.");
         }
+        else {
+          alert("Account successfully created!");
+        }
       });
   };
 
@@ -112,7 +115,7 @@ class CreateAccount extends Component {
                           placeholder="Enter Username"
                           className="signup-input pl-1"
                         />
-                        <span class="signup-input-border"></span>
+                        <span className="signup-input-border"></span>
                       </Form.Group>
 
                       <Form.Group
@@ -150,7 +153,7 @@ class CreateAccount extends Component {
                           placeholder="Enter First name"
                           className="signup-input pl-1"
                         />
-                        <span class="signup-input-border"></span>
+                        <span className="signup-input-border"></span>
                       </Form.Group>
 
                       <Form.Group
@@ -168,7 +171,7 @@ class CreateAccount extends Component {
                           placeholder="Enter Last name"
                           className="signup-input pl-1"
                         />
-                        <span class="signup-input-border"></span>
+                        <span className="signup-input-border"></span>
                       </Form.Group>
                     </Form.Row>
 
@@ -188,7 +191,7 @@ class CreateAccount extends Component {
                           placeholder="Enter Password"
                           className="signup-input pl-1"
                         />
-                        <span class="signup-input-border"></span>
+                        <span className="signup-input-border"></span>
                       </Form.Group>
                     </Form.Row>
 
