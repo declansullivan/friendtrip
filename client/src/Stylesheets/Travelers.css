@@ -9,3 +9,7 @@
 .travelers-list-body {
     background-color: #ffffff;
 }
+
+.close:hover {
+    cursor: pointer;
+}

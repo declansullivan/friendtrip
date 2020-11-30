@@ -137,14 +137,10 @@ class Trips extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("sent props");
-    console.log(nextProps)
     this.getTripsJSON(nextProps.tripIds, nextProps.invitations);
   }
 
   componentDidMount() {
-    console.log("mounted")
-    console.log(this.props);
     this.getTripsJSON(this.props.tripIds, this.props.invitations);
   }
 

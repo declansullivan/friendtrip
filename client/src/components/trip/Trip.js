@@ -85,10 +85,30 @@ class Trip extends Component {
       },
       body: JSON.stringify({ tripId: this.props.tripId }),
     }).then((res) => res.json()).then((res) => {
-      this.setState({ tripData: res.trip });
-      this.setState({ render: true });
+      this.setState({ tripData: res.trip, render: true });
     });
   };
+
+  getUserId = () => {
+    return localStorage.getItem("id");
+  };
+
+  isTripLeader = () => {
+    return this.state.tripData.tripLeaders.includes(this.getUserId())
+  }
+
+  showDeleteTrip = () => {
+    if (this.isTripLeader())
+      return (
+        <Button
+          variant="danger"
+          style={{ float: "right" }}
+          onClick={this.openDeleteTripModal}
+        >
+          Delete Trip
+        </Button>
+      )
+  }
 
   refreshTripJSON = () => {
     this.getTripJSON();
@@ -195,6 +215,7 @@ class Trip extends Component {
                     id={this.state.tripData.id}
                     travelerIds={this.state.tripData.travelerIds}
                     friendIds={this.props.traveler.friendIds}
+                    isTripLeader={this.isTripLeader}
                   />
                 </Col>
               </Row>
@@ -207,13 +228,7 @@ class Trip extends Component {
                     Add Expense
                   </Button>{" "}
                   <Button onClick={this.openEditTripModal}>Edit Trip</Button>
-                  <Button
-                    variant="danger"
-                    style={{ float: "right" }}
-                    onClick={this.openDeleteTripModal}
-                  >
-                    Delete Trip
-                  </Button>
+                  {this.showDeleteTrip()}
                 </Col>
               </Row>
             </Container>

@@ -47,9 +47,7 @@ class Friends extends Component {
   };
 
   showAlert = (message, status) => {
-    this.setState({ message });
-    this.setState({ status });
-    this.setState({ visible: true }, () => {
+    this.setState({ message, status, visible: true }, () => {
       window.setTimeout(() => {
         this.setState({ visible: false });
       }, 2000);
