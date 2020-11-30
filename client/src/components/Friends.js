@@ -29,6 +29,7 @@ class Friends extends Component {
     }).then((res) => {
       event.target.email.value = "";
       this.props.refreshTraveler();
+      this.getFriends();
       
       if (res.status === 200)
         this.showAlert("Successfully added Friend!", "success");
