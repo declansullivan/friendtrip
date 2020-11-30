@@ -44,6 +44,20 @@ class Friends extends Component {
     });
   }
 
+  removeFriend = (friendId) => {
+    const data = { id: this.getUserId(), friendId }
+    fetch("http://localhost:9000/account/removeFriend", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => {
+      this.props.refreshTraveler();
+      this.getFriends();
+    });
+  }
+
   getFriends = () => {
     fetch("http://localhost:9000/account/getFriends", {
       method: "POST",
@@ -68,10 +82,6 @@ class Friends extends Component {
     });
   };
 
-  removeFriend = (friendId) => {
-    console.log(friendId);
-  }
-
   createFriend = (friend) => {
     const name = friend.firstName + " " + friend.lastName;
     return (
@@ -80,6 +90,7 @@ class Friends extends Component {
           <Card.Title>{name}</Card.Title>
           <Card.Text>
             Username: {friend.username}
+            <br/>
             Email: {friend.email}
           </Card.Text>
           <Button onClick={() => {this.removeFriend(friend.id)}} variant="danger">

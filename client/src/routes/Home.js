@@ -21,7 +21,7 @@ class Home extends Component {
     super(props);
     this.page = this.switchPage.bind(this);
     this.logout = this.logoutFunc.bind(this);
-    this.renderOnDeleteTrip = this.renderOnDeleteTrip.bind(this);
+    this.redirectTrip = this.redirectTrip.bind(this);
     this.state = {
       render: "",
       tripId: "",
@@ -70,7 +70,8 @@ class Home extends Component {
     return localStorage.getItem("id");
   };
 
-  renderOnDeleteTrip = () => {
+  // Updates Traveler JSON and redirects to Trips Page
+  redirectTrip = () => {
     fetch("http://localhost:9000/account/getAccount", {
       method: "POST",
       headers: {
@@ -98,7 +99,7 @@ class Home extends Component {
       case "trip":
         return (
           <Trip
-            renderOnDeleteTrip={this.renderOnDeleteTrip}
+            redirectTrip={this.redirectTrip}
             tripId={this.state.tripId}
             traveler={this.state.traveler}
             history={this.props.history}

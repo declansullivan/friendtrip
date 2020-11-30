@@ -67,7 +67,21 @@ router.post('/addFriend', function(req, res, next) {
 });
 
 router.delete('/removeFriend', function(req, res, next) {
-    res.send("Not Implemented!");
+    handleGetTraveler = (traveler) => {
+        var friendIds = [];
+        for (const friend of traveler.friendIds) {
+            if (friend !== req.body.friendId) friendIds.push(friend);
+        }
+
+        updateTraveler({ id: req.body.id, friendIds}, handleUpdateTraveler);
+    }
+
+    handleUpdateTraveler = (error) => {
+        if (error) res.send(401);
+        else res.send(200);
+    }
+
+    getTraveler(req.body.id, handleGetTraveler)
 });
 
 router.post('/acceptFriend', function(req, res, next) {

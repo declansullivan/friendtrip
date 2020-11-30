@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "../../Stylesheets/CreateAccount.css";
 import Fade from "react-reveal/Fade";
 import friendtripLogo from "../../Media/friendtripLogo.svg";
+
 class CreateAccount extends Component {
   constructor(props) {
     super(props);
@@ -37,6 +38,7 @@ class CreateAccount extends Component {
           alert("Your password is too weak.");
         }
         else {
+          alert("Account successfully created!");
           this.props.history.push("/");
         }
       });
@@ -115,7 +117,7 @@ class CreateAccount extends Component {
                           placeholder="Enter Username"
                           className="signup-input pl-1"
                         />
-                        <span class="signup-input-border"></span>
+                        <span className="signup-input-border"></span>
                       </Form.Group>
 
                       <Form.Group
@@ -153,7 +155,7 @@ class CreateAccount extends Component {
                           placeholder="Enter First name"
                           className="signup-input pl-1"
                         />
-                        <span class="signup-input-border"></span>
+                        <span className="signup-input-border"></span>
                       </Form.Group>
 
                       <Form.Group
@@ -171,7 +173,7 @@ class CreateAccount extends Component {
                           placeholder="Enter Last name"
                           className="signup-input pl-1"
                         />
-                        <span class="signup-input-border"></span>
+                        <span className="signup-input-border"></span>
                       </Form.Group>
                     </Form.Row>
 
@@ -191,7 +193,7 @@ class CreateAccount extends Component {
                           placeholder="Enter Password"
                           className="signup-input pl-1"
                         />
-                        <span class="signup-input-border"></span>
+                        <span className="signup-input-border"></span>
                       </Form.Group>
                     </Form.Row>
 

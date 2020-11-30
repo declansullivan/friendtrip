@@ -1,19 +1,20 @@
 import React, { Component } from "react";
 import { Button, Modal } from "react-bootstrap";
 
-class ConfirmDelete extends Component {
+class ConfirmLeave extends Component {
   constructor(props) {
     super(props);
   }
 
-  deleteTrip = (event) => {
+  leaveTrip = (event) => {
       event.preventDefault();
       const data = {
         tripId: this.props.tripId,
-        travelerIds: this.props.travelerIds,
+        travelerId: this.props.travelerId,
+        isTripLeader: this.props.isTripLeader(),
       };
-      fetch("http://localhost:9000/trip/deleteTrip", {
-          method: "DELETE",
+      fetch("http://localhost:9000/trip/leaveTrip", {
+          method: "POST",
           headers: {
               "Content-Type": "application/json",
           },
@@ -34,16 +35,16 @@ class ConfirmDelete extends Component {
         centered
       >
         <Modal.Body>
-          <h4>Are you sure you want to delete this Trip?</h4>
+          <h4>Are you sure you want to leave this Trip?</h4>
           <hr></hr>
             <p>
-            Deleting the trip will delete all information associated with the
+            Leaving the trip will remove yourself from the information associated with the
             Trip, including Items, Expenses, and Destinations.
             </p>
           <hr></hr>
           <Button className="float-right ml-1" variant="warning" onClick={this.props.handleClose}>Cancel</Button>
-          <Button className="float-right" variant="danger" onClick={this.deleteTrip}>
-            Delete Trip
+          <Button className="float-right" variant="danger" onClick={this.leaveTrip}>
+            Leave Trip
           </Button>
         </Modal.Body>
       </Modal>
@@ -51,4 +52,4 @@ class ConfirmDelete extends Component {
   }
 }
 
-export default ConfirmDelete;
+export default ConfirmLeave;

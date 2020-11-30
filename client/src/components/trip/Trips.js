@@ -14,9 +14,9 @@ class Trips extends Component {
     };
   }
 
-  getOwnerIds = () => {
+  getOwnerIds = (trips) => {
     var owners = [];
-    for (const trip of this.state.trips) {
+    for (const trip of trips) {
       owners.push(trip.travelerId);
     }
     return owners;
@@ -52,7 +52,7 @@ class Trips extends Component {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ travelerIds: this.getOwnerIds() }),
+      body: JSON.stringify({ travelerIds: this.getOwnerIds(trips) }),
     }).then((res) => res.json()).then((res) => {
       const owners = {};
       for (const traveler of res.travelers) {
