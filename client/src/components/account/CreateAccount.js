@@ -39,6 +39,8 @@ class CreateAccount extends Component {
         }
         else {
           alert("Account successfully created!");
+          localStorage.setItem("id", data.email.replace('.', ''));
+          this.props.history.push("/home");
         }
       });
   };
