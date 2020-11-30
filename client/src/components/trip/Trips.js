@@ -79,7 +79,7 @@ class Trips extends Component {
     return localStorage.getItem("id");
   };
 
-  createTrip(trip) {
+  createTrip = (trip) => {
     const ownerName = this.state.owners[trip.travelerId];
     return (
         <ListGroup.Item
@@ -101,7 +101,7 @@ class Trips extends Component {
     );
   }
 
-  createInvitation(invite) {
+  createInvitation = (invite) => {
     return (
       <Row className="trips-invite m-0 text-center p-1" key={invite.id} id={"row" + invite.id}>
       <Col xs={2}>{invite.name}</Col>
