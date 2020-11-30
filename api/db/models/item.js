@@ -22,9 +22,9 @@ module.exports = class Item {
         Accessor.updateObject(itemRef, json, callback);
     }
 
-    static generateItemJSON(id, tripId, travelerId, name, priority,
-                            assignee, description, isPublic) {
-        return { id, tripId, travelerId, name, priority,
-            assignee, description, isPublic};
+    static generateItemJSON(id, tripId, travelerId, name,
+                            assignee, description, isPublic, isComplete) {
+        return { id, tripId, travelerId, name,
+            assignee, description, isPublic, isComplete};
     }
 }
