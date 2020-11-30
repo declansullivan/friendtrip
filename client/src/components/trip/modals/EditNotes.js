@@ -4,7 +4,6 @@ import { Button, Modal, Form } from "react-bootstrap";
 class EditNotes extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props);
     }
 
     updateItinerary = event => {

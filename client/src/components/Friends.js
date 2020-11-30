@@ -10,7 +10,8 @@ class Friends extends Component {
     this.state = {
       status: "",
       visible: false,
-      message: ""
+      message: "",
+      friends: []
     }
   }
 
@@ -28,6 +29,7 @@ class Friends extends Component {
     }).then((res) => {
       event.target.email.value = "";
       this.props.refreshTraveler();
+      this.getFriends();
       
       if (res.status === 200)
         this.showAlert("Successfully added Friend!", "success");
@@ -42,19 +44,64 @@ class Friends extends Component {
     });
   }
 
+  getFriends = () => {
+    fetch("http://localhost:9000/account/getFriends", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: this.getUserId() }),
+    }).then((res) => res.json()).then((res) => {
+      this.setState({ friends: res.friends });
+    });
+  }
+
   getUserId = () => {
     return localStorage.getItem("id");
   };
 
   showAlert = (message, status) => {
-    this.setState({ message });
-    this.setState({ status });
-    this.setState({ visible: true }, () => {
+    this.setState({ message, status, visible: true }, () => {
       window.setTimeout(() => {
         this.setState({ visible: false });
       }, 2000);
     });
   };
+
+  removeFriend = (friendId) => {
+    console.log(friendId);
+  }
+
+  createFriend = (friend) => {
+    const name = friend.firstName + " " + friend.lastName;
+    return (
+      <Card key={friend.id} style={{ width: "25%", margin: "0 2.5%" }} variant="Light">
+        <Card.Body>
+          <Card.Title>{name}</Card.Title>
+          <Card.Text>
+            Username: {friend.username}
+            Email: {friend.email}
+          </Card.Text>
+          <Button onClick={() => {this.removeFriend(friend.id)}} variant="danger">
+            Remove Friend
+          </Button>
+        </Card.Body>
+      </Card>
+    )
+  }
+
+  renderFriends = () => {
+    if (!this.state.friends) return;
+    var friendsJSX = [];
+    for (const friend of this.state.friends) {
+      friendsJSX.push(this.createFriend(friend));
+    }
+    return friendsJSX;
+  }
+
+  componentDidMount = () => {
+    this.getFriends();
+  }
 
   render() {
     return (
@@ -77,7 +124,6 @@ class Friends extends Component {
         <Card style={{ width: "100%" }} variant="Light">
           <Card.Header className="friend-list-header">
             <h2> Friend's List</h2>
-            {/* (1) TODO: Connect this Form to an onClick that takes in the email and checks if it exists. If so, send friend request. Otherwise, alert error */}
             <Form onSubmit={this.addFriend} className="add-friend-form text-center">
               <h5 className="m-0 ">Find Friends</h5>
               <Form.Row className="m-0 p-0 ml-2">
@@ -105,36 +151,7 @@ class Friends extends Component {
           </Alert>
 
           <Card.Body className="friend-list-body">
-            {/* (2) TODO: Individual Friend Card, Need to programmatically create these (Use js map func). Don't worry about the styling, flexbox will wrap them*/}
-            <Card style={{ width: "20%", margin: "0 2.5%" }} variant="Light">
-              <Card.Body>
-                <Card.Title>Friend Name</Card.Title>
-                <Card.Text>Friend Information Here</Card.Text>
-                <Button>Remove Friend</Button>
-              </Card.Body>
-            </Card>
-            {/* (2) TODO: END*/}
-            <Card style={{ width: "20%", margin: "0 2.5%" }} variant="Light">
-              <Card.Body>
-                <Card.Title>Friend Name</Card.Title>
-                <Card.Text>Friend Information Here</Card.Text>
-                <Button>Remove Friend</Button>
-              </Card.Body>
-            </Card>
-            <Card style={{ width: "20%", margin: "0 2.5%" }} variant="Light">
-              <Card.Body>
-                <Card.Title>Friend Name</Card.Title>
-                <Card.Text>Friend Information Here</Card.Text>
-                <Button>Remove Friend</Button>
-              </Card.Body>
-            </Card>
-            <Card style={{ width: "20%", margin: "0 2.5%" }} variant="Light">
-              <Card.Body>
-                <Card.Title>Friend Name</Card.Title>
-                <Card.Text>Friend Information Here</Card.Text>
-                <Button>Remove Friend</Button>
-              </Card.Body>
-            </Card>
+            {this.renderFriends()}
           </Card.Body>
         </Card>
         <img

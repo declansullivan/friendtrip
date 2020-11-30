@@ -50,8 +50,6 @@ class Home extends Component {
       },
       body: JSON.stringify({ id: this.getUserId() }),
     }).then((res) => res.json()).then((res) => {
-      console.log("new traveler")
-      console.log(res);
       this.setState({ traveler: res });
     });
   };

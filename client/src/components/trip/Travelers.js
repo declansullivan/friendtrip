@@ -33,23 +33,24 @@ class Travelers extends Component {
             },
             body: JSON.stringify({ travelerIds: this.props.travelerIds }),
         }).then((res) => res.json()).then((res) => {
-            this.setState({ travelers: res.travelers });
-            
             var friends;
             if (!this.props.friendIds) friends = [];
             else friends = this.props.friendIds;
             
             // Friend Ids that aren't in the Trip
-            friends.filter(value => !res.travelers.includes(value))
-            this.setState({ friendIds: friends, render: true })
+            friends = friends.filter(value => !this.props.travelerIds.includes(value))
+            this.setState({ travelers: res.travelers, friendIds: friends, render: true })
         });
     }
 
     createTraveler = (traveler) => {
         const name = traveler.firstName + " " + traveler.lastName;
+        var remove;
+        if (this.props.isTripLeader())
+            remove = (<span id={traveler.id} className="close">❌</span>);
         return (
             <ListGroup.Item key={traveler.id}>
-                <span id={traveler.id} className="close">❌</span>
+                {remove}
                 {name}
             </ListGroup.Item>
         )
