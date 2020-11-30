@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "../../Stylesheets/CreateAccount.css";
 import Fade from "react-reveal/Fade";
 import friendtripLogo from "../../Media/friendtripLogo.svg";
+
 class CreateAccount extends Component {
   constructor(props) {
     super(props);
