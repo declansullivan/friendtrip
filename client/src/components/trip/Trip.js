@@ -15,6 +15,7 @@ import AddExpense from "./modals/AddExpense";
 import Fade from "react-reveal/Fade";
 import tripIcon from "../../Media/tripIcon.svg";
 import "../../Stylesheets/Trip.css";
+
 class Trip extends Component {
   constructor(props) {
     super(props);
@@ -83,12 +84,10 @@ class Trip extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ tripId: this.props.tripId }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        this.setState({ tripData: res.trip });
-        this.setState({ render: true });
-      });
+    }).then((res) => res.json()).then((res) => {
+      this.setState({ tripData: res.trip });
+      this.setState({ render: true });
+    });
   };
 
   refreshTripJSON = () => {
@@ -101,7 +100,7 @@ class Trip extends Component {
 
   render() {
     if (!this.state.render) return <div></div>;
-    if(!this.state.tripData.id) this.refreshTripJSON();
+    if (!this.state.tripData.id) this.refreshTripJSON();
     return (
       //   <Fade>
       <div className="w-100 h-100">
@@ -196,7 +195,6 @@ class Trip extends Component {
                     id={this.state.tripData.id}
                     travelerIds={this.state.tripData.travelerIds}
                     friendIds={this.props.traveler.friendIds}
-                    refreshTrip={this.refreshTripJSON}
                   />
                 </Col>
               </Row>

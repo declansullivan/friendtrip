@@ -9,24 +9,10 @@ class Trips extends Component {
     super(props);
     this.state = {
       trips: [],
-      owners: {},
+      invitedTrips: [],
+      owners: {}
     };
   }
-
-  getTripsJSON = () => {
-    fetch("http://localhost:9000/trip/getTrips", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ tripIds: this.props.tripIds }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        this.setState({ trips: res.trips });
-        this.getOwnerNames();
-      });
-  };
 
   getOwnerIds = () => {
     var owners = [];
@@ -36,22 +22,61 @@ class Trips extends Component {
     return owners;
   };
 
-  getOwnerNames = () => {
+  getTripsJSON = (tripIds, invitations) => {
+    fetch("http://localhost:9000/trip/getTrips", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ tripIds }),
+    }).then((res) => res.json()).then((res) => {
+      this.getInvitedTripsJSON(res.trips, invitations)
+    });
+  };
+
+  getInvitedTripsJSON = (trips, tripIds) => {
+    fetch("http://localhost:9000/trip/getTrips", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ tripIds }),
+    }).then((res) => res.json()).then((res) => {
+      this.getOwnerNames(trips, res.trips);
+    });
+  }
+
+  getOwnerNames = (trips, invitedTrips) => {
     fetch("http://localhost:9000/trip/getTravelers", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ travelerIds: this.getOwnerIds() }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        const owners = {};
-        for (const traveler of res.travelers) {
-          owners[traveler.id] = traveler.firstName + " " + traveler.lastName;
-        }
-        this.setState({ owners });
-      });
+    }).then((res) => res.json()).then((res) => {
+      const owners = {};
+      for (const traveler of res.travelers) {
+        owners[traveler.id] = traveler.firstName + " " + traveler.lastName;
+      }
+      this.setState({ trips, invitedTrips, owners });
+    });
+  };
+
+  handleInvitation = (tripId, method) => {
+    const data = { travelerId: this.getUserId(), tripId }
+    fetch("http://localhost:9000/trip/" + method, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => {
+      this.props.refreshTraveler();
+    });
+  }
+
+  getUserId = () => {
+    return localStorage.getItem("id");
   };
 
   createTrip(trip) {
@@ -76,6 +101,23 @@ class Trips extends Component {
     );
   }
 
+  createInvitation(invite) {
+    return (
+      <Row className="trips-invite m-0 text-center p-1" key={invite.id} id={"row" + invite.id}>
+      <Col xs={2}>{invite.name}</Col>
+      <Col xs={5}>{invite.description}</Col>
+      <Col>
+        <Button onClick={() => {this.handleInvitation(invite.id, "acceptInvite")}} variant="success">
+          Accept
+        </Button>{" "}
+        <Button onClick={() => {this.handleInvitation(invite.id, "rejectInvite")}} className="ml-3" variant="danger">
+          Decline
+        </Button>
+      </Col>
+    </Row>
+    )
+  }
+
   renderTrips() {
     if (!this.state.trips) return;
     var tripsJSX = [];
@@ -84,8 +126,26 @@ class Trips extends Component {
     }
     return tripsJSX;
   }
+
+  renderInvitations() {
+    if (!this.state.invitedTrips) return;
+    var invitesJSX = [];
+    for (const invite of this.state.invitedTrips) {
+      invitesJSX.push(this.createInvitation(invite));
+    }
+    return invitesJSX;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log("sent props");
+    console.log(nextProps)
+    this.getTripsJSON(nextProps.tripIds, nextProps.invitations);
+  }
+
   componentDidMount() {
-    this.getTripsJSON();
+    console.log("mounted")
+    console.log(this.props);
+    this.getTripsJSON(this.props.tripIds, this.props.invitations);
   }
 
   render() {
@@ -101,7 +161,7 @@ class Trips extends Component {
             id="tripIcon"
           />
           <h1 className="d-inline-block">
-            <strong> Trips</strong>
+            <strong>Trips</strong>
           </h1>
         </div>
 
@@ -116,9 +176,6 @@ class Trips extends Component {
             <Container fluid>
               <Row className="m-0 text-center">
                 <Col xs={2}>
-                  <h5>Inviter</h5>
-                </Col>
-                <Col xs={2}>
                   <h5>Trip Name</h5>
                 </Col>
                 <Col xs={5}>
@@ -126,32 +183,7 @@ class Trips extends Component {
                 </Col>
                 <Col></Col>
               </Row>
-
-              {/* Need to programmatically create rows. */}
-              <Row className="trips-invite m-0 text-center p-1">
-                <Col xs={2}>Username</Col>
-                <Col xs={2}>Trip Name</Col>
-                <Col xs={5}>Trip Description</Col>
-                <Col>
-                  <Button variant="success">Accept</Button>{" "}
-                  <Button className="ml-3" variant="danger">
-                    Decline
-                  </Button>
-                </Col>
-              </Row>
-
-              {/* Need to programmatically create rows. */}
-              <Row className="trips-invite m-0 text-center p-1">
-                <Col xs={2}>Username</Col>
-                <Col xs={2}>Trip Name</Col>
-                <Col xs={5}>Trip Description</Col>
-                <Col>
-                  <Button variant="success">Accept</Button>{" "}
-                  <Button className="ml-3" variant="danger">
-                    Decline
-                  </Button>
-                </Col>
-              </Row>
+              {this.renderInvitations()}
             </Container>
           </Card.Body>
         </Card>

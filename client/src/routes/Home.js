@@ -32,16 +32,14 @@ class Home extends Component {
   logoutFunc = () => {
     fetch("http://localhost:9000/logout", {
       method: "POST",
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.status === 200) {
-          localStorage.clear();
-          this.props.history.push("/");
-        } else {
-          alert("Logout failed.");
-        }
-      });
+    }).then((res) => res.json()).then((res) => {
+      if (res.status === 200) {
+        localStorage.clear();
+        this.props.history.push("/");
+      } else {
+        alert("Logout failed.");
+      }
+    });
   };
 
   getTravelerJSON = () => {
@@ -51,11 +49,11 @@ class Home extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ id: this.getUserId() }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        this.setState({ traveler: res });
-      });
+    }).then((res) => res.json()).then((res) => {
+      console.log("new traveler")
+      console.log(res);
+      this.setState({ traveler: res });
+    });
   };
 
   switchPage = (event) => {
@@ -63,9 +61,13 @@ class Home extends Component {
   };
 
   selectTrip = (tripId) => {
-    this.setState({ tripId });
-    this.setState({ render: "trip" });
+    this.setState({ tripId, render: "trip" });
   };
+
+  refreshTravelerJSON = () => {
+    this.getTravelerJSON();
+  };
+
   getUserId = () => {
     return localStorage.getItem("id");
   };
@@ -77,11 +79,9 @@ class Home extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ id: this.getUserId() }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        this.setState({ traveler: res, render: "trips" });
-      });
+    }).then((res) => res.json()).then((res) => {
+      this.setState({ traveler: res, render: "trips" });
+    });
   }
 
   renderContent() {
@@ -92,6 +92,8 @@ class Home extends Component {
         return (
           <Trips
             tripIds={this.state.traveler.tripIds}
+            invitations={this.state.traveler.invitations}
+            refreshTraveler={this.refreshTravelerJSON}
             callback={this.selectTrip}
           ></Trips>
         );
@@ -102,10 +104,14 @@ class Home extends Component {
             tripId={this.state.tripId}
             traveler={this.state.traveler}
             history={this.props.history}
-          ></Trip>
+          />
         );
       case "friends":
-        return <Friends></Friends>;
+        return (
+          <Friends
+            refreshTraveler={this.refreshTravelerJSON}
+          />
+        );
       case "createTrip":
         return (
           <CreateTrip refreshTraveler={this.refreshTravelerJSON}></CreateTrip>
@@ -114,10 +120,6 @@ class Home extends Component {
         return <HomePage></HomePage>;
     }
   }
-
-  refreshTravelerJSON = () => {
-    this.getTravelerJSON();
-  };
 
   componentDidMount() {
     this.getTravelerJSON();

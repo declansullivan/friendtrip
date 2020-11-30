@@ -4,13 +4,7 @@ const { addTrip, generateTripJSON } = require('../db/models/trip');
 const { generateTravelerJSON, addTraveler, getTraveler } = require('../db/models/traveler');
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
 router.put('/signup', function (req, res, next) {
-
   // Callback for Firebase auth.
   handleCreateAccount = (status, code) => {
     const id = req.body.email.replace('.', '');
@@ -48,6 +42,7 @@ router.post('/login', function (req, res, next) {
       res.json({ status: 401, code });
     }
   }
+
   // getTraveler callback function
   handleGetTraveler = (snapshotValue) => {
     res.json({ status: 200, code: "Success", id: snapshotValue.id });
@@ -67,11 +62,11 @@ router.post('/logout', function (req, res) {
       res.json({ status: 401, code });
     }
   }
+
   Accessor.logout(handleLogout);
 });
 
 router.put('/createTrip', function (req, res, next) {
-
   function generateId(length, chars) {
       var result = '';
       for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
