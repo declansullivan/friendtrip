@@ -58,7 +58,6 @@ class Travelers extends Component {
 
     renderTravelers = () => {
         if (!this.state.travelers) return;
-
         var travelersJSX = [];
         for (const traveler of this.state.travelers) {
           travelersJSX.push(this.createTraveler(traveler));
@@ -71,7 +70,7 @@ class Travelers extends Component {
     }
 
     render() {
-        if (!this.state.render) return (<div></div>)
+        if (!this.state.render) return (<div></div>);
         return (
             <div>
                 <AddTraveler 
