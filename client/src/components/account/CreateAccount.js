@@ -36,6 +36,9 @@ class CreateAccount extends Component {
         if (res.code === "auth/weak-password") {
           alert("Your password is too weak.");
         }
+        else {
+          this.props.history.push("/");
+        }
       });
   };
 
