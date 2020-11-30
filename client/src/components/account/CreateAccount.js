@@ -38,7 +38,6 @@ class CreateAccount extends Component {
           alert("Your password is too weak.");
         }
         else {
-          alert("Account successfully created!");
           localStorage.setItem("id", data.email.replace('.', ''));
           this.props.history.push("/home");
         }
