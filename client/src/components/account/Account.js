@@ -25,7 +25,6 @@ class Account extends Component {
   openEditNameModal = () => {
     this.setState({ showEditName: true });
   };
-
   // Edit Username Modal
   closeEditUsernameModal = () => {
     this.setState({showEditUsername: false});

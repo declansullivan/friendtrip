@@ -2,6 +2,7 @@ var express = require('express');
 const { getTraveler, updateTraveler, getTravelerList } = require('../db/models/traveler');
 var router = express.Router();
 
+
 router.post('/getAccount', function(req, res, next) {
     handleGetAccount = (account) => {
         res.json(account);
