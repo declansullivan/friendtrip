@@ -10,6 +10,10 @@ class AddItem extends Component {
     };
   }
 
+  editItem = (event) => {
+
+  }
+
   addItem = (event) => {
     event.preventDefault();
     const {
@@ -21,6 +25,7 @@ class AddItem extends Component {
     } = event.target.elements;
     let assignedTraveler = !group.checked ? this.props.travelerId : traveler.value;
     const data = {
+      id: this.defaultValue("id"),
       itemName: name.value,
       itemDescription: description.value,
       isPublic: group.checked,
@@ -29,14 +34,20 @@ class AddItem extends Component {
       travelerId: this.props.travelerId,
       tripId: this.props.tripId,
     };
-    fetch("http://localhost:9000/item/addItem", {
-      method: "PUT",
+
+    console.log(assignedTraveler);
+
+    const addItemAPI = "http://localhost:9000/item/addItem";
+    const editItemAPI = "http://localhost:9000/item/editItem";
+    const fetchAPI = (this.props.kind === "Add") ? addItemAPI : editItemAPI;
+
+    fetch(fetchAPI, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     }).then((res) => {
-      console.log(res);
       this.props.refreshTrip();
       this.props.handleClose();
     });
@@ -57,13 +68,10 @@ class AddItem extends Component {
       });
   };
 
-  componentDidMount() {
-    this.getTravelersJSON();
-  }
-
   // Create Traveler Radio
   createTraveler = (traveler) => {
     const name = traveler.firstName + " " + traveler.lastName;
+    const checked = traveler.id === this.defaultValue("assignee");
     return (
       <Form.Check
         custom
@@ -73,6 +81,7 @@ class AddItem extends Component {
         id={`#${traveler.id}`}
         key={traveler.id}
         value={traveler.id}
+        defaultChecked={checked}
       />
     );
   };
@@ -87,8 +96,21 @@ class AddItem extends Component {
     return travelersJSX;
   };
 
+  defaultValue = (param) => {
+    if (!this.props.item) return "";
+    else return this.props.item[param];
+  }
+
+  componentDidMount() {
+    this.getTravelersJSON();
+  }
+
   render() {
     if (!this.state.render) return <div></div>;
+
+    const isCheckedOff = this.defaultValue("isComplete");
+    const isPublic = this.defaultValue("isPublic");
+
     return (
       <Modal
         show={this.props.show}
@@ -108,7 +130,7 @@ class AddItem extends Component {
                 controlId="exampleForm.ControlTextarea1"
               >
                 <Form.Label>Item Name</Form.Label>
-                <Form.Control name="name" as="textarea" rows={1} />
+                <Form.Control defaultValue={this.defaultValue("name")} name="name" as="textarea" rows={1} />
               </Form.Group>
             </Form.Row>
             <Form.Row className="m-0 p-0">
@@ -118,7 +140,7 @@ class AddItem extends Component {
                 controlId="exampleForm.ControlTextarea2"
               >
                 <Form.Label>Item Description</Form.Label>
-                <Form.Control name="description" as="textarea" rows={4} />
+                <Form.Control defaultValue={this.defaultValue("description")} name="description" as="textarea" rows={4} />
               </Form.Group>
             </Form.Row>
             <Form.Row className="m-0 p-0">
@@ -128,6 +150,7 @@ class AddItem extends Component {
                 name="group"
                 label="Make Item public?"
                 id="group"
+                defaultChecked={isPublic}
               />
             </Form.Row>
             <Form.Row className="m-0 p-0">
@@ -137,6 +160,7 @@ class AddItem extends Component {
                 name="complete"
                 label="Has this Item been gotten?"
                 id="complete"
+                defaultChecked={isCheckedOff}
               />
             </Form.Row>
             <br></br>

@@ -12,7 +12,7 @@ class EditUsername extends Component {
         travelerId: this.props.traveler.id,
         username: username.value,
     }
-    console.log(data);
+    
     fetch("http://localhost:9000/account/editAccount", {
         method: "POST",
         headers: {

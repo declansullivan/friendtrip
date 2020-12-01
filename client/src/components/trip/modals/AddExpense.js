@@ -31,7 +31,7 @@ class AddExpense extends Component {
       tripId: this.props.tripId,
       assignedTravelers: assignedTravelers,
     };
-    console.log(data);
+    
     fetch("http://localhost:9000/expense/addExpense", {
       method: "PUT",
       headers: {

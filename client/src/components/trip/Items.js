@@ -9,14 +9,18 @@ class Items extends Component {
     super(props);
     this.state = {
       showAddItem: false,
-      render: false,
+      showEditItem: false,
       items: [],
       groupItems: [],
       personalItems: [],
+      travelers: [],
+      itemToEdit: null,
     };
 
     this.openAddItemModal = this.openAddItemModal.bind(this);
     this.closeAddItemModal = this.closeAddItemModal.bind(this);
+    this.openEditItemModal = this.openEditItemModal.bind(this);
+    this.closeEditItemModal = this.closeEditItemModal.bind(this);
   }
 
   closeAddItemModal = () => {
@@ -24,15 +28,22 @@ class Items extends Component {
   };
 
   openAddItemModal = () => {
-    this.closeAddItemModal();
     this.setState({ showAddItem: true });
   };
 
-  getItemsListJSON = () => {
+  closeEditItemModal = () => {
+    this.setState({ showEditItem: false, itemToEdit: null });
+  }
+
+  openEditItemModal = (item) => {
+    this.setState({ showEditItem: true, itemToEdit: item });
+  }
+
+  getItemsListJSON = (itemIds) => {
     const data = {
       travelerId: this.props.travelerId,
       tripId: this.props.tripId,
-      itemIds: this.props.itemIds,
+      itemIds,
     };
     fetch("http://localhost:9000/item/getItemsList", {
       method: "POST",
@@ -41,29 +52,56 @@ class Items extends Component {
       },
       body: JSON.stringify(data),
     }).then((res) => res.json()).then((res) => {
-      this.setState({
-        groupItems: res.groupItems,
-        personalItems: res.personalItems,
-        render: true,
-      });
+      this.getTravelersJSON(res.groupItems, res.personalItems);
     });
   };
 
-  componentDidMount() {
-    this.getItemsListJSON();
+  getTravelersJSON = (groupItems, personalItems) => {
+    fetch("http://localhost:9000/trip/getTravelers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ travelerIds: this.props.travelerIds }),
+    }).then((res) => res.json()).then((res) => {
+      var travelers = {}
+      for (const traveler of res.travelers) {
+        travelers[traveler.id] = traveler;
+      }
+      this.setState({ travelers, groupItems, personalItems });
+    });
+}
+
+  deleteItem = (itemId, tripId) => {
+    fetch("http://localhost:9000/item/deleteItem", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: itemId, tripId }),
+    }).then((res) => {
+      this.props.refreshTrip();
+      this.getItemsListJSON();
+    });
   }
 
   createItemPane = (item) => {
+    const assignee = this.state.travelers[item.assignee];
+    const name = assignee.firstName + " " + assignee.lastName;
     return(
-      <Tab.Pane eventKey={`#${item.id}`}>
+      <Tab.Pane key={item.id} eventKey={`#${item.id}`}>
         <h5>{item.name}</h5>
-        <h6>Assigned To: {item.assignee}</h6>
+        <h6>Assigned To: {name}</h6>
         <p>{item.description}</p>
         <hr></hr>
-        <Button onClick={this.openAddItemModal}>Edit</Button>
+        <Button className="mr-1" onClick={() => {this.openEditItemModal(item)}}>Edit</Button>
+        <Button className="mr-1" onClick={() => {this.deleteItem(item.id, this.props.tripId)}} variant="danger">
+          Delete
+        </Button>
       </Tab.Pane>
     );
   }
+
   renderItemsTabPane = () => {
     let itemsToRender = [];
     if(this.props.category === "Group")  {
@@ -79,14 +117,16 @@ class Items extends Component {
     }
     return itemListPaneJSX;
   };
+
   createItemListGroupItem = (item) => {
     let completion = item.isComplete ? "✅" : "❌"
     return (
-      <ListGroup.Item action href={`#${item.id}`}>
+      <ListGroup.Item key={item.id} action href={`#${item.id}`}>
         {item.name}<span style={{ float: "right" }}>{completion}</span>
       </ListGroup.Item>
     );
   };
+
   renderItemsListGroupItem = () => {
     let itemsToRender = []
     if(this.props.category === "Group")  {
@@ -102,6 +142,7 @@ class Items extends Component {
     }
     return itemListGroupItemJSX;
   };
+
   renderItems = () => {
       return (
         <Row>
@@ -115,6 +156,18 @@ class Items extends Component {
       );
   };
 
+  refreshItems = () => {
+    this.getItemsListJSON(this.props.itemIds);
+  } 
+
+  componentWillReceiveProps(nextProps) {
+    this.getItemsListJSON(nextProps.itemIds);
+  }
+
+  componentDidMount() {
+    this.getItemsListJSON(this.props.itemIds);
+  }
+
   render() {
     return (
       <div>
@@ -125,9 +178,20 @@ class Items extends Component {
           tripId={this.props.tripId}
           show={this.state.showAddItem}
           refreshTrip={this.props.refreshTrip}
-          refreshItem={{}} // TODO
           handleClose={this.closeAddItemModal}
-        ></AddItem>
+        />
+
+      <AddItem
+          kind="Edit"
+          travelerId={this.props.travelerId}
+          travelerIds={this.props.travelerIds}
+          tripId={this.props.tripId}
+          show={this.state.showEditItem}
+          refreshTrip={this.props.refreshTrip}
+          refreshItem={this.refreshItems}
+          handleClose={this.closeEditItemModal}
+          item={this.state.itemToEdit}
+        />
 
         <Card className="item-list mb-3">
           <Card.Header className="item-list-header">

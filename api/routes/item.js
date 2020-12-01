@@ -1,5 +1,5 @@
 var express = require("express");
-const { Item, updateItem, getItemList } = require("../db/models/item");
+const { Item, updateItem, getItemList, getItem, deleteItem } = require("../db/models/item");
 var router = express.Router();
 const { addItem, generateItemJSON } = require("../db/models/item");
 const { getTrip, addTrip, updateTrip } = require("../db/models/trip");
@@ -9,10 +9,6 @@ const { getTrip, addTrip, updateTrip } = require("../db/models/trip");
 // the data is shown.
 
 router.post("/getItem", function (req, res, next) {
-  res.send("Not Implemented!");
-});
-
-router.post("/getItems", function (req, res, next) {
   res.send("Not Implemented!");
 });
 
@@ -34,8 +30,7 @@ router.post("/getItemsList", function (req, res, next) {
   getItemList(req.body.itemIds, handleGetItems);
 });
 
-router.put("/addItem", function (req, res, next) {
-  console.log(req.body);
+router.post("/addItem", function (req, res, next) {
   // Generates random ID
   function generateId(length, chars) {
     var result = '';
@@ -49,7 +44,7 @@ router.put("/addItem", function (req, res, next) {
       "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
     )
   );
-  console.log(id);
+  
   // Generate item JSON
   const data = generateItemJSON(
     id,
@@ -82,11 +77,49 @@ router.put("/addItem", function (req, res, next) {
 });
 
 router.post("/editItem", function (req, res, next) {
-  res.send("Not Implemented!");
+  handleGetItem = (item) => {
+    const data = generateItemJSON(
+      req.body.id,
+      req.body.tripId,
+      req.body.travelerId,
+      req.body.itemName,
+      req.body.assignedTraveler,
+      req.body.itemDescription,
+      req.body.isPublic,
+      req.body.isComplete,
+    );
+
+    updateItem(data, handleUpdateItem);
+  }
+
+  handleUpdateItem = (error) => {
+    if (error) res.sendStatus(401);
+    else res.sendStatus(200);
+  }
+  
+  getItem(req.body.id, handleGetItem);
 });
 
 router.delete("/deleteItem", function (req, res, next) {
-  res.send("Not Implemented!");
+  handleDeleteItem = (error) => {
+    getTrip(req.body.tripId, handleGetTrip);
+  }
+
+  handleGetTrip = (trip) => {
+    let itemIds = [];
+    for (const item of trip.itemIds) {
+      if (item !== req.body.id) itemIds.push(item);
+    }
+    trip.itemIds = itemIds;
+    updateTrip(trip, handleUpdateTrip);
+  }
+
+  handleUpdateTrip = (error) => {
+    if (error) res.sendStatus(401);
+    else res.sendStatus(200);
+  }
+  
+  deleteItem(req.body.id, handleDeleteItem);
 });
 
 router.post("/checkoffItem", function (req, res, next) {
