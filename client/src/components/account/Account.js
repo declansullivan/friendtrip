@@ -25,7 +25,6 @@ class Account extends Component {
   openEditNameModal = () => {
     this.setState({ showEditName: true });
   };
-
   // Edit Username Modal
   closeEditUsernameModal = () => {
     this.setState({showEditUsername: false});
@@ -38,7 +37,6 @@ class Account extends Component {
   getDateCreatedOn() {
     return Date(parseInt(this.props.traveler.createdOn,10)).toString('MM/dd/yy HH:mm:ss');
   }
-
   render() {
     return (
         <div className="accountInfo w-100 h-100">

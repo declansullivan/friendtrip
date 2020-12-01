@@ -15,7 +15,6 @@ import profileLogo from "../Media/profileIcon.svg";
 import navBarImage from "../Media/loginImage.svg";
 import Fade from "react-reveal/Fade";
 import "../Stylesheets/Home.css";
-
 class Home extends Component {
   constructor(props) {
     super(props);

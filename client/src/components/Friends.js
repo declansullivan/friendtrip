@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Alert, Button, Card, Form } from "react-bootstrap";
 import friendsPageImage from "../Media/friendsPageImage.svg";
 import friendsIcon from "../Media/friendsIcon.svg";
+import profileLogo from "../Media/profileIcon.svg";
 import "../Stylesheets/Friends.css";
-
 class Friends extends Component {
   constructor(props) {
     super(props);
@@ -87,7 +87,17 @@ class Friends extends Component {
     return (
       <Card key={friend.id} style={{ width: "25%", margin: "0 2.5%" }} variant="Light">
         <Card.Body>
-          <Card.Title>{name}</Card.Title>
+          <Card.Title>
+          <img
+              src={profileLogo}
+              width="25"
+              height="25"
+              className="d-inline-block align-top mr-1"
+              alt="profileLogo"
+              id="profileLogo"
+            />
+            {name}
+            </Card.Title>
           <Card.Text>
             Username: {friend.username}
             <br/>

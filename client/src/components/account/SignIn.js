@@ -9,7 +9,6 @@ class SignIn extends Component {
   constructor(props) {
     super(props);
   }
-
   signIn = (event) => {
     event.preventDefault();
     const { email, password } = event.target.elements;

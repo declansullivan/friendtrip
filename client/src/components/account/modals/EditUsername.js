@@ -5,7 +5,6 @@ class EditUsername extends Component {
   constructor(props) {
     super(props);
   }
-
   updateUsername = event => {
     event.preventDefault();
     const {username} = event.target.elements;

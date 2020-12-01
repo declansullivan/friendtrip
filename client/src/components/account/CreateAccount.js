@@ -9,7 +9,6 @@ class CreateAccount extends Component {
   constructor(props) {
     super(props);
   }
-
   createAccount = (event) => {
     event.preventDefault();
 
