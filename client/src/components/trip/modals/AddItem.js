@@ -6,7 +6,6 @@ class AddItem extends Component {
     super(props);
     this.state = {
       render: false,
-      showAddTraveler: false,
       travelers: [],
     };
   }
@@ -20,29 +19,28 @@ class AddItem extends Component {
       complete,
       traveler,
     } = event.target.elements;
+    let assignedTraveler = !group.checked ? this.props.travelerId : traveler.value;
     const data = {
       itemName: name.value,
       itemDescription: description.value,
       isPublic: group.checked,
       isComplete: complete.checked,
-      assignedTraveler: traveler.value,
+      assignedTraveler: assignedTraveler,
       travelerId: this.props.travelerId,
       tripId: this.props.tripId,
     };
-    console.log(data);
     fetch("http://localhost:9000/item/addItem", {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     }).then((res) => {
-        this.props.refreshTrip();
-        this.props.handleClose();
+      console.log(res);
+      this.props.refreshTrip();
+      this.props.handleClose();
     });
-
   };
-//   updateItem = () => {};
 
   // Gets Travelers on the Trip
   getTravelersJSON = () => {
@@ -55,28 +53,27 @@ class AddItem extends Component {
     })
       .then((res) => res.json())
       .then((res) => {
-        this.setState({ travelers: res.travelers, render: true});
+        this.setState({ travelers: res.travelers, render: true });
       });
   };
 
   componentDidMount() {
     this.getTravelersJSON();
-}
+  }
 
-
-  // Create Traveler Radio 
+  // Create Traveler Radio
   createTraveler = (traveler) => {
     const name = traveler.firstName + " " + traveler.lastName;
     return (
-        <Form.Check
+      <Form.Check
         custom
         type="radio"
         name="traveler"
         label={name}
-        id={traveler.id}
+        id={`#${traveler.id}`}
         key={traveler.id}
         value={traveler.id}
-      ></Form.Check>
+      />
     );
   };
 
@@ -90,9 +87,8 @@ class AddItem extends Component {
     return travelersJSX;
   };
 
-
   render() {
-    if (!this.state.render) return (<div></div>);
+    if (!this.state.render) return <div></div>;
     return (
       <Modal
         show={this.props.show}
@@ -106,13 +102,21 @@ class AddItem extends Component {
           <Modal.Body>
             <h4>{this.props.kind} Item</h4>
             <Form.Row className="m-0 p-0">
-              <Form.Group as={Col} className="m-0 p-0" controlId="exampleForm.ControlTextarea1">
+              <Form.Group
+                as={Col}
+                className="m-0 p-0"
+                controlId="exampleForm.ControlTextarea1"
+              >
                 <Form.Label>Item Name</Form.Label>
                 <Form.Control name="name" as="textarea" rows={1} />
               </Form.Group>
             </Form.Row>
             <Form.Row className="m-0 p-0">
-              <Form.Group as={Col} className="m-0 p-0" controlId="exampleForm.ControlTextarea2">
+              <Form.Group
+                as={Col}
+                className="m-0 p-0"
+                controlId="exampleForm.ControlTextarea2"
+              >
                 <Form.Label>Item Description</Form.Label>
                 <Form.Control name="description" as="textarea" rows={4} />
               </Form.Group>

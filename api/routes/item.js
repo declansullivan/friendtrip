@@ -1,5 +1,5 @@
 var express = require("express");
-const { Item, updateItem } = require("../db/models/item");
+const { Item, updateItem, getItemList } = require("../db/models/item");
 var router = express.Router();
 const { addItem, generateItemJSON } = require("../db/models/item");
 const { getTrip, addTrip, updateTrip } = require("../db/models/trip");
@@ -9,7 +9,6 @@ const { getTrip, addTrip, updateTrip } = require("../db/models/trip");
 // the data is shown.
 
 router.post("/getItem", function (req, res, next) {
-    console.log(req.body);
   res.send("Not Implemented!");
 });
 
@@ -17,14 +16,32 @@ router.post("/getItems", function (req, res, next) {
   res.send("Not Implemented!");
 });
 
+router.post("/getItemsList", function (req, res, next) {
+  handleGetItems = (items) => {
+    let personalItems = [];
+    let groupItems = [];
+    let itemsLength = Object.keys(items).length;
+    for (let i = 0; i < itemsLength; i++) {
+      if (!items[i].isPublic && items[i].assignee === req.body.travelerId) {
+        personalItems.push(items[i]);
+      }
+      else if (items[i].isPublic) {
+        groupItems.push(items[i]);
+      }
+    }
+    res.json({ personalItems, groupItems });
+  };
+  getItemList(req.body.itemIds, handleGetItems);
+});
+
 router.put("/addItem", function (req, res, next) {
+  console.log(req.body);
   // Generates random ID
-    function generateId(length, chars) {
-    var result = "";
-    for (var i = length; i > 0; --i)
-      result += chars[Math.floor(Math.random() * chars.length)];
+  function generateId(length, chars) {
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
     return result;
-  }
+}
   // Generate item ID
   const id = "item_".concat(
     generateId(
@@ -32,6 +49,7 @@ router.put("/addItem", function (req, res, next) {
       "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
     )
   );
+  console.log(id);
   // Generate item JSON
   const data = generateItemJSON(
     id,
@@ -41,10 +59,10 @@ router.put("/addItem", function (req, res, next) {
     req.body.assignedTraveler,
     req.body.itemDescription,
     req.body.isPublic,
-    req.body.isComplete
+    req.body.isComplete,
   );
   // Add item to database
-  handleAddItem = (error) => {}
+  handleAddItem = (error) => {};
   addItem(data, handleAddItem);
   // Add item to Trip Object
   handleUpdateTrip = (error) => {
@@ -52,14 +70,14 @@ router.put("/addItem", function (req, res, next) {
     else res.sendStatus(200);
   };
   handleGetTrip = (trip) => {
-    if(trip) {
-        let newItemIds = [];
-        if(trip.itemIds) newItemIds = trip.itemIds;
-        newItemIds.push(id);
-        trip.itemIds = newItemIds;
-        updateTrip(trip, handleUpdateTrip);
+    if (trip) {
+      let newItemIds = [];
+      if (trip.itemIds) newItemIds = trip.itemIds;
+      newItemIds.push(id);
+      trip.itemIds = newItemIds;
+      updateTrip(trip, handleUpdateTrip);
     }
-  }
+  };
   getTrip(req.body.tripId, handleGetTrip);
 });
 
