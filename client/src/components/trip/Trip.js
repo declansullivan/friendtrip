@@ -166,6 +166,8 @@ class Trip extends Component {
         <ConfirmDelete
           tripId={this.state.tripData.id}
           travelerIds={this.state.tripData.travelerIds}
+          itemIds={this.state.tripData.itemIds}
+          expenseIds={this.state.tripData.expenseIds}
           history={this.props.history}
           show={this.state.showDeleteTrip}
           refreshTrip={this.refreshTripJSON}

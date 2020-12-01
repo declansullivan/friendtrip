@@ -10,6 +10,8 @@ const {
   updateTrip,
   deleteTrip,
 } = require("../db/models/trip");
+const {deleteItem, getItemList} = require("../db/models/item");
+const {getExpenseList, deleteExpense} = require("../db/models/expense");
 var router = express.Router();
 
 router.get("/", function (req, res, next) {
@@ -103,7 +105,7 @@ router.delete("/deleteTrip", function (req, res, next) {
     for (let i = 0; i < travelerListLength; i++) {
       let trips;
       let tripsLength;
-      // Go through the traveler list, and look at what trips they are on
+      // Delete the Trip id from every Traveler on the Trip
       if (travelerList[i].tripIds) {
         trips = travelerList[i].tripIds;
         tripsLength = Object.keys(trips).length;
@@ -118,12 +120,28 @@ router.delete("/deleteTrip", function (req, res, next) {
         travelerList[i].tripIds = newTrips;
         updateTraveler(travelerList[i], handleUpdateTraveler);
       }
+      // Delete the Item objects associated with the Trip
+      getItemList(req.body.itemIds, handleGetItems);
+      // Delete the Expense Objects associated with the Trip
+      getExpenseList(req.body.expenseIds, handleGetExpenses)
     }
     deleteTrip(req.body.tripId, handleDeleteTrip);
   };
-
+  handleGetItems = (items) => {
+    let itemsListLength = Object.keys(items).length;
+    for (let k = 0; k < itemsListLength; k++) {
+      deleteItem(items[k].id, handleDeleteItem);
+    }
+  }
+  handleDeleteItem = (error) => {};
+  handleGetExpenses = (expenses) => {
+    let expensesListLength = Object.keys(expenses).length;
+    for(let m = 0; m < expensesListLength; m++) {
+      deleteExpense(expenses[m].id, handleDeleteExpense);
+    }
+  }
+  handleDeleteExpense = (error) => {};
   handleUpdateTraveler = (error) => {};
-
   handleDeleteTrip = (error) => {
     if (error) res.sendStatus(401);
     else res.sendStatus(200);

@@ -14,8 +14,14 @@ class AddExpense extends Component {
     event.preventDefault();
     const { name, description, cost, traveler } = event.target.elements;
     let assignedTravelers = [];
-    for (let i = 0; i < traveler.length; i++) {
-      if (traveler[i].checked) assignedTravelers.push(traveler[i].value);
+    let numOfTravelers = this.props.travelerIds.length;
+    if(numOfTravelers === 1) {
+      assignedTravelers.push(traveler.value);
+    }
+    else {
+      for (let i = 0; i < this.props.travelerIds.length; i++) {
+        if (traveler[i].checked) assignedTravelers.push(traveler[i].value);
+      }
     }
     const data = {
       expenseName: name.value,
@@ -25,6 +31,7 @@ class AddExpense extends Component {
       tripId: this.props.tripId,
       assignedTravelers: assignedTravelers,
     };
+    console.log(data);
     fetch("http://localhost:9000/expense/addExpense", {
       method: "PUT",
       headers: {

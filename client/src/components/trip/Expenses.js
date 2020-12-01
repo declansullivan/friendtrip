@@ -89,6 +89,7 @@ class Expenses extends Component {
     return expenseTabPaneJSX;
   };
   renderExpenses = () => {
+    if(!this.state.expenses || this.state.expenses.length === 0) return;
     return (
       <Row>
         <Col sm={5}>

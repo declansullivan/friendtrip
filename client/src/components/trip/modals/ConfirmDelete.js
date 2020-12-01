@@ -11,6 +11,8 @@ class ConfirmDelete extends Component {
       const data = {
         tripId: this.props.tripId,
         travelerIds: this.props.travelerIds,
+        itemIds: this.props.itemIds,
+        expenseIds: this.props.expenseIds,
       };
       fetch("http://localhost:9000/trip/deleteTrip", {
           method: "DELETE",
