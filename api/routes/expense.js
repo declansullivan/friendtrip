@@ -5,7 +5,10 @@ const {
   updateExpense,
   addExpense,
   getExpenseList,
+  deleteExpense,
+  getExpense,
 } = require("../db/models/expense");
+const { updateItem } = require("../db/models/item");
 const { updateTrip, getTrip } = require("../db/models/trip");
 var router = express.Router();
 
@@ -20,7 +23,7 @@ router.post("/getExpenses", function (req, res, next) {
   getExpenseList(req.body.expenseIds, handleGetExpenses);
 });
 
-router.put("/addExpense", function (req, res, next) {
+router.post("/addExpense", function (req, res, next) {
   // Generates random ID
   function generateId(length, chars) {
     var result = "";
@@ -65,11 +68,42 @@ router.put("/addExpense", function (req, res, next) {
 });
 
 router.post("/editExpense", function (req, res, next) {
-  res.send("Not Implemented!");
+  handleGetExpense = (expense) => {
+    const data = generateExpenseJSON(
+      req.body.id,
+      req.body.tripId,
+      req.body.travelerId,
+      req.body.expenseName,
+      req.body.description,
+      req.body.cost,
+      req.body.assignedTravelers,
+    );
+    updateExpense(data, handleUpdateExpense);
+  }
+  handleUpdateExpense = (error) => {
+    if(error) res.sendStatus(401);
+    else res.sendStatus(200);
+  }
+  getExpense(req.body.id, handleGetExpense);
 });
 
-router.post("/deleteExpense", function (req, res, next) {
-  res.send("Not Implemented!");
+router.delete("/deleteExpense", function (req, res, next) {
+  handleDeleteExpense = (error) => {
+    getTrip(req.body.tripId, handleGetTrip);
+  };
+  handleGetTrip = (trip) => {
+    let expenseIds = [];
+    for (const expense of trip.expenseIds) {
+      if (expense !== req.body.id) expenseIds.push(expense);
+    }
+    trip.expenseIds = expenseIds;
+    updateTrip(trip, handleUpdateTrip);
+  };
+  handleUpdateTrip = (error) => {
+    if (error) res.sendStatus(401);
+    else res.sendStatus(200);
+  };
+  deleteExpense(req.body.id, handleDeleteExpense);
 });
 
 module.exports = router;

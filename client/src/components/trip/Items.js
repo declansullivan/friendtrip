@@ -94,10 +94,10 @@ class Items extends Component {
         <h6>Assigned To: {name}</h6>
         <p>{item.description}</p>
         <hr></hr>
-        <Button className="mr-1" onClick={() => {this.openEditItemModal(item)}}>Edit</Button>
-        <Button className="mr-1" onClick={() => {this.deleteItem(item.id, this.props.tripId)}} variant="danger">
+        <Button className="float-right ml-1" onClick={() => {this.deleteItem(item.id, this.props.tripId)}} variant="danger">
           Delete
         </Button>
+        <Button className="float-right" onClick={() => {this.openEditItemModal(item)}}>Edit</Button>
       </Tab.Pane>
     );
   }

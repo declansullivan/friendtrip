@@ -14,16 +14,11 @@ class AddExpense extends Component {
     event.preventDefault();
     const { name, description, cost, traveler } = event.target.elements;
     let assignedTravelers = [];
-    let numOfTravelers = this.props.travelerIds.length;
-    if(numOfTravelers === 1) {
-      assignedTravelers.push(traveler.value);
-    }
-    else {
-      for (let i = 0; i < this.props.travelerIds.length; i++) {
-        if (traveler[i].checked) assignedTravelers.push(traveler[i].value);
-      }
+    for (let i = 0; i < this.props.travelerIds.length; i++) {
+      if (traveler[i].checked) assignedTravelers.push(traveler[i].value);
     }
     const data = {
+      id: this.defaultValue("id"),
       expenseName: name.value,
       description: description.value,
       cost: cost.value,
@@ -31,18 +26,21 @@ class AddExpense extends Component {
       tripId: this.props.tripId,
       assignedTravelers: assignedTravelers,
     };
-    
-    fetch("http://localhost:9000/expense/addExpense", {
-      method: "PUT",
+    const addExpenseAPI = "http://localhost:9000/expense/addExpense";
+    const editExpenseAPI = "http://localhost:9000/expense/editExpense";
+    const fetchAPI = this.props.kind === "Add" ? addExpenseAPI : editExpenseAPI;
+
+    fetch(fetchAPI, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     }).then((res) => {
       this.props.refreshTrip(this.props.refreshExpense);
+      this.props.handleClose();
     });
   };
-
 
   // Gets Travelers on the Trip
   getTravelersJSON = () => {
@@ -58,10 +56,6 @@ class AddExpense extends Component {
         this.setState({ travelers: res.travelers, render: true });
       });
   };
-
-  componentDidMount() {
-    this.getTravelersJSON();
-  }
 
   // Create Traveler Radio
   createTraveler = (traveler) => {
@@ -89,6 +83,14 @@ class AddExpense extends Component {
     return travelersJSX;
   };
 
+  defaultValue = (param) => {
+    if (!this.props.expense) return "";
+    else return this.props.expense[param];
+  };
+
+  componentDidMount() {
+    this.getTravelersJSON();
+  }
   render() {
     if (!this.state.render) return <div></div>;
     return (
@@ -107,19 +109,34 @@ class AddExpense extends Component {
             <Form.Row>
               <Form.Group as={Col} controlId="exampleForm.ControlTextarea1">
                 <Form.Label>Expense Name</Form.Label>
-                <Form.Control name="name" as="textarea" rows={1} />
+                <Form.Control
+                  defaultValue={this.defaultValue("name")}
+                  name="name"
+                  as="textarea"
+                  rows={1}
+                />
               </Form.Group>
             </Form.Row>
             <Form.Row>
               <Form.Group as={Col} controlId="exampleForm.ControlTextarea2">
                 <Form.Label>Expense Description</Form.Label>
-                <Form.Control name="description" as="textarea" rows={4} />
+                <Form.Control
+                  defaultValue={this.defaultValue("description")}
+                  name="description"
+                  as="textarea"
+                  rows={4}
+                />
               </Form.Group>
             </Form.Row>
             <Form.Row>
               <Form.Group as={Col} controlId="exampleForm.ControlTextarea3">
                 <Form.Label>Cost</Form.Label>
-                <Form.Control name="cost" as="textarea" rows={1} />
+                <Form.Control
+                  defaultValue={this.defaultValue("cost")}
+                  name="cost"
+                  as="textarea"
+                  rows={1}
+                />
               </Form.Group>
             </Form.Row>
             <br></br>
@@ -128,9 +145,7 @@ class AddExpense extends Component {
 
             <Form.Row>
               <br></br>
-              <div key="assignedTraveler">
-                {this.renderTravelers()}
-              </div>
+              <div key="assignedTraveler">{this.renderTravelers()}</div>
             </Form.Row>
           </Modal.Body>
           <Modal.Footer>
