@@ -38,7 +38,6 @@ class Account extends Component {
   getDateCreatedOn() {
     return Date(parseInt(this.props.traveler.createdOn,10)).toString('MM/dd/yy HH:mm:ss');
   }
-
   render() {
     return (
         <div className="accountInfo w-100 h-100">
