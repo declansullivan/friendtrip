@@ -1,6 +1,7 @@
 const { destinationRef } = require('../index');
 const { Accessor } = require('./accessor');
 
+
 module.exports = class Destination {
     static getDestination(id, callback) {
         Accessor.getObject(destinationRef, id, callback);
