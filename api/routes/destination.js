@@ -1,6 +1,7 @@
 var express = require('express');
 const { getDestination, getDestinationList, addDestination,
     deleteDestination, updateDestination, generateDestinationJSON } = require('../db/models/destination');
+const { getTrip, addTrip, updateTrip } = require("../db/models/trip");
 var router = express.Router();
 
 router.post('/getDestination', function (req, res, next) {
@@ -12,7 +13,6 @@ router.post('/getDestinations', function (req, res, next) {
 });
 
 router.put('/addDestination', function (req, res, next) {
-    console.log("hello");
     // Generates random ID
     function generateId(length, chars) {
         var result = "";
@@ -27,23 +27,19 @@ router.put('/addDestination', function (req, res, next) {
             "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         )
     );
-
     const data = generateDestinationJSON(
         id,
         req.body.tripId,
         req.body.travelerId,
-        req.body.name,
-        req.body.countryCode,
-        req.body.startDate,
+        req.body.destName,
+        req.body.destCountryCode,
+        req.body.destStartDate,
         req.body.destEndDate,
-        req.body.description,
+        req.body.destDescription,
         req.body.destAddress,
     );
-
-
-
+    // Add Destination Object
     handleAddDestination = (error) => { }
-    console.log("hello");
     addDestination(data, handleAddDestination);
 
     handleUpdateTrip = (error) => {
@@ -52,10 +48,10 @@ router.put('/addDestination', function (req, res, next) {
     };
     handleGetTrip = (trip) => {
         if (trip) {
-            let newItemIds = [];
-            if (trip.itemIds) newItemIds = trip.itemIds;
-            newItemIds.push(id);
-            trip.itemIds = newItemIds;
+            let newDestinationIds = [];
+            if (trip.destinationIds) newItemIds = trip.destinationIds;
+            newDestinationIds.push(id);
+            trip.destinationIds = newDestinationIds;
             updateTrip(trip, handleUpdateTrip);
         }
     }

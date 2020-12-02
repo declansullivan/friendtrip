@@ -16,13 +16,15 @@ class AddDestination extends Component {
             address,
         } = event.target.elements;
         const data = {
+            tripId: this.props.tripId,
+            travelerId: this.props.travelerId,
             destName: name.value,
             destDescription: description.value,
+            destCountryCode: 0,
             destStartDate: start.value,
             destEndDate: end.value,
             destAddress: address.value,
         };
-        console.log(data);
         fetch("http://localhost:9000/destination/addDestination", {
             method: "PUT",
             headers: {
@@ -30,7 +32,6 @@ class AddDestination extends Component {
             },
             body: JSON.stringify(data),
         }).then((res) => {
-            console.log("sup");
             this.props.refreshTrip();
             this.props.handleClose();
         });

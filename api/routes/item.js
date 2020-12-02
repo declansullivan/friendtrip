@@ -18,7 +18,6 @@ router.post("/getItems", function (req, res, next) {
 });
 
 router.put("/addItem", function (req, res, next) {
-  console.log("AHHH");
   // Generates random ID
   function generateId(length, chars) {
     var result = "";

@@ -40,7 +40,11 @@ class Destinations extends Component {
             <div>
                 <ViewDestination show={this.state.showViewDestination} handleClose={this.closeViewDestinationModal}>
                 </ViewDestination>
-                <AddDestination kind="Add" show={this.state.showAddDestination} handleClose={this.closeAddDestinationModal}
+                <AddDestination kind="Add" 
+                tripId={this.props.tripId}
+                travelerId={this.props.travelerId}
+                show={this.state.showAddDestination} 
+                handleClose={this.closeAddDestinationModal}
                     refreshTrip={this.props.refreshTrip} />
 
                 <Card className="destinations-list">
