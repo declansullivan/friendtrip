@@ -26,7 +26,6 @@ class Trip extends Component {
       showLeaveTrip: false,
       showEditTrip: false,
       showAddItem: false,
-      showAddExpense: false,
       tripData: {},
     };
 
@@ -43,8 +42,6 @@ class Trip extends Component {
     this.openAddItemModal = this.openAddItemModal.bind(this);
     this.closeAddItemModal = this.closeAddItemModal.bind(this);
 
-    this.openAddExpenseModal = this.openAddExpenseModal.bind(this);
-    this.closeAddExpenseModal = this.closeAddExpenseModal.bind(this);
   }
 
   // Handle modal visibility
@@ -80,16 +77,8 @@ class Trip extends Component {
     this.setState({ showAddItem: true });
   };
 
-  closeAddExpenseModal = () => {
-    this.setState({ showAddExpense: false });
-  };
-
-  openAddExpenseModal = () => {
-    this.setState({ showAddExpense: true });
-  };
-
   // Retrieve all releveant data
-  getTripJSON = () => {
+  getTripJSON = (callback) => {
     fetch("http://localhost:9000/trip/getTrip", {
       method: "POST",
       headers: {
@@ -100,6 +89,7 @@ class Trip extends Component {
       .then((res) => res.json())
       .then((res) => {
         this.setState({ tripData: res.trip, render: true });
+        if(callback) callback();
       });
   };
 
@@ -146,8 +136,8 @@ class Trip extends Component {
     }
   };
 
-  refreshTripJSON = () => {
-    this.getTripJSON();
+  refreshTripJSON = (callback) => {
+    this.getTripJSON(callback);
   };
 
   componentDidMount() {
@@ -176,6 +166,8 @@ class Trip extends Component {
         <ConfirmDelete
           tripId={this.state.tripData.id}
           travelerIds={this.state.tripData.travelerIds}
+          itemIds={this.state.tripData.itemIds}
+          expenseIds={this.state.tripData.expenseIds}
           history={this.props.history}
           show={this.state.showDeleteTrip}
           refreshTrip={this.refreshTripJSON}
@@ -196,20 +188,6 @@ class Trip extends Component {
           show={this.state.showEditTrip}
           handleClose={this.closeEditTripModal}
         ></EditTrip>
-        <AddItem
-          kind="Add"
-          travelerIds={this.state.tripData.travelerIds}
-          travelerId={this.props.traveler.id}
-          tripId={this.state.tripData.id}
-          show={this.state.showAddItem}
-          refreshTrip={this.refreshTripJSON}
-          handleClose={this.closeAddItemModal}
-        ></AddItem>
-        <AddExpense
-          kind="Add"
-          show={this.state.showAddExpense}
-          handleClose={this.closeAddExpenseModal}
-        ></AddExpense>
 
         <Card className="trip-list w-100">
           <Card.Header className="trip-list-header">
@@ -245,18 +223,25 @@ class Trip extends Component {
               <Row>
                 <Col xs={8}>
                   <Items
+                    travelerId={this.props.traveler.id}
+                    travelerIds={this.state.tripData.travelerIds}
+                    tripId={this.state.tripData.id}
                     itemIds={this.state.tripData.itemIds}
                     category="Group"
                     refreshTrip={this.refreshTripJSON}
                   />
-                  <br></br>
                   <Items
+                    travelerId={this.props.traveler.id}
+                    travelerIds={this.state.tripData.travelerIds}
+                    tripId={this.state.tripData.id}
                     itemIds={this.state.tripData.itemIds}
                     category="Personal"
                     refreshTrip={this.refreshTripJSON}
                   />
-                  <br></br>
                   <Expenses
+                    travelerId={this.props.traveler.id}
+                    travelerIds={this.state.tripData.travelerIds}
+                    tripId={this.state.tripData.id}
                     expenseIds={this.state.tripData.expenseIds}
                     refreshTrip={this.refreshTripJSON}
                   />
@@ -270,14 +255,9 @@ class Trip extends Component {
                   />
                 </Col>
               </Row>
-              <br></br>
 
               <Row>
                 <Col>
-                  <Button className="mr-1" onClick={this.openAddItemModal}>Add Item</Button>
-                  <Button className="mr-1" onClick={this.openAddExpenseModal}>
-                    Add Expense
-                  </Button>
                   <Button onClick={this.openEditTripModal}>Edit Trip</Button>
                   {this.showLeaveTrip()}
                   {this.showDeleteTrip()}

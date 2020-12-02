@@ -2,6 +2,7 @@ var express = require('express');
 const { getTraveler, updateTraveler, getTravelerList } = require('../db/models/traveler');
 var router = express.Router();
 
+
 router.post('/getAccount', function(req, res, next) {
     handleGetAccount = (account) => {
         res.json(account);
@@ -11,7 +12,19 @@ router.post('/getAccount', function(req, res, next) {
 });
 
 router.post('/editAccount', function(req, res, next) {
-    res.send("Not Implemented!");
+    handleGetTraveler = (traveler) => {
+        if(traveler) {
+            if(req.body.firstName) traveler.firstName = req.body.firstName;
+            if(req.body.lastName) traveler.lastName = req.body.lastName;
+            if(req.body.username) traveler.username = req.body.username;
+            updateTraveler(traveler, handleUpdateTraveler);
+        }
+    }
+    handleUpdateTraveler = (error) => {
+        if (error) res.send(401);
+        else res.send(200);
+    }
+    getTraveler(req.body.travelerId, handleGetTraveler);
 });
 
 router.post('/getFriends', function(req, res, next) {

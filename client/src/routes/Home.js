@@ -15,7 +15,6 @@ import profileLogo from "../Media/profileIcon.svg";
 import navBarImage from "../Media/loginImage.svg";
 import Fade from "react-reveal/Fade";
 import "../Stylesheets/Home.css";
-
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -32,14 +31,16 @@ class Home extends Component {
   logoutFunc = () => {
     fetch("http://localhost:9000/logout", {
       method: "POST",
-    }).then((res) => res.json()).then((res) => {
-      if (res.status === 200) {
-        localStorage.clear();
-        this.props.history.push("/");
-      } else {
-        alert("Logout failed.");
-      }
-    });
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 200) {
+          localStorage.clear();
+          this.props.history.push("/");
+        } else {
+          alert("Logout failed.");
+        }
+      });
   };
 
   getTravelerJSON = () => {
@@ -49,9 +50,11 @@ class Home extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ id: this.getUserId() }),
-    }).then((res) => res.json()).then((res) => {
-      this.setState({ traveler: res });
-    });
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        this.setState({ traveler: res });
+      });
   };
 
   switchPage = (event) => {
@@ -78,15 +81,23 @@ class Home extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ id: this.getUserId() }),
-    }).then((res) => res.json()).then((res) => {
-      this.setState({ traveler: res, render: "trips" });
-    });
-  }
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        this.setState({ traveler: res, render: "trips" });
+      });
+  };
 
   renderContent() {
     switch (this.state.render) {
       case "account":
-        return <Account user={this.getUserId()}></Account>;
+        return (
+          <Account
+            traveler={this.state.traveler}
+            refreshTraveler={this.refreshTravelerJSON}
+            user={this.getUserId()}
+          ></Account>
+        );
       case "trips":
         return (
           <Trips
@@ -106,11 +117,7 @@ class Home extends Component {
           />
         );
       case "friends":
-        return (
-          <Friends
-            refreshTraveler={this.refreshTravelerJSON}
-          />
-        );
+        return <Friends refreshTraveler={this.refreshTravelerJSON} />;
       case "createTrip":
         return (
           <CreateTrip refreshTraveler={this.refreshTravelerJSON}></CreateTrip>
@@ -126,7 +133,7 @@ class Home extends Component {
 
   redirectOnLoggedOut = () => {
     if (!localStorage.getItem("id")) this.props.history.push("/");
-  }
+  };
 
   render() {
     return (

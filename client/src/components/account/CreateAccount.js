@@ -9,7 +9,6 @@ class CreateAccount extends Component {
   constructor(props) {
     super(props);
   }
-
   createAccount = (event) => {
     event.preventDefault();
 
@@ -38,7 +37,6 @@ class CreateAccount extends Component {
           alert("Your password is too weak.");
         }
         else {
-          alert("Account successfully created!");
           localStorage.setItem("id", data.email.replace('.', ''));
           this.props.history.push("/home");
         }

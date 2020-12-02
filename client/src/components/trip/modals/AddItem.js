@@ -6,7 +6,6 @@ class AddItem extends Component {
     super(props);
     this.state = {
       render: false,
-      showAddTraveler: false,
       travelers: [],
     };
   }
@@ -20,29 +19,33 @@ class AddItem extends Component {
       complete,
       traveler,
     } = event.target.elements;
+    let assignedTraveler = !group.checked ? this.props.travelerId : traveler.value;
     const data = {
+      id: this.defaultValue("id"),
       itemName: name.value,
       itemDescription: description.value,
       isPublic: group.checked,
       isComplete: complete.checked,
-      assignedTraveler: traveler.value,
+      assignedTraveler: assignedTraveler,
       travelerId: this.props.travelerId,
       tripId: this.props.tripId,
     };
-    console.log(data);
-    fetch("http://localhost:9000/item/addItem", {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    }).then((res) => {
-        this.props.refreshTrip();
-        this.props.handleClose();
-    });
 
+    const addItemAPI = "http://localhost:9000/item/addItem";
+    const editItemAPI = "http://localhost:9000/item/editItem";
+    const fetchAPI = (this.props.kind === "Add") ? addItemAPI : editItemAPI;
+
+    fetch(fetchAPI, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => {
+      this.props.refreshTrip(this.props.refreshItem);
+      this.props.handleClose();
+    });
   };
-//   updateItem = () => {};
 
   // Gets Travelers on the Trip
   getTravelersJSON = () => {
@@ -55,28 +58,25 @@ class AddItem extends Component {
     })
       .then((res) => res.json())
       .then((res) => {
-        this.setState({ travelers: res.travelers, render: true});
+        this.setState({ travelers: res.travelers, render: true });
       });
   };
 
-  componentDidMount() {
-    this.getTravelersJSON();
-}
-
-
-  // Create Traveler Radio 
+  // Create Traveler Radio
   createTraveler = (traveler) => {
     const name = traveler.firstName + " " + traveler.lastName;
+    const checked = traveler.id === this.defaultValue("assignee");
     return (
-        <Form.Check
+      <Form.Check
         custom
         type="radio"
         name="traveler"
         label={name}
-        id={traveler.id}
+        id={`#${traveler.id}`}
         key={traveler.id}
         value={traveler.id}
-      ></Form.Check>
+        defaultChecked={checked}
+      />
     );
   };
 
@@ -90,9 +90,21 @@ class AddItem extends Component {
     return travelersJSX;
   };
 
+  defaultValue = (param) => {
+    if (!this.props.item) return "";
+    else return this.props.item[param];
+  }
+
+  componentDidMount() {
+    this.getTravelersJSON();
+  }
 
   render() {
-    if (!this.state.render) return (<div></div>);
+    if (!this.state.render) return <div></div>;
+
+    const isCheckedOff = this.defaultValue("isComplete");
+    const isPublic = this.defaultValue("isPublic");
+
     return (
       <Modal
         show={this.props.show}
@@ -106,15 +118,23 @@ class AddItem extends Component {
           <Modal.Body>
             <h4>{this.props.kind} Item</h4>
             <Form.Row className="m-0 p-0">
-              <Form.Group as={Col} className="m-0 p-0" controlId="exampleForm.ControlTextarea1">
+              <Form.Group
+                as={Col}
+                className="m-0 p-0"
+                controlId="exampleForm.ControlTextarea1"
+              >
                 <Form.Label>Item Name</Form.Label>
-                <Form.Control name="name" as="textarea" rows={1} />
+                <Form.Control defaultValue={this.defaultValue("name")} name="name" as="textarea" rows={1} />
               </Form.Group>
             </Form.Row>
             <Form.Row className="m-0 p-0">
-              <Form.Group as={Col} className="m-0 p-0" controlId="exampleForm.ControlTextarea2">
+              <Form.Group
+                as={Col}
+                className="m-0 p-0"
+                controlId="exampleForm.ControlTextarea2"
+              >
                 <Form.Label>Item Description</Form.Label>
-                <Form.Control name="description" as="textarea" rows={4} />
+                <Form.Control defaultValue={this.defaultValue("description")} name="description" as="textarea" rows={4} />
               </Form.Group>
             </Form.Row>
             <Form.Row className="m-0 p-0">
@@ -124,6 +144,7 @@ class AddItem extends Component {
                 name="group"
                 label="Make Item public?"
                 id="group"
+                defaultChecked={isPublic}
               />
             </Form.Row>
             <Form.Row className="m-0 p-0">
@@ -133,6 +154,7 @@ class AddItem extends Component {
                 name="complete"
                 label="Has this Item been gotten?"
                 id="complete"
+                defaultChecked={isCheckedOff}
               />
             </Form.Row>
             <br></br>

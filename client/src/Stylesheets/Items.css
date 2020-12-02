@@ -3,8 +3,10 @@
     border: 1px solid #81a6da;
 }
 .item-list-header {
+    display: flex;
     background-color: #166AE0;
     color: white;
+    align-items: center;
 }
 .item-list-body {
     background-color: #ffffff;
