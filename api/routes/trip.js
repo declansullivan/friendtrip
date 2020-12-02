@@ -11,7 +11,7 @@ const {
   deleteTrip,
 } = require("../db/models/trip");
 const {deleteItem, getItemList, updateItem} = require("../db/models/item");
-const {getExpenseList, deleteExpense} = require("../db/models/expense");
+const {getExpenseList, deleteExpense, updateExpense} = require("../db/models/expense");
 var router = express.Router();
 
 router.get("/", function (req, res, next) {
@@ -199,11 +199,26 @@ router.post("/leaveTrip", function (req, res, next) {
     }
     // Handle updating the Item Objects in the abscence of the Traveler
     if(trip.itemIds) getItemList(trip.itemIds, handleGetItems);
-
     // Handle updating the Expense in the abscence of the Traveler
+    if(trip.expenseIds) getExpenseList(trip.expenseIds, handleGetExpenses);
     // Update the Trip Object
     updateTrip(trip, handleUpdateTrip);
   };
+  handleGetExpenses = (expenses) => {
+    if(expenses) {
+      let expensesListLength = Object.keys(expenses).length;
+      for(let n = 0; n < expensesListLength; n++) {
+        let newExpenseAssignees = [];
+        let expenseAssigneesLength = Object.keys(expenses[n].travelerIds).length;
+        for(let t = 0; t < expenseAssigneesLength; t++) {
+          if(expenses[n].travelerIds[t] !== req.body.travelerId) newExpenseAssignees.push(expenses[n].travelerIds[t]);
+        }
+        expenses[n].travelerIds = newExpenseAssignees;
+        updateExpense(expenses[n], handleUpdateExpense);
+      }
+    }
+  }
+  handleUpdateExpense = (error) => {};
   // For each item in the Trip, if the person leaving is assigned to it, blank out the assignee
   handleGetItems = (items) => {
     if(items) {
