@@ -50,8 +50,7 @@ class Expenses extends Component {
     })
       .then((res) => res.json())
       .then((res) => {
-        this.getTravelersJSON(res.expenses)
-        // this.setState({ expenses: res.expenses, render: true });
+        this.getTravelersJSON(res.expenses);
       });
   };
 
@@ -95,12 +94,13 @@ class Expenses extends Component {
 
   createExpenseTabPane = (expense) => {
     let arr = [];
+    let travelerList = <div></div>;
     if(expense.travelerIds) {
       for (let i = 0; i < Object.keys(expense.travelerIds).length; i++) {
         arr.push(this.state.travelers[expense.travelerIds[i]]);
       }
+      travelerList = arr.map((traveler) => <li>{traveler} </li>);
     }
-    const travelerList = arr.map((traveler) => <li>{traveler} </li>);
     return (
       <Tab.Pane key={expense.id} eventKey={`#${expense.id}`}>
         <h5>{expense.name}</h5>
