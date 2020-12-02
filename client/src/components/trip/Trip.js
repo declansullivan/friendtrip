@@ -279,8 +279,13 @@ class Trip extends Component {
                 <Col>
                   <Travelers
                     id={this.state.tripData.id}
+                    tripId={this.state.tripData.id}
+                    tripOwner={this.state.tripData.travelerId}
+                    travelerId={this.props.traveler.id}
                     travelerIds={this.state.tripData.travelerIds}
                     friendIds={this.props.traveler.friendIds}
+                    tripLeaders={this.state.tripData.tripLeaders}
+                    refreshTrip={this.refreshTripJSON}
                     isTripLeader={this.isTripLeader}
                   />
                 </Col>

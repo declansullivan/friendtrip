@@ -54,7 +54,7 @@ class AddTripLeader extends Component {
         const tripLeader = this.props.tripLeaders.includes(traveler.id);
         if (traveler.id === this.props.tripOwner) return;
         return (
-            <Form.Row id={traveler.id} className="m-0 p-0">
+            <Form.Row key={traveler.id} className="m-0 p-0">
                 <Form.Check
                     type="checkbox"
                     size="lg"

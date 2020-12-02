@@ -100,10 +100,6 @@ router.post("/addTripLeader", function (req, res, next) {
   updateTrip(req.body, handleUpdateTrip);
 });
 
-router.delete("/deleteTraveler", function (req, res, next) {
-  res.send("Not Implemented!");
-});
-
 router.delete("/deleteTrip", function (req, res, next) {
   handleGetTraveler = (travelerList) => {
     let travelerListLength = Object.keys(travelerList).length;
