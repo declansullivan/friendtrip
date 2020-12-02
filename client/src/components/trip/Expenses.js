@@ -3,7 +3,7 @@ import { Card, Col, Row, Tab, ListGroup, Button } from "react-bootstrap";
 
 import AddExpense from "./modals/AddExpense";
 import "../../Stylesheets/Expenses.css";
-import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
+
 class Expenses extends Component {
   constructor(props) {
     super(props);
@@ -11,6 +11,7 @@ class Expenses extends Component {
       render: false,
       showAddExpense: false,
       expenses: [],
+      travelers: {},
       expenseToEdit: null,
     };
 
@@ -49,9 +50,28 @@ class Expenses extends Component {
     })
       .then((res) => res.json())
       .then((res) => {
-        this.setState({ expenses: res.expenses, render: true });
+        this.getTravelersJSON(res.expenses)
+        // this.setState({ expenses: res.expenses, render: true });
       });
   };
+
+  getTravelersJSON = (expenses) => {
+    fetch("http://localhost:9000/trip/getTravelers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ travelerIds: this.props.travelerIds }),
+    }).then((res) => res.json()).then((res) => {
+      var travelers = {}
+      for (const traveler of res.travelers) {
+        travelers[traveler.id] = traveler.firstName + " " + traveler.lastName;
+      }
+      this.setState({ travelers, expenses, render: true });
+    });
+  }
+
+
   createExpenseListGroupItem = (expense) => {
     return (
       <ListGroup.Item action key={expense.id} href={`#${expense.id}`}>
@@ -59,6 +79,7 @@ class Expenses extends Component {
       </ListGroup.Item>
     );
   };
+
   deleteExpense = (expenseId, tripId) => {
     fetch("http://localhost:9000/expense/deleteExpense", {
       method: "DELETE",
@@ -71,20 +92,22 @@ class Expenses extends Component {
       this.getExpenses();
     });
   };
+
   createExpenseTabPane = (expense) => {
     let arr = [];
     if(expense.travelerIds) {
       for (let i = 0; i < Object.keys(expense.travelerIds).length; i++) {
-        arr.push(expense.travelerIds[i]);
+        arr.push(this.state.travelers[expense.travelerIds[i]]);
       }
     }
     const travelerList = arr.map((traveler) => <li>{traveler} </li>);
     return (
-      <Tab.Pane eventKey={`#${expense.id}`}>
+      <Tab.Pane key={expense.id} eventKey={`#${expense.id}`}>
         <h5>{expense.name}</h5>
         <h6>Remaining Balance: {expense.cost}</h6>
         <h6>Travelers: </h6>
         {travelerList}
+        <br/>
         <h6>Description:</h6>
         <p>{expense.description}</p>
         <hr></hr>
@@ -108,6 +131,7 @@ class Expenses extends Component {
       </Tab.Pane>
     );
   };
+
   renderExpenseListGroupItem = () => {
     if (!this.state.expenses || this.state.expenses.length === 0) return;
     let expenseListGroupItemJSX = [];
@@ -116,6 +140,7 @@ class Expenses extends Component {
     }
     return expenseListGroupItemJSX;
   };
+
   renderExpenseTabPane = () => {
     if (!this.state.expenses || this.state.expenses.length === 0) return;
     let expenseTabPaneJSX = [];
@@ -124,6 +149,7 @@ class Expenses extends Component {
     }
     return expenseTabPaneJSX;
   };
+
   renderExpenses = () => {
     if (!this.state.expenses || this.state.expenses.length === 0) return;
     return (
@@ -141,12 +167,15 @@ class Expenses extends Component {
   refreshExpenses = () => {
     this.getExpenses(this.props.expenseIds);
   };
+
   componentWillReceiveProps(nextProps) {
     this.getExpenses(nextProps.expenseIds);
   }
+
   componentDidMount() {
     this.getExpenses(this.props.expenseIds);
   }
+
   render() {
     if (!this.state.render) return <div></div>;
     return (
@@ -187,6 +216,7 @@ class Expenses extends Component {
             <Tab.Container
               id="list-group-tabs-example"
               defaultActiveKey="#link1"
+              transition={false}
             >
               {this.renderExpenses()}
             </Tab.Container>
