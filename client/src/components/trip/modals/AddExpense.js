@@ -14,8 +14,12 @@ class AddExpense extends Component {
     event.preventDefault();
     const { name, description, cost, traveler } = event.target.elements;
     let assignedTravelers = [];
-    for (let i = 0; i < this.props.travelerIds.length; i++) {
-      if (traveler[i].checked) assignedTravelers.push(traveler[i].value);
+    if (this.props.travelerIds.length === 1) {
+      if (traveler.checked) assignedTravelers.push(traveler.value);
+    } else if (this.props.travelerIds.length > 1) {
+      for (let i = 0; i < this.props.travelerIds.length; i++) {
+        if (traveler[i].checked) assignedTravelers.push(traveler[i].value);
+      }
     }
     const data = {
       id: this.defaultValue("id"),
@@ -63,14 +67,17 @@ class AddExpense extends Component {
       if (assignee === travelerId) return true;
     }
     return false;
-  }
+  };
 
   // Create Traveler Radio
   createTraveler = (traveler) => {
     const name = traveler.firstName + " " + traveler.lastName;
     var checked = false;
     if (this.props.expense && this.props.expense.travelerIds) {
-      checked = this.travelerAssigned(traveler.id, this.props.expense.travelerIds);
+      checked = this.travelerAssigned(
+        traveler.id,
+        this.props.expense.travelerIds
+      );
     }
     return (
       <Form.Check
