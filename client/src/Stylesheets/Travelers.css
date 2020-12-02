@@ -3,13 +3,17 @@
     border: 1px solid #81a6da;
 }
 .travelers-list-header {
+    display: flex;
     background-color: #166AE0;
     color: white;
+    align-items: center;
 }
 .travelers-list-body {
     background-color: #ffffff;
 }
-
+.travelers-list-icon {
+    filter: invert(1);
+}
 .close:hover {
     cursor: pointer;
 }

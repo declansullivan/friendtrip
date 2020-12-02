@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Card, Col, Row, Tab, ListGroup, Button } from "react-bootstrap";
 
 import AddItem from "./modals/AddItem";
+import itemIcon from "../../Media/itemIcon.svg";
+
 import "../../Stylesheets/Items.css";
 
 class Items extends Component {
@@ -97,9 +99,9 @@ class Items extends Component {
     }
     return(
       <Tab.Pane key={item.id} eventKey={`#${item.id}`}>
-        <h5>{item.name}</h5>
-        <h6>Assigned To: {name}</h6>
-        <p>{item.description}</p>
+        <h5>Item Name: {item.name}</h5>
+        <h5>Assigned To: {name}</h5>
+        <h5>Description: {item.description}</h5>
         <hr></hr>
         <Button className="float-right ml-1" onClick={() => {this.deleteItem(item.id, this.props.tripId)}} variant="danger">
           Delete
@@ -202,6 +204,14 @@ class Items extends Component {
 
         <Card className="item-list mb-3">
           <Card.Header className="item-list-header p-1 pl-3">
+          <img
+            src={itemIcon}
+            width="25"
+            height="25"
+            className="item-list-icon d-inline-block align-top mr-2 "
+            alt="itemIcon"
+            id="itemIcon"
+          />
             <strong>{this.props.category} List</strong>
             <Button
               className="ml-auto d-inline-block"

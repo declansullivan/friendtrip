@@ -11,3 +11,6 @@
 .notes-list-body {
     background-color: #ffffff;
 }
+.notes-list-icon {
+    filter: invert(1);
+}

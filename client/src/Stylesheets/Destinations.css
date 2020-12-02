@@ -11,7 +11,9 @@
 .destinations-list-body {
     background-color: #ffffff;
 }
-
+.destinations-list-icon {
+    filter: invert(1);
+}
 .tripThumbnail:hover {
     cursor: pointer;
 }

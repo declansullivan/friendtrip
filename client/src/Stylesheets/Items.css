@@ -11,3 +11,6 @@
 .item-list-body {
     background-color: #ffffff;
 }
+.item-list-icon {
+    filter: invert(1);
+}

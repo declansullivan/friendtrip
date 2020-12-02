@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Button, Card } from "react-bootstrap";
 
 import EditNotes from "./modals/EditNotes";
+import notesIcon from "../../Media/notesIcon.svg";
+
 import "../../Stylesheets/Notes.css";
 class Notes extends Component {
   constructor(props) {
@@ -35,6 +37,14 @@ class Notes extends Component {
 
         <Card className="notes-list">
           <Card.Header className="notes-list-header p-1 pl-3">
+          <img
+            src={notesIcon}
+            width="20"
+            height="20"
+            className="notes-list-icon d-inline-block align-top mr-2 "
+            alt="notesIcon"
+            id="notesIcon"
+          />
             <strong>Notes</strong>
             <Button className="ml-auto d-inline-block" onClick={this.openEditNotesModal} variant="success">Edit Notes</Button>
           </Card.Header>
