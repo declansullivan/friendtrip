@@ -32,13 +32,13 @@ class AddTraveler extends Component {
         });
     }
 
-    getFriendsJSON = () => {
+    getFriendsJSON = (friendIds) => {
         fetch("http://localhost:9000/trip/getTravelers", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ travelerIds: this.props.friendIds }),
+            body: JSON.stringify({ travelerIds: friendIds }),
         }).then((res) => res.json()).then((res) => {
             this.setState({ friends: res.travelers, render: true });
         });
@@ -75,8 +75,12 @@ class AddTraveler extends Component {
         });
     };
 
+    componentWillReceiveProps(nextProps) {
+        this.getFriendsJSON(nextProps.friendIds);
+    }
+
     componentDidMount() {
-        this.getFriendsJSON();
+        this.getFriendsJSON(this.props.friendIds);
     }
 
     render() {
