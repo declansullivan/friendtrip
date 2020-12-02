@@ -96,7 +96,6 @@ router.post("/addTripLeader", function (req, res, next) {
     if (error) res.sendStatus(401);
     else res.sendStatus(200);
   }
-
   updateTrip(req.body, handleUpdateTrip);
 });
 
