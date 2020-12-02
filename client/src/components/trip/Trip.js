@@ -10,8 +10,7 @@ import Expenses from "./Expenses";
 import ConfirmDelete from "./modals/ConfirmDelete";
 import ConfirmLeave from "./modals/ConfirmLeave";
 import EditTrip from "./modals/EditTrip";
-import AddItem from "./modals/AddItem";
-import AddExpense from "./modals/AddExpense";
+import AddTripLeader from "./modals/AddTripLeader";
 
 import Fade from "react-reveal/Fade";
 import tripIcon from "../../Media/tripIcon.svg";
@@ -26,6 +25,7 @@ class Trip extends Component {
       showLeaveTrip: false,
       showEditTrip: false,
       showAddItem: false,
+      showAddTripLead: false,
       tripData: {},
     };
 
@@ -42,6 +42,8 @@ class Trip extends Component {
     this.openAddItemModal = this.openAddItemModal.bind(this);
     this.closeAddItemModal = this.closeAddItemModal.bind(this);
 
+    this.openAddTripLeaderModal = this.openAddTripLeaderModal.bind(this);
+    this.closeAddTripLeaderModal = this.closeAddTripLeaderModal.bind(this);
   }
 
   // Handle modal visibility
@@ -77,6 +79,14 @@ class Trip extends Component {
     this.setState({ showAddItem: true });
   };
 
+  closeAddTripLeaderModal = () => {
+    this.setState({ showAddTripLead: false })
+  }
+
+  openAddTripLeaderModal = () => {
+    this.setState({ showAddTripLead: true })
+  }
+
   // Retrieve all releveant data
   getTripJSON = (callback) => {
     fetch("http://localhost:9000/trip/getTrip", {
@@ -111,13 +121,23 @@ class Trip extends Component {
   showDeleteTrip = () => {
     if (this.isTripLeader())
       return (
-        <Button
-          variant="danger"
-          className="float-right"
-          onClick={this.openDeleteTripModal}
-        >
-          Delete Trip
-        </Button>
+        <div> 
+          <Button
+            variant="danger"
+            className="float-right ml-1"
+            onClick={this.openDeleteTripModal}
+          >
+            Delete Trip
+          </Button>
+
+          <Button
+            variant="warning"
+            className="float-right ml-1"
+            onClick={this.openAddTripLeaderModal}
+          >
+            Manage Trip Leaders
+          </Button>
+        </div>
       );
   };
 
@@ -184,6 +204,16 @@ class Trip extends Component {
           redirectTrip={this.props.redirectTrip}
           handleClose={this.closeLeaveTripModal}
         ></ConfirmLeave>
+        <AddTripLeader
+          tripId={this.state.tripData.id}
+          tripOwner={this.state.tripData.travelerId}
+          travelerIds={this.state.tripData.travelerIds}
+          tripLeaders={this.state.tripData.tripLeaders}
+          show={this.state.showAddTripLead}
+          refreshTrip={this.refreshTripJSON}
+          handleClose={this.closeAddTripLeaderModal}
+        >
+        </AddTripLeader>
         <EditTrip
           show={this.state.showEditTrip}
           handleClose={this.closeEditTripModal}
@@ -258,9 +288,9 @@ class Trip extends Component {
 
               <Row>
                 <Col>
-                  <Button onClick={this.openEditTripModal}>Edit Trip</Button>
-                  {this.showLeaveTrip()}
-                  {this.showDeleteTrip()}
+                  <Button className="float-left ml-1" onClick={this.openEditTripModal}>Edit Trip</Button>
+                  {this.showDeleteTrip()}{this.showLeaveTrip()}
+                  
                 </Col>
               </Row>
             </Container>
