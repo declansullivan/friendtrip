@@ -188,6 +188,7 @@ class Trip extends Component {
           travelerIds={this.state.tripData.travelerIds}
           itemIds={this.state.tripData.itemIds}
           expenseIds={this.state.tripData.expenseIds}
+          destinationIds={this.state.tripData.destinationIds}
           history={this.props.history}
           show={this.state.showDeleteTrip}
           refreshTrip={this.refreshTripJSON}
