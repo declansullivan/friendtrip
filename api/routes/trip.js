@@ -10,7 +10,7 @@ const {
   updateTrip,
   deleteTrip,
 } = require("../db/models/trip");
-const {deleteItem, getItemList} = require("../db/models/item");
+const {deleteItem, getItemList, updateItem} = require("../db/models/item");
 const {getExpenseList, deleteExpense} = require("../db/models/expense");
 var router = express.Router();
 
@@ -197,9 +197,27 @@ router.post("/leaveTrip", function (req, res, next) {
       }
       trip.tripLeaders = newTripLeaders;
     }
+    // Handle updating the Item Objects in the abscence of the Traveler
+    if(trip.itemIds) getItemList(trip.itemIds, handleGetItems);
+
+    // Handle updating the Expense in the abscence of the Traveler
     // Update the Trip Object
     updateTrip(trip, handleUpdateTrip);
   };
+  // For each item in the Trip, if the person leaving is assigned to it, blank out the assignee
+  handleGetItems = (items) => {
+    if(items) {
+      let itemsListLength = Object.keys(items).length;
+      for(let l = 0; l < itemsListLength; l++) {
+        if(items[l].assignee === req.body.travelerId) {
+          let newItem = items[l];
+          newItem.assignee = null;
+          updateItem(newItem, handleUpdateItem);
+        }
+      }
+    }
+  };
+  handleUpdateItem = (error) => {};
   handleUpdateTrip = (error) => {
     if (error) res.sendStatus(401);
     else res.sendStatus(200);
