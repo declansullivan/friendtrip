@@ -3,6 +3,7 @@ import { Card, Col, Row, Tab, ListGroup, Button } from "react-bootstrap";
 
 import AddExpense from "./modals/AddExpense";
 import "../../Stylesheets/Expenses.css";
+import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
 class Expenses extends Component {
   constructor(props) {
     super(props);
@@ -10,10 +11,13 @@ class Expenses extends Component {
       render: false,
       showAddExpense: false,
       expenses: [],
+      expenseToEdit: null,
     };
 
     this.openAddExpenseModal = this.openAddExpenseModal.bind(this);
     this.closeAddExpenseModal = this.closeAddExpenseModal.bind(this);
+    this.closeEditExpenseModal = this.closeEditExpenseModal.bind(this);
+    this.openEditExpenseModal = this.openEditExpenseModal.bind(this);
   }
 
   closeAddExpenseModal = () => {
@@ -24,13 +28,17 @@ class Expenses extends Component {
     this.setState({ showAddExpense: true });
   };
 
-  componentDidMount() {
-    this.getExpenses();
-  }
+  closeEditExpenseModal = () => {
+    this.setState({ showEditExpense: false, expenseToEdit: null });
+  };
 
-  getExpenses = () => {
+  openEditExpenseModal = (item) => {
+    this.setState({ showEditExpense: true, expenseToEdit: item });
+  };
+
+  getExpenses = (expenseIds) => {
     const data = {
-      expenseIds: this.props.expenseIds,
+      expenseIds,
     };
     fetch("http://localhost:9000/expense/getExpenses", {
       method: "POST",
@@ -46,15 +54,29 @@ class Expenses extends Component {
   };
   createExpenseListGroupItem = (expense) => {
     return (
-      <ListGroup.Item action href={`#${expense.id}`}>
+      <ListGroup.Item action key={expense.id} href={`#${expense.id}`}>
         {expense.name}
       </ListGroup.Item>
     );
   };
+  deleteExpense = (expenseId, tripId) => {
+    fetch("http://localhost:9000/expense/deleteExpense", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: expenseId, tripId }),
+    }).then((res) => {
+      this.props.refreshTrip();
+      this.getExpenses();
+    });
+  };
   createExpenseTabPane = (expense) => {
     let arr = [];
-    for (let i = 0; i < Object.keys(expense.travelerIds).length; i++) {
-      arr.push(expense.travelerIds[i]);
+    if(expense.travelerIds) {
+      for (let i = 0; i < Object.keys(expense.travelerIds).length; i++) {
+        arr.push(expense.travelerIds[i]);
+      }
     }
     const travelerList = arr.map((traveler) => <li>{traveler} </li>);
     return (
@@ -66,7 +88,21 @@ class Expenses extends Component {
         <h6>Description:</h6>
         <p>{expense.description}</p>
         <hr></hr>
-        <Button className="float-right" onClick={this.openAddExpenseModal}>
+        <Button
+          className="float-right ml-1"
+          onClick={() => {
+            this.deleteExpense(expense.id, this.props.tripId);
+          }}
+          variant="danger"
+        >
+          Delete
+        </Button>
+        <Button
+          className="float-right"
+          onClick={() => {
+            this.openEditExpenseModal(expense);
+          }}
+        >
           Edit
         </Button>
       </Tab.Pane>
@@ -89,7 +125,7 @@ class Expenses extends Component {
     return expenseTabPaneJSX;
   };
   renderExpenses = () => {
-    if(!this.state.expenses || this.state.expenses.length === 0) return;
+    if (!this.state.expenses || this.state.expenses.length === 0) return;
     return (
       <Row>
         <Col sm={5}>
@@ -102,6 +138,15 @@ class Expenses extends Component {
     );
   };
 
+  refreshExpenses = () => {
+    this.getExpenses(this.props.expenseIds);
+  };
+  componentWillReceiveProps(nextProps) {
+    this.getExpenses(nextProps.expenseIds);
+  }
+  componentDidMount() {
+    this.getExpenses(this.props.expenseIds);
+  }
   render() {
     if (!this.state.render) return <div></div>;
     return (
@@ -112,12 +157,22 @@ class Expenses extends Component {
           travelerIds={this.props.travelerIds}
           tripId={this.props.tripId}
           refreshTrip={this.props.refreshTrip}
-          refreshExpense={this.getExpenses}
+          refreshExpense={this.refreshExpenses}
           show={this.state.showAddExpense}
           handleClose={this.closeAddExpenseModal}
         ></AddExpense>
-
-        <Card className="expenses-list mb-3" >
+        <AddExpense
+          kind="Edit"
+          travelerId={this.props.travelerId}
+          travelerIds={this.props.travelerIds}
+          tripId={this.props.tripId}
+          refreshTrip={this.props.refreshTrip}
+          refreshExpense={this.refreshExpenses}
+          show={this.state.showEditExpense}
+          handleClose={this.closeEditExpenseModal}
+          expense={this.state.expenseToEdit}
+        />
+        <Card className="expenses-list mb-3">
           <Card.Header className="expenses-list-header">
             <h5 className="d-inline-block m-0"> Expenses </h5>
             <Button

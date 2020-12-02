@@ -10,10 +10,6 @@ class AddItem extends Component {
     };
   }
 
-  editItem = (event) => {
-
-  }
-
   addItem = (event) => {
     event.preventDefault();
     const {
@@ -35,8 +31,6 @@ class AddItem extends Component {
       tripId: this.props.tripId,
     };
 
-    console.log(assignedTraveler);
-
     const addItemAPI = "http://localhost:9000/item/addItem";
     const editItemAPI = "http://localhost:9000/item/editItem";
     const fetchAPI = (this.props.kind === "Add") ? addItemAPI : editItemAPI;
@@ -48,7 +42,7 @@ class AddItem extends Component {
       },
       body: JSON.stringify(data),
     }).then((res) => {
-      this.props.refreshTrip();
+      this.props.refreshTrip(this.props.refreshItem);
       this.props.handleClose();
     });
   };
