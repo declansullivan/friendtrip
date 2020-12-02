@@ -9,7 +9,8 @@ const { getTrip, addTrip, updateTrip } = require("../db/models/trip");
 // the data is shown.
 
 router.post("/getItem", function (req, res, next) {
-  res.send("Not Implemented!");
+
+ res.send("Not Implemented!");
 });
 
 router.post("/getItemsList", function (req, res, next) {

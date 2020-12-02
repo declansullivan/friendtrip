@@ -211,6 +211,8 @@ class Trip extends Component {
               <Row>
                 <Col>
                   <Destinations
+                    tripId={this.state.tripData.id}
+                    travelerId={this.props.traveler.id}
                     destinationIds={this.state.tripData.destinationIds}
                     refreshTrip={this.refreshTripJSON}
                   />

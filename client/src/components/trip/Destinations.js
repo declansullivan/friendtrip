@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Card, Col, Row, Container, Alert} from "react-bootstrap";
+import { Button, Card, Col, Row, Container, Alert } from "react-bootstrap";
 
 import ViewDestination from "./modals/ViewDestination";
 import AddDestination from "./modals/AddDestination";
@@ -20,19 +20,19 @@ class Destinations extends Component {
     }
 
     closeViewDestinationModal = () => {
-        this.setState({showViewDestination: false});
+        this.setState({ showViewDestination: false });
     }
 
     openViewDestinationModal = () => {
-        this.setState({showViewDestination: true});
+        this.setState({ showViewDestination: true });
     }
 
     closeAddDestinationModal = () => {
-        this.setState({showAddDestination: false});
+        this.setState({ showAddDestination: false });
     }
 
     openAddDestinationModal = () => {
-        this.setState({showAddDestination: true});
+        this.setState({ showAddDestination: true });
     }
 
     render() {
@@ -40,7 +40,12 @@ class Destinations extends Component {
             <div>
                 <ViewDestination show={this.state.showViewDestination} handleClose={this.closeViewDestinationModal}>
                 </ViewDestination>
-                <AddDestination kind="Add" show={this.state.showAddDestination} handleClose={this.closeAddDestinationModal}></AddDestination>
+                <AddDestination kind="Add" 
+                tripId={this.props.tripId}
+                travelerId={this.props.travelerId}
+                show={this.state.showAddDestination} 
+                handleClose={this.closeAddDestinationModal}
+                    refreshTrip={this.props.refreshTrip} />
 
                 <Card className="destinations-list">
                     <Card.Header className="destinations-list-header">
@@ -59,7 +64,7 @@ class Destinations extends Component {
                             <Alert onClick={this.openViewDestinationModal}
                                 className="tripThumbnail" variant="secondary"
                             >
-                                <Row style={{color:"black"}} className="align-items-center">
+                                <Row style={{ color: "black" }} className="align-items-center">
                                     <Col xs={2}>Destination Name</Col>
                                     <Col xs={2}>start date</Col>
                                     <Col xs={2}>end date</Col>
@@ -74,7 +79,7 @@ class Destinations extends Component {
                             </Row>
                         </Container>
                     </Card.Body>
-                </Card>                
+                </Card>
             </div>
         )
     }

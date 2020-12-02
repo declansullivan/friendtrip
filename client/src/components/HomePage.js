@@ -12,7 +12,7 @@ class HomePage extends Component {
   render() {
     return (
       <div className="w-100 h-100">
-                <div className="home-page-header ">
+        <div className="home-page-header ">
           <img
             src={homeIcon}
             width="40"

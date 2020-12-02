@@ -6,12 +6,39 @@ class AddDestination extends Component {
         super(props);
     }
 
-    addDestination = () => {
-
+    addDestination = (event) => {
+        event.preventDefault();
+        const {
+            name,
+            description,
+            start,
+            end,
+            address,
+        } = event.target.elements;
+        const data = {
+            tripId: this.props.tripId,
+            travelerId: this.props.travelerId,
+            destName: name.value,
+            destDescription: description.value,
+            destCountryCode: 0,
+            destStartDate: start.value,
+            destEndDate: end.value,
+            destAddress: address.value,
+        };
+        fetch("http://localhost:9000/destination/addDestination", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        }).then((res) => {
+            this.props.refreshTrip();
+            this.props.handleClose();
+        });
     }
 
     updateDestination = () => {
-        
+
     }
 
     render() {
@@ -23,8 +50,8 @@ class AddDestination extends Component {
                 onHide={this.props.handleClose}
                 animation={false}
                 centered
-                >
-                <Form>
+            >
+                <Form onSubmit={this.addDestination}>
                     <Modal.Body>
                         <h4>{this.props.kind} Destination</h4>
                         <Form.Row>
@@ -50,7 +77,7 @@ class AddDestination extends Component {
                             </Form.Group>
                         </Form.Row>
                         <Form.Row>
-                            <Form.Group as={Col} controlId="exampleForm.ControlTextarea2">
+                            <Form.Group as={Col} controlId="exampleForm.ControlTextarea5">
                                 <Form.Label>Destination Address</Form.Label>
                                 <Form.Control name="address" as="textarea" rows={2} />
                             </Form.Group>
@@ -58,7 +85,7 @@ class AddDestination extends Component {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={this.props.handleClose}>Close</Button>
-                        <Button onClick={this.addDestination} variant="success" type="submit">Save</Button>
+                        <Button variant="success" type="submit">Save</Button>
                     </Modal.Footer>
                 </Form>
             </Modal>
