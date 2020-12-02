@@ -12,6 +12,7 @@ const {
 } = require("../db/models/trip");
 const {deleteItem, getItemList, updateItem} = require("../db/models/item");
 const {getExpenseList, deleteExpense, updateExpense} = require("../db/models/expense");
+const {getDestinationList, deleteDestination} = require("../db/models/destination");
 var router = express.Router();
 
 router.get("/", function (req, res, next) {
@@ -124,9 +125,20 @@ router.delete("/deleteTrip", function (req, res, next) {
       getItemList(req.body.itemIds, handleGetItems);
       // Delete the Expense Objects associated with the Trip
       getExpenseList(req.body.expenseIds, handleGetExpenses)
+      // Delete the Destination objects associated with the Trip
+      getDestinationList(req.body.destinationIds, handleGetDestinations);
     }
     deleteTrip(req.body.tripId, handleDeleteTrip);
   };
+  // Destination Callbacks
+  handleGetDestinations = (destinations) => {
+    let destinationsListLength = Object.keys(destinations).length;
+    for(let l = 0; l < destinationsListLength; l++) {
+      deleteDestination(destinations[l].id, handleDeleteDestination);
+    }
+  }
+  handleDeleteDestination = (error) => {};
+  // Item Callbacks
   handleGetItems = (items) => {
     let itemsListLength = Object.keys(items).length;
     for (let k = 0; k < itemsListLength; k++) {
@@ -134,6 +146,7 @@ router.delete("/deleteTrip", function (req, res, next) {
     }
   }
   handleDeleteItem = (error) => {};
+  // Expense Callbacks
   handleGetExpenses = (expenses) => {
     let expensesListLength = Object.keys(expenses).length;
     for(let m = 0; m < expensesListLength; m++) {
@@ -141,7 +154,9 @@ router.delete("/deleteTrip", function (req, res, next) {
     }
   }
   handleDeleteExpense = (error) => {};
+  // Travler Callback
   handleUpdateTraveler = (error) => {};
+  // Trip Callback
   handleDeleteTrip = (error) => {
     if (error) res.sendStatus(401);
     else res.sendStatus(200);
