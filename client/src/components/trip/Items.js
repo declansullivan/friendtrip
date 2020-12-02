@@ -86,8 +86,15 @@ class Items extends Component {
   }
 
   createItemPane = (item) => {
-    const assignee = this.state.travelers[item.assignee];
-    const name = assignee.firstName + " " + assignee.lastName;
+    let assignee;
+    let name ;
+    if(item.assignee) {
+      assignee = this.state.travelers[item.assignee];
+      name = assignee.firstName + " " + assignee.lastName;
+    }
+    else {
+      name = "";
+    }
     return(
       <Tab.Pane key={item.id} eventKey={`#${item.id}`}>
         <h5>{item.name}</h5>
