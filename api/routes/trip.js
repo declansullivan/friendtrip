@@ -91,27 +91,12 @@ router.post("/sendInvite", function (req, res, next) {
   getTraveler(req.body.id, handleGetTraveler);
 });
 
-router.put("/addTripLeader", function (req, res, next) {
-  res.send("Not Implemented!");
-});
-
-router.delete("/deleteTraveler", function (req, res, next) {
-  res.send("Not Implemented!");
-  /*
-    handleGetTraveler = (traveler) => {
-    if (!traveler.tripIds) traveler.tripIds = [];
-    traveler.tripIds.push(req.body.tripId);
-
-    updateTraveler(traveler, handleUpdateTraveler);
-  };
-
-  handleUpdateTraveler = (error) => {
+router.post("/addTripLeader", function (req, res, next) {
+  handleUpdateTrip = (error) => {
     if (error) res.sendStatus(401);
     else res.sendStatus(200);
-  };
-
-  getTraveler(req.body.travelerId, handleGetTraveler);
-  */
+  }
+  updateTrip(req.body, handleUpdateTrip);
 });
 
 router.delete("/deleteTrip", function (req, res, next) {

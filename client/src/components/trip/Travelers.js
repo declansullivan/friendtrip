@@ -25,33 +25,63 @@ class Travelers extends Component {
         this.setState({showAddTraveler: true});
     }
 
-    getTravelersJSON = () => {
+    removeTraveler = (travelerId) => {
+        const isTripLeader = this.props.tripLeaders.includes(travelerId);
+        const data = {
+            tripId: this.props.tripId,
+            travelerId, 
+            isTripLeader
+        };
+        
+        fetch("http://localhost:9000/trip/leaveTrip", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        }).then((res) => {
+            this.props.refreshTrip();
+        });
+    }
+
+    getTravelersJSON = (travelerIds) => {
         fetch("http://localhost:9000/trip/getTravelers", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ travelerIds: this.props.travelerIds }),
+            body: JSON.stringify({ travelerIds }),
         }).then((res) => res.json()).then((res) => {
             var friends;
             if (!this.props.friendIds) friends = [];
             else friends = this.props.friendIds;
             
             // Friend Ids that aren't in the Trip
-            friends = friends.filter(value => !this.props.travelerIds.includes(value))
+            friends = friends.filter(value => !travelerIds.includes(value))
             this.setState({ travelers: res.travelers, friendIds: friends, render: true })
         });
     }
 
     createTraveler = (traveler) => {
         const name = traveler.firstName + " " + traveler.lastName;
-        var remove;
-        if (this.props.isTripLeader())
-            remove = (<span id={traveler.id} className="close">❌</span>);
+        var remove, strong;
+        if (this.props.isTripLeader() && 
+            traveler.id !== this.props.tripOwner && 
+            traveler.id != this.props.travelerId) {
+                remove = (<span 
+                    onClick={() => {this.removeTraveler(traveler.id)}} 
+                    id={traveler.id} 
+                    className="close">❌
+                    </span>);
+        }
+        if (traveler.id === this.props.tripOwner)
+            strong = (<strong>{name}</strong>);
+        else strong = name;
+        
         return (
             <ListGroup.Item key={traveler.id}>
                 {remove}
-                {name}
+                {strong}
             </ListGroup.Item>
         )
     }
@@ -64,9 +94,13 @@ class Travelers extends Component {
         }
         return travelersJSX;
     }
+
+    componentWillReceiveProps(nextProps) {
+        this.getTravelersJSON(nextProps.travelerIds);
+    }
     
     componentDidMount() {
-        this.getTravelersJSON();
+        this.getTravelersJSON(this.props.travelerIds);
     }
 
     render() {
