@@ -70,7 +70,7 @@ class Items extends Component {
       }
       this.setState({ travelers, groupItems, personalItems });
     });
-}
+  }
 
   deleteItem = (itemId, tripId) => {
     fetch("http://localhost:9000/item/deleteItem", {

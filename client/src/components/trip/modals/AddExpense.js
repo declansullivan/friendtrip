@@ -57,9 +57,21 @@ class AddExpense extends Component {
       });
   };
 
+  travelerAssigned = (travelerId, ids) => {
+    ids = Object.values(ids);
+    for (const assignee of ids) {
+      if (assignee === travelerId) return true;
+    }
+    return false;
+  }
+
   // Create Traveler Radio
   createTraveler = (traveler) => {
     const name = traveler.firstName + " " + traveler.lastName;
+    var checked = false;
+    if (this.props.expense && this.props.expense.travelerIds) {
+      checked = this.travelerAssigned(traveler.id, this.props.expense.travelerIds);
+    }
     return (
       <Form.Check
         custom
@@ -69,6 +81,7 @@ class AddExpense extends Component {
         id={`#${traveler.id}`}
         key={traveler.id}
         value={traveler.id}
+        defaultChecked={checked}
       />
     );
   };
@@ -84,7 +97,7 @@ class AddExpense extends Component {
   };
 
   defaultValue = (param) => {
-    if (!this.props.expense) return "";
+    if (!this.props.expense) return null;
     else return this.props.expense[param];
   };
 
