@@ -63,22 +63,19 @@ class ViewDestination extends Component {
               <strong>Description:</strong>
             </h5>
             <h5>{this.props.destinationToView.description}</h5>
+            <br></br>
             <h5>
               <strong>Duration:</strong>
             </h5>
             {this.props.destinationToView.startDate} to{" "}
             {this.props.destinationToView.endDate}
             <br></br>
+            <br></br>
             <h5>
               <strong>Address:</strong>
             </h5>
             {this.props.destinationToView.address}
             <br></br>
-            <hr></hr>
-            <h5>
-              <strong>Useful Information</strong>
-            </h5>
-            This is where scraped stuff would go
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.openAddDestinationModal}>Edit</Button>

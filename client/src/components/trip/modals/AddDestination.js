@@ -83,7 +83,7 @@ class AddDestination extends Component {
             </Form.Row>
             <Form.Row>
               <Form.Group as={Col} controlId="exampleForm.ControlTextarea3">
-                <Form.Label>Start Date (dd/mm/yyyy)</Form.Label>
+                <Form.Label>Start Date</Form.Label>
                 <Form.Control
                   defaultValue={this.defaultValue("startDate")}
                   name="start"
@@ -92,7 +92,7 @@ class AddDestination extends Component {
                 />
               </Form.Group>
               <Form.Group as={Col} controlId="exampleForm.ControlTextarea4">
-                <Form.Label>End Date (dd/mm/yyyy)</Form.Label>
+                <Form.Label>End Date</Form.Label>
                 <Form.Control
                   defaultValue={this.defaultValue("endDate")}
                   name="end"
