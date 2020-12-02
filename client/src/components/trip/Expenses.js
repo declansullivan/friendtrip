@@ -99,7 +99,7 @@ class Expenses extends Component {
       for (let i = 0; i < Object.keys(expense.travelerIds).length; i++) {
         arr.push(this.state.travelers[expense.travelerIds[i]]);
       }
-      travelerList = arr.map((traveler) => <li>{traveler} </li>);
+      travelerList = arr.map((traveler) => <li key={`#${traveler.id}`}>{traveler} </li>);
     }
     return (
       <Tab.Pane key={expense.id} eventKey={`#${expense.id}`}>
