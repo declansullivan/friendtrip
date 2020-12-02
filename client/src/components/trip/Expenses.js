@@ -202,8 +202,8 @@ class Expenses extends Component {
           expense={this.state.expenseToEdit}
         />
         <Card className="expenses-list mb-3">
-          <Card.Header className="expenses-list-header">
-            <h5 className="d-inline-block m-0"> Expenses </h5>
+          <Card.Header className="expenses-list-header p-1 pl-3">
+            <strong>Expenses</strong>
             <Button
               className="ml-auto d-inline-block"
               variant="success"

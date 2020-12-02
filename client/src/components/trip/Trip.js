@@ -220,12 +220,12 @@ class Trip extends Component {
           handleClose={this.closeEditTripModal}
         ></EditTrip>
 
-        <Card className="trip-list w-100">
+        <Card className="trip-list w-100 mb-5">
           <Card.Header className="trip-list-header">
             <h2>{this.state.tripData.name}</h2>
           </Card.Header>
           <Card.Body className="p-4">
-            <h5 className="pl-3">{this.state.tripData.description}</h5>
+            <h5 className="pl-3"> <strong>Description:</strong> {this.state.tripData.description}</h5>
             <hr className="mr-3 ml-3"></hr>
             <Container fluid>
               <Row>

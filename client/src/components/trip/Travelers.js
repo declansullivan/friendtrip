@@ -114,7 +114,7 @@ class Travelers extends Component {
                     handleClose={this.closeAddTravelerModal}/>
 
                 <Card className="travelers-list">
-                    <Card.Header className="travelers-list-header">Travelers</Card.Header>
+                    <Card.Header className="travelers-list-header p-1 pl-3"> <strong>Travelers</strong></Card.Header>
                     <ListGroup variant="flush">
                         { this.renderTravelers() }
                         <Button variant="light" onClick={this.openAddTravelerModal}>Add Traveler</Button>

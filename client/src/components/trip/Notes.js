@@ -34,13 +34,13 @@ class Notes extends Component {
         />
 
         <Card className="notes-list">
-          <Card.Header className="notes-list-header">
-            <h5>Notes</h5>
+          <Card.Header className="notes-list-header p-1 pl-3">
+            <strong>Notes</strong>
+            <Button className="ml-auto d-inline-block" onClick={this.openEditNotesModal} variant="success">Edit Notes</Button>
           </Card.Header>
           <Card.Body className="notes-list-body">
             <div style={{whiteSpace: "pre-line"}}>{this.props.notes}</div>
             <br></br>
-            <Button onClick={this.openEditNotesModal}>Edit</Button>
           </Card.Body>
         </Card>
       </div>

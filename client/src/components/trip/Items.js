@@ -201,8 +201,8 @@ class Items extends Component {
         />
 
         <Card className="item-list mb-3">
-          <Card.Header className="item-list-header">
-            <h5 className="d-inline-block m-0">{this.props.category} List</h5>
+          <Card.Header className="item-list-header p-1 pl-3">
+            <strong>{this.props.category} List</strong>
             <Button
               className="ml-auto d-inline-block"
               variant="success"
