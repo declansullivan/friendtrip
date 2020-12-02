@@ -117,6 +117,13 @@ class Destinations extends Component {
         <Card className="destinations-list">
           <Card.Header className="destinations-list-header">
             <h5> Destinations</h5>
+            <Button
+              className="ml-auto d-inline-block"
+              variant="success"
+              onClick={this.openAddDestinationModal}
+            >
+              Add Destination
+            </Button>
           </Card.Header>
           <Card.Body className="destinations-list-body">
             <Container fluid>
@@ -136,11 +143,7 @@ class Destinations extends Component {
               </Row>
               {this.renderDestinations()}
               <Row>
-                <Col>
-                  <Button onClick={this.openAddDestinationModal}>
-                    Add Destination
-                  </Button>
-                </Col>
+                <Col></Col>
               </Row>
             </Container>
           </Card.Body>

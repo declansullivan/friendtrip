@@ -97,6 +97,21 @@ router.put("/addTripLeader", function (req, res, next) {
 
 router.delete("/deleteTraveler", function (req, res, next) {
   res.send("Not Implemented!");
+  /*
+    handleGetTraveler = (traveler) => {
+    if (!traveler.tripIds) traveler.tripIds = [];
+    traveler.tripIds.push(req.body.tripId);
+
+    updateTraveler(traveler, handleUpdateTraveler);
+  };
+
+  handleUpdateTraveler = (error) => {
+    if (error) res.sendStatus(401);
+    else res.sendStatus(200);
+  };
+
+  getTraveler(req.body.travelerId, handleGetTraveler);
+  */
 });
 
 router.delete("/deleteTrip", function (req, res, next) {

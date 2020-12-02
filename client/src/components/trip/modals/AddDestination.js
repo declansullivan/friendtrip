@@ -73,23 +73,43 @@ class AddDestination extends Component {
             <Form.Row>
               <Form.Group as={Col} controlId="exampleForm.ControlTextarea2">
                 <Form.Label>Destination Description</Form.Label>
-                <Form.Control name="description" as="textarea" rows={4} />
+                <Form.Control
+                  defaultValue={this.defaultValue("description")}
+                  name="description"
+                  as="textarea"
+                  rows={4}
+                />
               </Form.Group>
             </Form.Row>
             <Form.Row>
               <Form.Group as={Col} controlId="exampleForm.ControlTextarea3">
                 <Form.Label>Start Date (dd/mm/yyyy)</Form.Label>
-                <Form.Control name="start" as="textarea" rows={1} />
+                <Form.Control
+                  defaultValue={this.defaultValue("startDate")}
+                  name="start"
+                  as="textarea"
+                  rows={1}
+                />
               </Form.Group>
               <Form.Group as={Col} controlId="exampleForm.ControlTextarea4">
                 <Form.Label>End Date (dd/mm/yyyy)</Form.Label>
-                <Form.Control name="end" as="textarea" rows={1} />
+                <Form.Control
+                  defaultValue={this.defaultValue("endDate")}
+                  name="end"
+                  as="textarea"
+                  rows={1}
+                />
               </Form.Group>
             </Form.Row>
             <Form.Row>
               <Form.Group as={Col} controlId="exampleForm.ControlTextarea5">
                 <Form.Label>Destination Address</Form.Label>
-                <Form.Control name="address" as="textarea" rows={2} />
+                <Form.Control
+                  defaultValue={this.defaultValue("address")}
+                  name="address"
+                  as="textarea"
+                  rows={2}
+                />
               </Form.Group>
             </Form.Row>
           </Modal.Body>
