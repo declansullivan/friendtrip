@@ -216,7 +216,11 @@ class Trip extends Component {
         >
         </AddTripLeader>
         <EditTrip
+          tripId={this.state.tripData.id}
+          name={this.state.tripData.name}
+          description={this.state.tripData.description}
           show={this.state.showEditTrip}
+          refreshTrip={this.refreshTripJSON}
           handleClose={this.closeEditTripModal}
         ></EditTrip>
 

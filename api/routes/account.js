@@ -21,8 +21,8 @@ router.post('/editAccount', function(req, res, next) {
         }
     }
     handleUpdateTraveler = (error) => {
-        if (error) res.send(401);
-        else res.send(200);
+        if (error) res.sendStatus(401);
+        else res.sendStatus(200);
     }
     getTraveler(req.body.travelerId, handleGetTraveler);
 });
@@ -39,29 +39,60 @@ router.post('/getFriends', function(req, res, next) {
     getTraveler(req.body.id, handleGetTraveler);
 });
 
+router.post('/getFriendInvites', function(req, res, next) {
+    handleGetTraveler = (traveler) => {
+        getTravelerList(traveler.friendInvitations, handleGetFriendInvites);
+    }
+
+    handleGetFriendInvites = (invitations) => {
+        res.json({ status: 200, invitations });
+    }
+
+    getTraveler(req.body.id, handleGetTraveler);
+});
+
 router.post('/addFriend', function(req, res, next) {
-    handleValidTraveler = (traveler) => {
+    handleGetTraveler = (traveler) => {
+        if (!traveler.friendIds) traveler.friendIds = [];
+        if (!traveler.friendInvitations) traveler.friendInvitations = [];
+
+        for (const friend of traveler.friendInvitations) {
+            if (friend === req.body.friendId) {
+                res.sendStatus(204);
+                return;
+            }
+        }
+
+        getTraveler(req.body.friendId, handleGetOtherTraveler);
+    }
+
+    handleGetOtherTraveler = (traveler) => {
         // Traveler invited must exist
         if (!traveler) {
             res.sendStatus(404);
             return;
         }
 
-        getTraveler(req.body.id, handleGetTraveler);
-    }
-
-    handleGetTraveler = (traveler) => {
         if (!traveler.friendIds) traveler.friendIds = [];
+        if (!traveler.friendInvitations) traveler.friendInvitations = [];
 
         // No duplicate friends.
         for (const friend of traveler.friendIds) {
-            if (friend === req.body.friendId) {
+            if (friend === req.body.id) {
                 res.sendStatus(202);
                 return;
             }
         }
 
-        traveler.friendIds.push(req.body.friendId);
+        // No duplicate friends.
+        for (const friend of traveler.friendInvitations) {
+            if (friend === req.body.id) {
+                res.sendStatus(203);
+                return;
+            }
+        }
+
+        traveler.friendInvitations.push(req.body.id);
         updateTraveler(traveler, handleUpdateTraveler);
     }
 
@@ -76,7 +107,13 @@ router.post('/addFriend', function(req, res, next) {
         return;
     }
 
-    getTraveler(req.body.friendId, handleValidTraveler);
+    // No empty input.
+    if (!req.body.friendId || req.body.friendId === "") {
+        res.sendStatus(401);
+        return;
+    }
+
+    getTraveler(req.body.id, handleGetTraveler);
 });
 
 router.delete('/removeFriend', function(req, res, next) {
@@ -89,24 +126,75 @@ router.delete('/removeFriend', function(req, res, next) {
         updateTraveler({ id: req.body.id, friendIds}, handleUpdateTraveler);
     }
 
-    handleUpdateTraveler = (error) => {
-        if (error) res.send(401);
-        else res.send(200);
+    handleUpdateTraveler = (error) => {}
+
+    handleGetFriend = (traveler) => {
+        var friendIds = [];
+        for (const friend of traveler.friendIds) {
+            if (friend !== req.body.id) friendIds.push(friend);
+        }
+
+        updateTraveler({ id: req.body.friendId, friendIds}, handleUpdateFriend);
+    }
+
+    handleUpdateFriend = (error) => {
+        if (error) res.sendStatus(401);
+        else res.sendStatus(200);
     }
 
     getTraveler(req.body.id, handleGetTraveler)
+    getTraveler(req.body.friendId, handleGetFriend)
 });
 
 router.post('/acceptFriend', function(req, res, next) {
-    res.send("Not Implemented!");
+    handleGetTraveler = (traveler) => {
+        var newInvites = [];
+        for (const invite of traveler.friendInvitations) {
+            if (invite !== req.body.friendId) newInvites.push(invite);
+        }
+
+        if (!traveler.friendIds) traveler.friendIds = [];
+        traveler.friendIds.push(req.body.friendId);
+        traveler.friendInvitations = newInvites;
+
+        updateTraveler(traveler, handleUpdateTraveler);
+    }
+
+    handleUpdateTraveler = (error) => {}
+
+    handleGetFriend= (friend) => {
+        if (!friend.friendIds) friend.friendIds = [];
+        friend.friendIds.push(req.body.travelerId);
+        
+        updateTraveler(friend, handleUpdateFriend);
+    }
+
+    handleUpdateFriend = (error) => {
+        if (error) res.sendStatus(401);
+        else res.sendStatus(200);
+    }
+    
+    getTraveler(req.body.travelerId, handleGetTraveler);
+    getTraveler(req.body.friendId, handleGetFriend);
 });
 
 router.post('/rejectFriend', function(req, res, next) {
-    res.send("Not Implemented!");
-});
+    handleGetTraveler = (traveler) => {
+        var newInvites = [];
+        for (const invite of traveler.friendInvitations) {
+            if (invite !== req.body.friendId) newInvites.push(invite);
+        }
 
-router.get('/viewFriend', function(req, res, next) {
-    res.send("Not Implemented!");
+        traveler.friendInvitations = newInvites;
+        updateTraveler(traveler, handleUpdateTraveler);
+    }
+
+    handleUpdateTraveler = (error) => {
+        if (error) res.sendStatus(401);
+        else res.sendStatus(200);
+    }
+    
+    getTraveler(req.body.travelerId, handleGetTraveler);
 });
 
 module.exports = router;
