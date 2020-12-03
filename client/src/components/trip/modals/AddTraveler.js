@@ -16,7 +16,7 @@ class AddTraveler extends Component {
     addTraveler = (travelerId) => {
         const data = { id: travelerId, tripId: this.props.id }
 
-        fetch("http://localhost:9000/trip/sendInvite", {
+        fetch("/trip/sendInvite", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -33,7 +33,7 @@ class AddTraveler extends Component {
     }
 
     getFriendsJSON = (friendIds) => {
-        fetch("http://localhost:9000/trip/getTravelers", {
+        fetch("/trip/getTravelers", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

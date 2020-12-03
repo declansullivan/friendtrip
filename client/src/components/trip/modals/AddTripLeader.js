@@ -25,7 +25,7 @@ class AddTripLeader extends Component {
             if (currTraveler.checked) tripLeaders.push(currTraveler.name);
         }
 
-        fetch("http://localhost:9000/trip/addTripLeader", {
+        fetch("/trip/addTripLeader", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -38,7 +38,7 @@ class AddTripLeader extends Component {
     }
 
     getTravelerJSON = () => {
-        fetch("http://localhost:9000/trip/getTravelers", {
+        fetch("/trip/getTravelers", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

@@ -7,7 +7,24 @@ class EditTrip extends Component {
     }
 
     updateTrip = () => {
+        const { name, description } = event.target.elements;
+        const data = {
+            id: this.props.tripId,
+            name: name.value,
+            description: description.value
+        }
 
+        fetch("/trip/updateTrip", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((res) => {
+                this.props.refreshTrip();
+                this.props.handleClose();
+            });
     }
 
     render() {

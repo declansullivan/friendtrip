@@ -30,8 +30,8 @@ class AddExpense extends Component {
       tripId: this.props.tripId,
       assignedTravelers: assignedTravelers,
     };
-    const addExpenseAPI = "http://localhost:9000/expense/addExpense";
-    const editExpenseAPI = "http://localhost:9000/expense/editExpense";
+    const addExpenseAPI = "/expense/addExpense";
+    const editExpenseAPI = "/expense/editExpense";
     const fetchAPI = this.props.kind === "Add" ? addExpenseAPI : editExpenseAPI;
 
     fetch(fetchAPI, {
@@ -48,7 +48,7 @@ class AddExpense extends Component {
 
   // Gets Travelers on the Trip
   getTravelersJSON = () => {
-    fetch("http://localhost:9000/trip/getTravelers", {
+    fetch("/trip/getTravelers", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

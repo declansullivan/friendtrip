@@ -23,7 +23,7 @@ class Trips extends Component {
   };
 
   getTripsJSON = (tripIds, invitations) => {
-    fetch("http://localhost:9000/trip/getTrips", {
+    fetch("/trip/getTrips", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -35,7 +35,7 @@ class Trips extends Component {
   };
 
   getInvitedTripsJSON = (trips, tripIds) => {
-    fetch("http://localhost:9000/trip/getTrips", {
+    fetch("/trip/getTrips", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -47,7 +47,7 @@ class Trips extends Component {
   }
 
   getOwnerNames = (trips, invitedTrips) => {
-    fetch("http://localhost:9000/trip/getTravelers", {
+    fetch("/trip/getTravelers", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -64,7 +64,7 @@ class Trips extends Component {
 
   handleInvitation = (tripId, method) => {
     const data = { travelerId: this.getUserId(), tripId }
-    fetch("http://localhost:9000/trip/" + method, {
+    fetch("/trip/" + method, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

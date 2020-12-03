@@ -23,7 +23,7 @@ class ViewDestination extends Component {
     this.setState({ showAddDestination: true });
   };
   deleteDestination = (destinationId, tripId) => {
-    fetch("http://localhost:9000/destination/deleteDestination", {
+    fetch("/destination/deleteDestination", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

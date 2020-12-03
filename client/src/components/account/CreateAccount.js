@@ -21,7 +21,7 @@ class CreateAccount extends Component {
       password: password.value,
     };
 
-    fetch("http://localhost:9000/signup", {
+    fetch("/signup", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

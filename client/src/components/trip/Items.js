@@ -47,7 +47,7 @@ class Items extends Component {
       tripId: this.props.tripId,
       itemIds,
     };
-    fetch("http://localhost:9000/item/getItemsList", {
+    fetch("/item/getItemsList", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -59,7 +59,7 @@ class Items extends Component {
   };
 
   getTravelersJSON = (groupItems, personalItems) => {
-    fetch("http://localhost:9000/trip/getTravelers", {
+    fetch("/trip/getTravelers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -75,7 +75,7 @@ class Items extends Component {
   }
 
   deleteItem = (itemId, tripId) => {
-    fetch("http://localhost:9000/item/deleteItem", {
+    fetch("/item/deleteItem", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

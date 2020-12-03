@@ -13,7 +13,7 @@ class ConfirmLeave extends Component {
         travelerId: this.props.travelerId,
         isTripLeader: this.props.isTripLeader(),
       };
-      fetch("http://localhost:9000/trip/leaveTrip", {
+      fetch("/trip/leaveTrip", {
           method: "POST",
           headers: {
               "Content-Type": "application/json",

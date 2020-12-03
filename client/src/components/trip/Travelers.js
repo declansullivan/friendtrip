@@ -35,7 +35,7 @@ class Travelers extends Component {
             isTripLeader
         };
         
-        fetch("http://localhost:9000/trip/leaveTrip", {
+        fetch("/trip/leaveTrip", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -47,7 +47,7 @@ class Travelers extends Component {
     }
 
     getTravelersJSON = (travelerIds) => {
-        fetch("http://localhost:9000/trip/getTravelers", {
+        fetch("/trip/getTravelers", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

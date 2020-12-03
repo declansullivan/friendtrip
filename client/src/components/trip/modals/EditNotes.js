@@ -14,7 +14,7 @@ class EditNotes extends Component {
             itinerary: text.value,
         }
 
-        fetch("http://localhost:9000/trip/updateItinerary", {
+        fetch("/trip/updateItinerary", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

@@ -20,7 +20,7 @@ class Friends extends Component {
     const email = event.target.email.value.replace(".", "");
     const data = { id: this.getUserId(), friendId: email }
 
-    fetch("http://localhost:9000/account/addFriend", {
+    fetch("/account/addFriend", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,9 +44,23 @@ class Friends extends Component {
     });
   }
 
+  handleInvitation = (friendId, method) => {
+    const data = { travelerId: this.getUserId(), friendId }
+    fetch("/account/" + method, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => {
+      this.props.refreshTraveler();
+      this.getFriends();
+    });
+  }
+
   removeFriend = (friendId) => {
     const data = { id: this.getUserId(), friendId }
-    fetch("http://localhost:9000/account/removeFriend", {
+    fetch("/account/removeFriend", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -59,14 +73,26 @@ class Friends extends Component {
   }
 
   getFriends = () => {
-    fetch("http://localhost:9000/account/getFriends", {
+    fetch("/account/getFriends", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ id: this.getUserId() }),
     }).then((res) => res.json()).then((res) => {
-      this.setState({ friends: res.friends });
+      this.getFriendInvitations(res.friends)
+    });
+  }
+
+  getFriendInvitations = (friends) => {
+    fetch("/account/getFriendInvites", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: this.getUserId() }),
+    }).then((res) => res.json()).then((res) => {
+      this.setState({ friends, invitations: res.invitations });
     });
   }
 

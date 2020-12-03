@@ -47,7 +47,7 @@ class Destinations extends Component {
       tripId: this.props.tripId,
       destinationIds,
     };
-    fetch("http://localhost:9000/destination/getDestinations", {
+    fetch("/destination/getDestinations", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

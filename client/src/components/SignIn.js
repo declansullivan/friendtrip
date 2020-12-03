@@ -24,7 +24,7 @@ class SignIn extends Component {
             password: password.value
         }
 
-        fetch('http://localhost:9000/login', {
+        fetch('/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

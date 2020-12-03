@@ -15,7 +15,7 @@ class ConfirmDelete extends Component {
         expenseIds: this.props.expenseIds,
         destinationIds: this.props.destinationIds,
       };
-      fetch("http://localhost:9000/trip/deleteTrip", {
+      fetch("/trip/deleteTrip", {
           method: "DELETE",
           headers: {
               "Content-Type": "application/json",

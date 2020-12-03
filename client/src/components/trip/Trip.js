@@ -89,7 +89,7 @@ class Trip extends Component {
 
   // Retrieve all releveant data
   getTripJSON = (callback) => {
-    fetch("http://localhost:9000/trip/getTrip", {
+    fetch("/trip/getTrip", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

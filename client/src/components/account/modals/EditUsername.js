@@ -13,7 +13,7 @@ class EditUsername extends Component {
         username: username.value,
     }
     
-    fetch("http://localhost:9000/account/editAccount", {
+    fetch("/account/editAccount", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

@@ -42,7 +42,7 @@ class Expenses extends Component {
     const data = {
       expenseIds,
     };
-    fetch("http://localhost:9000/expense/getExpenses", {
+    fetch("/expense/getExpenses", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,7 +56,7 @@ class Expenses extends Component {
   };
 
   getTravelersJSON = (expenses) => {
-    fetch("http://localhost:9000/trip/getTravelers", {
+    fetch("/trip/getTravelers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -81,7 +81,7 @@ class Expenses extends Component {
   };
 
   deleteExpense = (expenseId, tripId) => {
-    fetch("http://localhost:9000/expense/deleteExpense", {
+    fetch("/expense/deleteExpense", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

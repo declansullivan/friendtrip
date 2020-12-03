@@ -32,7 +32,7 @@ class CreateTrip extends Component {
     name.value = "";
     description.value = "";
 
-    fetch("http://localhost:9000/createTrip", {
+    fetch("/createTrip", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +50,7 @@ class CreateTrip extends Component {
 
   addTravelerToTrip = (travelerId, tripId) => {
     const data = { travelerId, tripId };
-    fetch("http://localhost:9000/trip/addTraveler", {
+    fetch("/trip/addTraveler", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

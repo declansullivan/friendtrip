@@ -24,9 +24,9 @@ class AddDestination extends Component {
       destAddress: address.value,
     };
     const addDestinationAPI =
-      "http://localhost:9000/destination/addDestination";
+      "/destination/addDestination";
     const editDestinationAPI =
-      "http://localhost:9000/destination/editDestination";
+      "/destination/editDestination";
     const fetchAPI =
       this.props.kind === "Add" ? addDestinationAPI : editDestinationAPI;
     fetch(fetchAPI, {

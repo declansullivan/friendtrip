@@ -29,7 +29,7 @@ class Home extends Component {
   }
 
   logoutFunc = () => {
-    fetch("http://localhost:9000/logout", {
+    fetch("/logout", {
       method: "POST",
     })
       .then((res) => res.json())
@@ -44,7 +44,7 @@ class Home extends Component {
   };
 
   getTravelerJSON = () => {
-    fetch("http://localhost:9000/account/getAccount", {
+    fetch("/account/getAccount", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -75,7 +75,7 @@ class Home extends Component {
 
   // Updates Traveler JSON and redirects to Trips Page
   redirectTrip = () => {
-    fetch("http://localhost:9000/account/getAccount", {
+    fetch("/account/getAccount", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
