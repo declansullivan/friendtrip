@@ -10,9 +10,16 @@ const {
   updateTrip,
   deleteTrip,
 } = require("../db/models/trip");
-const {deleteItem, getItemList, updateItem} = require("../db/models/item");
-const {getExpenseList, deleteExpense, updateExpense} = require("../db/models/expense");
-const {getDestinationList, deleteDestination} = require("../db/models/destination");
+const { deleteItem, getItemList, updateItem } = require("../db/models/item");
+const {
+  getExpenseList,
+  deleteExpense,
+  updateExpense,
+} = require("../db/models/expense");
+const {
+  getDestinationList,
+  deleteDestination,
+} = require("../db/models/destination");
 var router = express.Router();
 
 router.get("/", function (req, res, next) {
@@ -96,7 +103,7 @@ router.post("/addTripLeader", function (req, res, next) {
   handleUpdateTrip = (error) => {
     if (error) res.sendStatus(401);
     else res.sendStatus(200);
-  }
+  };
   updateTrip(req.body, handleUpdateTrip);
 });
 
@@ -124,7 +131,7 @@ router.delete("/deleteTrip", function (req, res, next) {
       // Delete the Item objects associated with the Trip
       getItemList(req.body.itemIds, handleGetItems);
       // Delete the Expense Objects associated with the Trip
-      getExpenseList(req.body.expenseIds, handleGetExpenses)
+      getExpenseList(req.body.expenseIds, handleGetExpenses);
       // Delete the Destination objects associated with the Trip
       getDestinationList(req.body.destinationIds, handleGetDestinations);
     }
@@ -133,10 +140,10 @@ router.delete("/deleteTrip", function (req, res, next) {
   // Destination Callbacks
   handleGetDestinations = (destinations) => {
     let destinationsListLength = Object.keys(destinations).length;
-    for(let l = 0; l < destinationsListLength; l++) {
+    for (let l = 0; l < destinationsListLength; l++) {
       deleteDestination(destinations[l].id, handleDeleteDestination);
     }
-  }
+  };
   handleDeleteDestination = (error) => {};
   // Item Callbacks
   handleGetItems = (items) => {
@@ -144,15 +151,15 @@ router.delete("/deleteTrip", function (req, res, next) {
     for (let k = 0; k < itemsListLength; k++) {
       deleteItem(items[k].id, handleDeleteItem);
     }
-  }
+  };
   handleDeleteItem = (error) => {};
   // Expense Callbacks
   handleGetExpenses = (expenses) => {
     let expensesListLength = Object.keys(expenses).length;
-    for(let m = 0; m < expensesListLength; m++) {
+    for (let m = 0; m < expensesListLength; m++) {
       deleteExpense(expenses[m].id, handleDeleteExpense);
     }
-  }
+  };
   handleDeleteExpense = (error) => {};
   // Travler Callback
   handleUpdateTraveler = (error) => {};
@@ -213,33 +220,36 @@ router.post("/leaveTrip", function (req, res, next) {
       trip.tripLeaders = newTripLeaders;
     }
     // Handle updating the Item Objects in the abscence of the Traveler
-    if(trip.itemIds) getItemList(trip.itemIds, handleGetItems);
+    if (trip.itemIds) getItemList(trip.itemIds, handleGetItems);
     // Handle updating the Expense in the abscence of the Traveler
-    if(trip.expenseIds) getExpenseList(trip.expenseIds, handleGetExpenses);
+    if (trip.expenseIds) getExpenseList(trip.expenseIds, handleGetExpenses);
     // Update the Trip Object
     updateTrip(trip, handleUpdateTrip);
   };
   handleGetExpenses = (expenses) => {
-    if(expenses) {
+    if (expenses) {
       let expensesListLength = Object.keys(expenses).length;
-      for(let n = 0; n < expensesListLength; n++) {
+      for (let n = 0; n < expensesListLength; n++) {
         let newExpenseAssignees = [];
-        let expenseAssigneesLength = Object.keys(expenses[n].travelerIds).length;
-        for(let t = 0; t < expenseAssigneesLength; t++) {
-          if(expenses[n].travelerIds[t] !== req.body.travelerId) newExpenseAssignees.push(expenses[n].travelerIds[t]);
+        let expenseAssigneesLength = Object.keys(expenses[n].travelerIds)
+          .length;
+        for (let t = 0; t < expenseAssigneesLength; t++) {
+          if (expenses[n].travelerIds[t] !== req.body.travelerId)
+            newExpenseAssignees.push(expenses[n].travelerIds[t]);
         }
         expenses[n].travelerIds = newExpenseAssignees;
         updateExpense(expenses[n], handleUpdateExpense);
       }
     }
-  }
+  };
   handleUpdateExpense = (error) => {};
   // For each item in the Trip, if the person leaving is assigned to it, blank out the assignee
   handleGetItems = (items) => {
-    if(items) {
+    if (items) {
       let itemsListLength = Object.keys(items).length;
-      for(let l = 0; l < itemsListLength; l++) {
-        if(items[l].assignee === req.body.travelerId) {
+      for (let l = 0; l < itemsListLength; l++) {
+        // Remove Traveler from Group Item (Leave Personal Items alone)
+        if (items[l].isPublic && items[l].assignee === req.body.travelerId) {
           let newItem = items[l];
           newItem.assignee = null;
           updateItem(newItem, handleUpdateItem);
@@ -247,6 +257,7 @@ router.post("/leaveTrip", function (req, res, next) {
       }
     }
   };
+  handleDeleteItem = (error) => {};
   handleUpdateItem = (error) => {};
   handleUpdateTrip = (error) => {
     if (error) res.sendStatus(401);
