@@ -71,8 +71,7 @@ class Destinations extends Component {
         onClick={() => {
           this.openViewDestinationModal(destination);
         }}
-        className="tripThumbnail"
-        variant="secondary"
+        className="tripThumbnail mb-2"
         key={destination.id}
       >
         <Row style={{ color: "black" }} className="align-items-center text-center">

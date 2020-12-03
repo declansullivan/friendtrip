@@ -169,10 +169,10 @@ class AddExpense extends Component {
             </Form.Row>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="success" type="submit">
+            <Button className="m-0" variant="success" type="submit">
               Save
             </Button>
-            <Button onClick={this.props.handleClose}>Close</Button>
+            <Button className="m-0 ml-1" variant="warning" onClick={this.props.handleClose}>Close</Button>
           </Modal.Footer>
         </Form>
       </Modal>

@@ -15,5 +15,9 @@
     filter: invert(1);
 }
 .tripThumbnail:hover {
+    background-color: #f7f7f7;
     cursor: pointer;
+}
+.tripThumbnail {
+    border: 1px solid rgba(0,0,0,.125);
 }

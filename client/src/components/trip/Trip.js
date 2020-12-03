@@ -224,7 +224,7 @@ class Trip extends Component {
           <Card.Header className="trip-list-header">
             <h2>{this.state.tripData.name}</h2>
           </Card.Header>
-          <Card.Body className="p-4">
+          <Card.Body className="trip-list-body p-4">
             <h5 className="pl-3"> <strong>Description:</strong> {this.state.tripData.description}</h5>
             <hr className="mr-3 ml-3"></hr>
             <Container fluid>

@@ -100,8 +100,10 @@ class Items extends Component {
     return(
       <Tab.Pane key={item.id} eventKey={`#${item.id}`}>
         <h5>Item Name: {item.name}</h5>
-        <h5>Assigned To: {name}</h5>
-        <h5>Description: {item.description}</h5>
+        <h6>Assigned To: {name}</h6>
+        <br></br>
+        <h6>Description:</h6>
+        {item.description}
         <hr></hr>
         <Button className="float-right ml-1" onClick={() => {this.deleteItem(item.id, this.props.tripId)}} variant="danger">
           Delete
@@ -182,6 +184,7 @@ class Items extends Component {
       <div>
         <AddItem
           kind="Add"
+          category={this.props.category}
           travelerId={this.props.travelerId}
           travelerIds={this.props.travelerIds}
           tripId={this.props.tripId}
@@ -192,6 +195,7 @@ class Items extends Component {
 
       <AddItem
           kind="Edit"
+          category={this.props.category}
           travelerId={this.props.travelerId}
           travelerIds={this.props.travelerIds}
           tripId={this.props.tripId}
@@ -218,7 +222,7 @@ class Items extends Component {
               variant="success"
               onClick={this.openAddItemModal}
             >
-              Add Item
+              Add {this.props.category} Item
             </Button>
           </Card.Header>
           <Card.Body className="item-list-body">
