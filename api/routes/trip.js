@@ -22,10 +22,6 @@ const {
 } = require("../db/models/destination");
 var router = express.Router();
 
-router.get("/", function (req, res, next) {
-  res.send("Trip page.");
-});
-
 router.post("/getTrip", function (req, res, next) {
   handleGetTrip = (trip) => {
     res.json({ trip });
@@ -73,6 +69,15 @@ router.post("/updateItinerary", function (req, res, next) {
   };
 
   updateTrip(req.body, handleUpdateItinerary);
+});
+
+router.post("/updateTrip", function (req, res, next) {
+  handleUpdateTrip = (error) => {
+    if (error) res.sendStatus(401);
+    else res.sendStatus(200);
+  };
+
+  updateTrip(req.body, handleUpdateTrip);
 });
 
 router.post("/sendInvite", function (req, res, next) {

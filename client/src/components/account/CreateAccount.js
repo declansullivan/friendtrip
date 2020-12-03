@@ -71,7 +71,7 @@ class CreateAccount extends Component {
                       <h5> A collaborative task management interface </h5>
                     </li>
                     <li>
-                      <h5> Real-time trip notifications </h5>
+                      <h5> Trip destination planning </h5>
                     </li>
                     <li>
                       <h5> User-friendly expense allocation </h5>

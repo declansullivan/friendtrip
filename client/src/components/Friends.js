@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Alert, Button, Card, Form } from "react-bootstrap";
+import { Alert, Button, Card, Form, Row, Col, Container } from "react-bootstrap";
 import friendsPageImage from "../Media/friendsPageImage.svg";
 import friendsIcon from "../Media/friendsIcon.svg";
 import profileLogo from "../Media/profileIcon.svg";
 import "../Stylesheets/Friends.css";
+
 class Friends extends Component {
   constructor(props) {
     super(props);
@@ -11,7 +12,8 @@ class Friends extends Component {
       status: "",
       visible: false,
       message: "",
-      friends: []
+      friends: [],
+      invitations: []
     }
   }
 
@@ -34,13 +36,31 @@ class Friends extends Component {
       if (res.status === 200)
         this.showAlert("Successfully added Friend!", "success");
       else if (res.status === 202)
-        this.showAlert("You are already Friends with this Traveler", "warning");
+        this.showAlert("You are already Friends with this Traveler.", "warning");
+      else if (res.status === 203)
+        this.showAlert("You have already requested to be friends with this Traveler.", "warning");
+      else if (res.status === 204)
+        this.showAlert("You have a request from this Traveler, either accept or decline it.", "warning");
       else if (res.status === 403)
         this.showAlert("You cannot add yourself as a Friend.", "danger");
       else if (res.status === 404)
         this.showAlert("This Traveler does not exist.", "danger");
       else
         this.showAlert("Failed to add Friend.", "danger");
+    });
+  }
+
+  handleInvitation = (friendId, method) => {
+    const data = { travelerId: this.getUserId(), friendId }
+    fetch("http://localhost:9000/account/" + method, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => {
+      this.props.refreshTraveler();
+      this.getFriends();
     });
   }
 
@@ -66,7 +86,19 @@ class Friends extends Component {
       },
       body: JSON.stringify({ id: this.getUserId() }),
     }).then((res) => res.json()).then((res) => {
-      this.setState({ friends: res.friends });
+      this.getFriendInvitations(res.friends)
+    });
+  }
+
+  getFriendInvitations = (friends) => {
+    fetch("http://localhost:9000/account/getFriendInvites", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: this.getUserId() }),
+    }).then((res) => res.json()).then((res) => {
+      this.setState({ friends, invitations: res.invitations });
     });
   }
 
@@ -81,6 +113,24 @@ class Friends extends Component {
       }, 2000);
     });
   };
+
+  createFriendRequest = (traveler) => {
+    const name = traveler.firstName + " " + traveler.lastName;
+    return (
+      <Row className="trips-invite m-0 text-center p-1" key={traveler.id} id={"row" + traveler.id}>
+        <Col xs={2}>{name}</Col>
+        <Col xs={5}>{traveler.username}</Col>
+        <Col>
+          <Button onClick={() => {this.handleInvitation(traveler.id, "acceptFriend")}} variant="success">
+            Accept
+          </Button>{" "}
+          <Button onClick={() => {this.handleInvitation(traveler.id, "rejectFriend")}} className="ml-3" variant="danger">
+            Decline
+          </Button>
+        </Col>
+      </Row>
+    )
+  }
 
   createFriend = (friend) => {
     const name = friend.firstName + " " + friend.lastName;
@@ -109,6 +159,15 @@ class Friends extends Component {
         </Card.Body>
       </Card>
     )
+  }
+
+  renderFriendRequests = () => {
+    if (!this.state.invitations) return;
+    var invitesJSX = [];
+    for (const invite of this.state.invitations) {
+      invitesJSX.push(this.createFriendRequest(invite));
+    }
+    return invitesJSX;
   }
 
   renderFriends = () => {
@@ -142,7 +201,27 @@ class Friends extends Component {
         </div>
         <hr></hr>
 
-        <Card style={{ width: "100%" }} variant="Light">
+        <Card className="trips-list" style={{ width: "100%" }}>
+          <Card.Header className="trip-list-header">
+            <h2> Friend Requests </h2>
+          </Card.Header>
+          <Card.Body>
+            <Container fluid>
+              <Row className="m-0 text-center">
+                <Col xs={2}>
+                  <h5>Friend</h5>
+                </Col>
+                <Col xs={5}>
+                  <h5>Username</h5>
+                </Col>
+                <Col></Col>
+              </Row>
+              {this.renderFriendRequests()}
+            </Container>
+          </Card.Body>
+        </Card>
+
+        <Card className="mt-3" style={{ width: "100%" }} variant="Light">
           <Card.Header className="friend-list-header">
             <h2> Friend's List</h2>
             <Form onSubmit={this.addFriend} className="add-friend-form text-center">
