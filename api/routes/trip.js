@@ -271,10 +271,6 @@ router.post("/leaveTrip", function (req, res, next) {
   getTrip(req.body.tripId, handleGetTrip);
 });
 
-router.get("/exportTrip", function (req, res, next) {
-  res.send("Not Implemented!");
-});
-
 router.post("/alertTraveler", function (req, res, next) {
   res.send("Not Implemented!");
 });
