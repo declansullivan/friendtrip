@@ -58,10 +58,12 @@ class Home extends Component {
   };
 
   switchPage = (event) => {
+    this.refreshTravelerJSON();
     this.setState({ render: event });
   };
 
   selectTrip = (tripId) => {
+    this.refreshTravelerJSON();
     this.setState({ tripId, render: "trip" });
   };
 

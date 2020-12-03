@@ -119,6 +119,7 @@ router.post('/addFriend', function(req, res, next) {
 router.delete('/removeFriend', function(req, res, next) {
     handleGetTraveler = (traveler) => {
         var friendIds = [];
+        if (!traveler.friendIds) traveler.friendIds = [];
         for (const friend of traveler.friendIds) {
             if (friend !== req.body.friendId) friendIds.push(friend);
         }
@@ -130,6 +131,7 @@ router.delete('/removeFriend', function(req, res, next) {
 
     handleGetFriend = (traveler) => {
         var friendIds = [];
+        if (!traveler.friendIds) traveler.friendIds = [];
         for (const friend of traveler.friendIds) {
             if (friend !== req.body.id) friendIds.push(friend);
         }
