@@ -62,6 +62,7 @@ class Home extends Component {
   };
 
   selectTrip = (tripId) => {
+    this.refreshTravelerJSON();
     this.setState({ tripId, render: "trip" });
   };
 
