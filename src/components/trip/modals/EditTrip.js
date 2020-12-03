@@ -7,6 +7,7 @@ class EditTrip extends Component {
     }
 
     updateTrip = (event) => {
+        event.preventDefault();
         const { name, description } = event.target.elements;
         const data = {
             id: this.props.tripId,
