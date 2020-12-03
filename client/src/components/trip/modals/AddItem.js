@@ -12,28 +12,22 @@ class AddItem extends Component {
 
   addItem = (event) => {
     event.preventDefault();
-    const {
-      name,
-      description,
-      group,
-      complete,
-      traveler,
-    } = event.target.elements;
-    let assignedTraveler = !group.checked ? this.props.travelerId : traveler.value;
+    const { name, description, complete, traveler } = event.target.elements;
+    let isPublic = this.props.category === "Group" ? true : false;
+    let assignedTraveler = !isPublic ? this.props.travelerId : traveler.value;
     const data = {
       id: this.defaultValue("id"),
       itemName: name.value,
       itemDescription: description.value,
-      isPublic: group.checked,
+      isPublic: isPublic,
       isComplete: complete.checked,
       assignedTraveler: assignedTraveler,
       travelerId: this.props.travelerId,
       tripId: this.props.tripId,
     };
-
     const addItemAPI = "http://localhost:9000/item/addItem";
     const editItemAPI = "http://localhost:9000/item/editItem";
-    const fetchAPI = (this.props.kind === "Add") ? addItemAPI : editItemAPI;
+    const fetchAPI = this.props.kind === "Add" ? addItemAPI : editItemAPI;
 
     fetch(fetchAPI, {
       method: "POST",
@@ -93,7 +87,22 @@ class AddItem extends Component {
   defaultValue = (param) => {
     if (!this.props.item) return "";
     else return this.props.item[param];
-  }
+  };
+
+  renderTravelersOnCategory = () => {
+    if (this.props.category === "Personal") return;
+    else {
+      return (
+        <div>
+          <h5>Choose Traveler to Assign</h5>
+          <Form.Row className="m-0 p-0">
+            <br></br>
+            <div key="assignedTraveler">{this.renderTravelers()}</div>
+          </Form.Row>
+        </div>
+      );
+    }
+  };
 
   componentDidMount() {
     this.getTravelersJSON();
@@ -103,7 +112,6 @@ class AddItem extends Component {
     if (!this.state.render) return <div></div>;
 
     const isCheckedOff = this.defaultValue("isComplete");
-    const isPublic = this.defaultValue("isPublic");
 
     return (
       <Modal
@@ -116,7 +124,9 @@ class AddItem extends Component {
       >
         <Form onSubmit={this.addItem} className="p-3">
           <Modal.Body>
-            <h4>{this.props.kind} Item</h4>
+            <h4>
+              {this.props.kind} {this.props.category} Item
+            </h4>
             <Form.Row className="m-0 p-0">
               <Form.Group
                 as={Col}
@@ -124,7 +134,12 @@ class AddItem extends Component {
                 controlId="exampleForm.ControlTextarea1"
               >
                 <Form.Label>Item Name</Form.Label>
-                <Form.Control defaultValue={this.defaultValue("name")} name="name" as="textarea" rows={1} />
+                <Form.Control
+                  defaultValue={this.defaultValue("name")}
+                  name="name"
+                  as="textarea"
+                  rows={1}
+                />
               </Form.Group>
             </Form.Row>
             <Form.Row className="m-0 p-0">
@@ -134,44 +149,38 @@ class AddItem extends Component {
                 controlId="exampleForm.ControlTextarea2"
               >
                 <Form.Label>Item Description</Form.Label>
-                <Form.Control defaultValue={this.defaultValue("description")} name="description" as="textarea" rows={4} />
+                <Form.Control
+                  defaultValue={this.defaultValue("description")}
+                  name="description"
+                  as="textarea"
+                  rows={4}
+                />
               </Form.Group>
             </Form.Row>
-            <Form.Row className="m-0 p-0">
-              <Form.Check
-                custom
-                type="checkbox"
-                name="group"
-                label="Make Item public?"
-                id="group"
-                defaultChecked={isPublic}
-              />
-            </Form.Row>
+            <br></br>
             <Form.Row className="m-0 p-0">
               <Form.Check
                 custom
                 type="checkbox"
                 name="complete"
-                label="Has this Item been gotten?"
+                label="Completion Check-off"
                 id="complete"
                 defaultChecked={isCheckedOff}
               />
             </Form.Row>
             <br></br>
-
-            <h5>Choose Traveler to Assign</h5>
-
-            <Form.Row className="m-0 p-0">
-              <br></br>
-              <div key="assignedTraveler">
-                {this.renderTravelers()}
-              </div>
-            </Form.Row>
+            {this.renderTravelersOnCategory()}
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.props.handleClose}>Close</Button>
-            <Button variant="success" type="submit">
+            <Button className="m-0" variant="success" type="submit">
               Save
+            </Button>
+            <Button
+              className="m-0 ml-1"
+              variant="warning"
+              onClick={this.props.handleClose}
+            >
+              Close
             </Button>
           </Modal.Footer>
         </Form>

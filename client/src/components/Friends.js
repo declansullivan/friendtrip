@@ -155,7 +155,7 @@ class Friends extends Component {
                     placeholder="Enter friend's email"
                   />
                 </Form.Group>
-                <Button className="ml-2" variant="primary" type="submit">
+                <Button className="ml-2" variant="success" type="submit">
                   Add
                 </Button>
               </Form.Row>

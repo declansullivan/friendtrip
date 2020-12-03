@@ -3,9 +3,14 @@
     border: 1px solid #81a6da;
 }
 .notes-list-header {
+    display: flex;
     background-color: #166AE0;
     color: white;
+    align-items: center;
 }
 .notes-list-body {
     background-color: #ffffff;
+}
+.notes-list-icon {
+    filter: invert(1);
 }

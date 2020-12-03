@@ -3,6 +3,8 @@ import { Button, Card, Col, Row, Container, Alert } from "react-bootstrap";
 
 import ViewDestination from "./modals/ViewDestination";
 import AddDestination from "./modals/AddDestination";
+import destinationIcon from "../../Media/destinationIcon.svg";
+
 import "../../Stylesheets/Destinations.css";
 class Destinations extends Component {
   constructor(props) {
@@ -69,11 +71,10 @@ class Destinations extends Component {
         onClick={() => {
           this.openViewDestinationModal(destination);
         }}
-        className="tripThumbnail"
-        variant="secondary"
+        className="tripThumbnail mb-2"
         key={destination.id}
       >
-        <Row style={{ color: "black" }} className="align-items-center">
+        <Row style={{ color: "black" }} className="align-items-center text-center">
           <Col xs={2}>{destination.name}</Col>
           <Col xs={2}>{destination.startDate}</Col>
           <Col xs={2}>{destination.endDate}</Col>
@@ -115,8 +116,16 @@ class Destinations extends Component {
           refreshDestinations={this.refreshDestinations}
         />
         <Card className="destinations-list">
-          <Card.Header className="destinations-list-header">
-            <h5> Destinations</h5>
+          <Card.Header className="destinations-list-header p-1 pl-3">
+          <img
+            src={destinationIcon}
+            width="25"
+            height="25"
+            className="destinations-list-icon d-inline-block align-top mr-2 "
+            alt="destinationIcon"
+            id="destinationIcon"
+          />
+            <strong>Destinations</strong>
             <Button
               className="ml-auto d-inline-block"
               variant="success"
@@ -127,7 +136,7 @@ class Destinations extends Component {
           </Card.Header>
           <Card.Body className="destinations-list-body">
             <Container fluid>
-              <Row>
+              <Row className="m-0 text-center">
                 <Col xs={2}>
                   <h5>Destination</h5>
                 </Col>

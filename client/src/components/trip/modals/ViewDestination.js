@@ -56,13 +56,15 @@ class ViewDestination extends Component {
           animation={false}
           centered
         >
+          <Modal.Header>
+            <Modal.Title>Destination Name: {this.props.destinationToView.name}</Modal.Title>
+          </Modal.Header>
           <Modal.Body>
-            <h4>{this.props.destinationToView.name}</h4>
-            <hr></hr>
             <h5>
               <strong>Description:</strong>
             </h5>
-            <h5>{this.props.destinationToView.description}</h5>
+            {this.props.destinationToView.description}
+            <br></br>
             <br></br>
             <h5>
               <strong>Duration:</strong>

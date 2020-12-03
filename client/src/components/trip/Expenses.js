@@ -3,6 +3,7 @@ import { Card, Col, Row, Tab, ListGroup, Button } from "react-bootstrap";
 
 import AddExpense from "./modals/AddExpense";
 import "../../Stylesheets/Expenses.css";
+import expenseIcon from "../../Media/expenseIcon.svg";
 
 class Expenses extends Component {
   constructor(props) {
@@ -73,7 +74,7 @@ class Expenses extends Component {
 
   createExpenseListGroupItem = (expense) => {
     return (
-      <ListGroup.Item action key={expense.id} href={`#${expense.id}`}>
+      <ListGroup.Item action key={`#${expense.id}`} href={`#${expense.id}`}>
         {expense.name}
       </ListGroup.Item>
     );
@@ -93,16 +94,14 @@ class Expenses extends Component {
   };
 
   createExpenseTabPane = (expense) => {
-    let arr = [];
-    let travelerList = <div></div>;
+    let travelerList = [];
     if(expense.travelerIds) {
       for (let i = 0; i < Object.keys(expense.travelerIds).length; i++) {
-        arr.push(this.state.travelers[expense.travelerIds[i]]);
+        travelerList.push(<li key={`#${expense.travelerIds[i]}`} >{this.state.travelers[expense.travelerIds[i]]} </li>);
       }
-      travelerList = arr.map((traveler) => <li key={`#${traveler.id}`}>{traveler} </li>);
     }
     return (
-      <Tab.Pane key={expense.id} eventKey={`#${expense.id}`}>
+      <Tab.Pane key={`#${expense.id}`} eventKey={`#${expense.id}`}>
         <h5>{expense.name}</h5>
         <h6>Remaining Balance: {expense.cost}</h6>
         <h6>Travelers: </h6>
@@ -202,8 +201,16 @@ class Expenses extends Component {
           expense={this.state.expenseToEdit}
         />
         <Card className="expenses-list mb-3">
-          <Card.Header className="expenses-list-header">
-            <h5 className="d-inline-block m-0"> Expenses </h5>
+          <Card.Header className="expenses-list-header p-1 pl-3">
+          <img
+            src={expenseIcon}
+            width="25"
+            height="25"
+            className="expenses-list-icon d-inline-block align-top mr-2 "
+            alt="expenseIcon"
+            id="expenseIcon"
+          />
+            <strong>Expenses</strong>
             <Button
               className="ml-auto d-inline-block"
               variant="success"

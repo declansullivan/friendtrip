@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { ListGroup, Button, Card} from "react-bootstrap";
 
 import AddTraveler from "./modals/AddTraveler"
+import travelersIcon from "../../Media/travelersIcon.svg";
+
 import "../../Stylesheets/Travelers.css";
 class Travelers extends Component {
     constructor(props) {
@@ -114,7 +116,17 @@ class Travelers extends Component {
                     handleClose={this.closeAddTravelerModal}/>
 
                 <Card className="travelers-list">
-                    <Card.Header className="travelers-list-header">Travelers</Card.Header>
+                    <Card.Header className="travelers-list-header p-1 pl-3">
+                    <img
+            src={travelersIcon}
+            width="25"
+            height="25"
+            className="travelers-list-icon d-inline-block align-top mr-2 "
+            alt="travelersIcon"
+            id="travelersIcon"
+          />
+                         <strong>Travelers</strong>
+                         </Card.Header>
                     <ListGroup variant="flush">
                         { this.renderTravelers() }
                         <Button variant="light" onClick={this.openAddTravelerModal}>Add Traveler</Button>

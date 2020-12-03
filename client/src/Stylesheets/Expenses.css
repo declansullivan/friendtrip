@@ -11,3 +11,6 @@
 .expenses-list-body {
     background-color: #ffffff;
 }
+.expenses-list-icon {
+    filter: invert(1);
+}

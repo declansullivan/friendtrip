@@ -72,6 +72,12 @@ class CreateTrip extends Component {
       }, 2000);
     });
   };
+  resetInputs = (event ) => {
+    event.preventDefault();
+    const { name, description } = event.target.elements;
+    name.value = "";
+    description.value = "";
+  }
 
   render() {
     return (
@@ -96,7 +102,7 @@ class CreateTrip extends Component {
             <h2> Create Trip Form </h2>
           </Card.Header>
           <Card.Body className="createTrip-form-body">
-            <Form onSubmit={this.createTrip}>
+            <Form onSubmit={this.createTrip} onReset={this.resetInputs}>
               <Form.Row>
                 <Form.Group as={Col} controlId="formGridname">
                   <Form.Label>
@@ -125,14 +131,12 @@ class CreateTrip extends Component {
               </Form.Row>
 
               <div style={{ textAlign: "right" }}>
-                <Link to="/home">
-                  <Button variant="primary" type="submit">
-                    Cancel
-                  </Button>{" "}
-                </Link>
-                <Button variant="primary" type="submit">
+              <Button variant="success" type="submit">
                   Create Trip
                 </Button>
+                  <Button className="ml-1" variant="warning " type="reset">
+                    Reset Form
+                  </Button>
               </div>
             </Form>
           </Card.Body>
