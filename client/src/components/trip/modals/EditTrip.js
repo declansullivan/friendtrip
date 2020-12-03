@@ -37,23 +37,23 @@ class EditTrip extends Component {
                 animation={false}
                 centered
                 >
-                <Modal.Body>
-                    <h4>Edit Trip Information</h4>
-                    <Form>
-                        <Form.Group controlId="exampleForm.ControlTextarea1">
+                <Form onSubmit={this.updateTrip}>
+                    <Modal.Body>
+                        <h4>Edit Trip Information</h4>
+                        <Form.Group>
                             <Form.Label>Trip Name</Form.Label>
-                            <Form.Control name="name" as="textarea" rows={1} />
+                            <Form.Control id="name" name="name" defaultValue={this.props.name} as="textarea" rows={1} />
                         </Form.Group>
-                        <Form.Group controlId="exampleForm.ControlTextarea2">
+                        <Form.Group>
                             <Form.Label>Trip Description</Form.Label>
-                            <Form.Control name="descripton" as="textarea" rows={4} />
+                            <Form.Control id="description" name="descripton" defaultValue={this.props.description} as="textarea" rows={4} />
                         </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={this.props.handleClose}>Close</Button>
-                    <Button onClick={this.updateTrip} variant="success">Save</Button>
-                </Modal.Footer>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={this.props.handleClose}>Close</Button>
+                        <Button type="submit" variant="success">Save</Button>
+                    </Modal.Footer>
+                </Form>
             </Modal>
         )
     }

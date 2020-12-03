@@ -23,10 +23,12 @@ module.exports = class Traveler {
     }
 
     static generateTravelerJSON(id, email, username, firstName, lastName,
-                                createdOn, tripIds, friendIds, invitations) {
+                                createdOn, tripIds, friendIds, invitations,
+                                friendInvitations) {
         return {
             id, email, username, firstName, lastName,
-            createdOn, tripIds, friendIds, invitations
+            createdOn, tripIds, friendIds, invitations,
+            friendInvitations
         };
     }
 }

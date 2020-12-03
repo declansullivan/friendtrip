@@ -11,7 +11,7 @@ router.put('/signup', function (req, res, next) {
 
     if (status === 200) {
       const data = generateTravelerJSON(id, req.body.email, req.body.username, req.body.first,
-        req.body.last, Date.now(), [], [], []);
+        req.body.last, Date.now(), [], [], [], []);
       addTraveler(data, handleCreateTraveler);
     }
     else {
