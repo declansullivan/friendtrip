@@ -58,6 +58,7 @@ class Home extends Component {
   };
 
   switchPage = (event) => {
+    this.refreshTravelerJSON();
     this.setState({ render: event });
   };
 
