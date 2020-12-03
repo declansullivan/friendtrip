@@ -6,7 +6,7 @@ class EditTrip extends Component {
         super(props);
     }
 
-    updateTrip = () => {
+    updateTrip = (event) => {
         const { name, description } = event.target.elements;
         const data = {
             id: this.props.tripId,
