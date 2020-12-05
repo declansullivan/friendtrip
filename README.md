@@ -11,11 +11,13 @@ Populated Test Account:
  - email: master@gmail.com
  
 ## Requirements
+ If running this as a part of CSE 110 verification/grading, please look at the submitted README document for credentials and `.env` file contents to run locally.
+
  1. Internet Connection.
  2. Database credentials if running locally.
  3. No database credentials if visiting from https://friendtrip-cse110.herokuapp.com/.
  4. This web-app is designed to be run on a computer.
-  
+ 
 ## Installation Instructions
  1. Clone the FriendTrip repository from Github.
  2. Open the command line and navigate to the FriendTrip directory.
