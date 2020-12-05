@@ -12,20 +12,19 @@ Populated Test Account:
  
 ## Requirements
  1. Internet Connection.
- 2. Database Credentials
-  a. If running locally, .env credentials.
-  b. If visiting from https://friendtrip-cse110.herokuapp.com/, no credentials needed.
- 3. This web-app is designed to be run on a computer.
+ 2. Database credentials if running locally.
+ 3. No database credentials if visiting from https://friendtrip-cse110.herokuapp.com/.
+ 4. This web-app is designed to be run on a computer.
   
 ## Installation Instructions
  1. Clone the FriendTrip repository from Github.
  2. Open the command line and navigate to the FriendTrip directory.
  3. Run `npm install` at the root level of FriendTrip.
  4. Run `cd api` then `npm install` to install the remaining packages.
- 4a. Copy paste the information from the provided `.env` file into an `.env` file inside of `friendtrip/api/`.
- 5. Run `cd ..` then `npm run build` to generate a new build of FriendTrip.
- 6. Run `npm start` to begin the service.
- 7. Visit `http://localhost:9000/` to view the site.
+ 5. Copy paste the information from the provided `.env` file into an `.env` file inside of `friendtrip/api/`.
+ 6. Run `cd ..` then `npm run build` to generate a new build of FriendTrip.
+ 7. Run `npm start` to begin the service.
+ 8. Visit `http://localhost:9000/` to view the site.
  
  Alternatively, visit https://friendtrip-cse110.herokuapp.com/.
 
