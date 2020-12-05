@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '..', 'build')));
-
+z
 app.use('/', indexRouter);
 app.use('/account', accountRouter);
 app.use('/trip', tripRouter);

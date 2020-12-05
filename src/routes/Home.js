@@ -165,7 +165,7 @@ class Home extends Component {
             <img
               src={profileLogo}
               width="25"
-              height="25"
+              height="25"z
               className="d-inline-block align-top"
               alt="profileLogo"
               id="profileLogo"
