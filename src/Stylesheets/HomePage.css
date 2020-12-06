@@ -4,3 +4,48 @@
     justify-content: flex-start;
     align-items: center;
 }
+
+.home-page-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.carousel-img {
+    display: inline-block;
+    height: 40vh;
+}
+
+.carousel-body {
+    background-color: #5797f0;
+    border-radius: 15px;
+}
+.carousel-description {
+    text-align: center;
+}
+.carousel-description > p {
+    font-size: calc(0.25vw + 0.75rem);
+}
+.carousel-description > h1 {
+    border-bottom: 1px solid white;
+}
+.home-page-greeting {
+    background-color: #4087eb;
+    color: white;
+    border-radius: 30px;
+}
+.home-page-greeting-title {
+    font-size: 2vw;
+}
+.carousel-title {
+    font-size: 2vw;
+    padding-bottom: 1rem;
+}
+.home-page-greeting-description {
+    font-size: calc(0.25vw + 0.75rem);
+    background-color: #5797f0;
+}
+.carousel-inner {
+    padding-left: 8vw;
+    padding-right: 8vw;
+}
