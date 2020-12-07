@@ -36,3 +36,4 @@ Populated Test Account:
 ## Known Bugs
  1. There is no form checking for any user input at this point in time. This could potentially be used for malicious intent or leave users with blank information.
  2. For buttons pertaining to actions like leaving a Trip or removing a friend, clicking the button twice quickly can cause problems when the database is cleared of certain information, then the deletion request is processed again, now with that information already missing.
+ 3. If a Traveler is invited to a Trip and that Trip is deleted, then the Traveler's Trips page cannot load and will crash.
