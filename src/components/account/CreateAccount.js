@@ -33,7 +33,7 @@ class CreateAccount extends Component {
         if (res.code === "auth/email-already-in-use") {
           alert("This email is already in use.");
         }
-        if (res.code === "auth/weak-password") {
+        else if (res.code === "auth/weak-password") {
           alert("Your password is too weak.");
         }
         else {
