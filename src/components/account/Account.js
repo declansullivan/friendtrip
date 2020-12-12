@@ -35,7 +35,7 @@ class Account extends Component {
 
   // Parse Miliseconds to Date string
   getDateCreatedOn() {
-    return Date(parseInt(this.props.traveler.createdOn,10)).toString('MM/dd/yy HH:mm:ss');
+    return new Date(parseInt(this.props.traveler.createdOn,10)).toString('MM/dd/yy HH:mm:ss');
   }
   render() {
     return (

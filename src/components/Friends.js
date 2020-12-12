@@ -34,7 +34,7 @@ class Friends extends Component {
       this.getFriends();
       
       if (res.status === 200)
-        this.showAlert("Successfully added Friend!", "success");
+        this.showAlert("Successfully sent Friend invitation!", "success");
       else if (res.status === 202)
         this.showAlert("You are already Friends with this Traveler.", "warning");
       else if (res.status === 203)
