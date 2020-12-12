@@ -102,6 +102,7 @@ class Trips extends Component {
   }
 
   createInvitation = (invite) => {
+    if (!invite) return (<div></div>);
     return (
       <Row className="trips-invite m-0 text-center p-1" key={invite.id} id={"row" + invite.id}>
       <Col xs={2}>{invite.name}</Col>
