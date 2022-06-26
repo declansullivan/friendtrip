@@ -20,7 +20,10 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div> 
+        <h1>THIS WEBSITE WAS BUILT BY 
+          <a href="https://www.linkedin.com/in/declansullivan/"> DECLAN SULLIVAN</a> AND 
+          <a href="https://www.linkedin.com/in/loc-chuong/"> LOC CHUONG</a> EXCLUSIVELY </h1>
         <Router>
           <Route exact path='/' component={SignIn} />
           <Route exact path='/signup' component={CreateAccount} />
